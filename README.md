@@ -8,4 +8,6 @@ libmemcached
 ```bash
 https://www.pigcha.com/misc/linux_tutorial
 
+git config user.email "946731809@qq.com"
+git config user.name "monopodium"
 ```
