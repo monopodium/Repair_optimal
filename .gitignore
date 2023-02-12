@@ -4,7 +4,10 @@ prototype/memcached/*
 prototype/packages/*
 prototype/third_party/*
 *a.txt
-
+.history/*
+.vscode
+.history
+.vscode/*
 *CMakeLists.txt.user
 *CMakeCache.txt
 *CMakeFiles
