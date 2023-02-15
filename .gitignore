@@ -6,7 +6,7 @@ prototype/third_party/*
 *a.txt
 .history/*
 .vscode
-.history
+.history/
 .vscode/*
 *CMakeLists.txt.user
 *CMakeCache.txt
