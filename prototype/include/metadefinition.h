@@ -55,6 +55,7 @@ namespace REPAIR
     // data globle local
     //[cluster id, cluster id]
     typedef std::vector<unsigned int> Placement;
+    typedef std::map<std::string, std::vector<std::string>> RepairRequest;
     typedef struct StripeItem
     {
         std::vector<unsigned int> node_ids;

@@ -291,4 +291,33 @@ namespace REPAIR
         jerasure_matrix_decode(group_data_number, 1, w, last_matrix.data(), 0, erasures, data_ptrs, coding_ptrs, blocksize);
         return true;
     }
+    void Code_Placement::return_repair_request(int block_index, std::vector<int> &repair_request)
+    {
+        std::string block;
+        if (block_index < k)
+        {
+            block = index_to_str("D", block_index);
+        }
+        else if (block_index < k + g)
+        {
+            block = index_to_str("G", block_index - k);
+        }
+        else
+        {
+            block = index_to_str("L", block_index - k - g);
+        }
+        for (std::string repair_block : m_block_repair_request[block])
+        {
+            repair_request.push_back(block_to_index(repair_block));
+        }
+    }
+    int Code_Placement::block_to_index(std::string block)
+    {
+        int index = 0;
+        for (int i = 1; i < block.length(); i++)
+        {
+            index = index * 10 + block[i] - '0';
+        }
+        return index;
+    }
 }

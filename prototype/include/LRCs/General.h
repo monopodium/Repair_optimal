@@ -43,15 +43,15 @@ namespace REPAIR
         void set_parameter(int n_in, int k_in, int r_in, int w = 8);
         virtual std::pair<double, double> return_DRC_NRC(REPAIR::PlacementType placement_type, int random_seed = 10);
         virtual REPAIR::Placement generate_placement(REPAIR::PlacementType placement_type, int random_seed = 10);
-
-        virtual void generate_best_placement() = 0;
+        virtual void return_repair_request(int block_index,std::vector<int> &repair_request);
+        // virtual void generate_best_placement() = 0;
         virtual int calculate_distance() = 0;
         virtual void nkr_to_klgr(int n, int k, int r, int &l, int &g) = 0;
         virtual void klgr_to_nkr(int k, int l, int g, int r, int &n) = 0;
         virtual bool check_parameter() = 0;
         virtual bool encode(char **data_ptrs, char **coding_ptrs, int blocksize)=0;
         virtual bool decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize)=0;
-
+        int block_to_index(std::string block);
     protected:
         int n = 0;
         int k = 0;
@@ -64,7 +64,7 @@ namespace REPAIR
         bool m_first = true;
         std::vector<std::string> m_raw_stripe;
         std::vector<std::vector<std::string>> m_stripe_information;
-        std::map<std::string, std::vector<std::string>> m_block_repair_request;
+        RepairRequest m_block_repair_request;
 
         typedef std::vector<Cluster> PlacementRaw;
         PlacementRaw m_random_placement_raw;
@@ -87,7 +87,9 @@ namespace REPAIR
         virtual void generate_stripe_information() = 0;
         virtual void generate_block_repair_request() = 0;
         virtual void return_group_number() = 0;
+        virtual void generate_best_placement() = 0;
         void generate_random_placement(int random_seed = 10);
+        
         bool check_cluster_information(std::vector<REPAIR::Cluster> placement, std::map<std::string, int> placement_map);
         void generate_flat_placement();
         bool decode_in_group_xor(int group_data_number, char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize);
