@@ -331,15 +331,37 @@ def generate_parity_check_matrix(k=10, m=4, r=5, l=2):
     init2 = init2.view(GF)
     H_in_paper.append(init2)
     x_n = init2
-    for i in range(k-2):
+    for i in range(m-2):
         x_n = init2*x_n
-        G_in_paper.append(x_n)
-    G_in_paper = np.array(G_in_paper).T.tolist()
+        H_in_paper.append(x_n)
+    H_in_paper = np.array(H_in_paper)
+    print(H_in_paper)
+    return H_in_paper
 
-def generate_generator_matrix_from_check_matrix(G_in_paper):
-    #method 1:
-    
+def generate_generator_matrix_from_check_matrix(H_in_paper,k=10, m=4, r=5, l=2):
+    if H_in_paper.shape!=(m,k+m):
+        print("H_in_paper.shape",H_in_paper.shape)
+        print("bad shape!")
     #method 2:
+    H_in_paper = H_in_paper.view(GF)
+    m_m_matrix = H_in_paper[:,k:]
+    
+    print(type(m_m_matrix))
+    part_matrix = np.dot(np.linalg.inv(m_m_matrix),H_in_paper)[:,:k]
+    print("part_matrix")
+    print(part_matrix)
+    part_matrix = part_matrix.T
+    print("part_matrix.T")
+    print(part_matrix)
+    G_in_paper = np.hstack((np.eye(k, dtype=int),part_matrix))
+    for each_line in G_in_paper:
+        sum = GF(0)
+        for each_number in each_line:
+            sum = sum + each_number
+        print(sum)
+            
+    print(G_in_paper)
+    #check
     
     
 def Xorbas_matrix(k=10, m=4, r=5, l=2):
@@ -382,7 +404,9 @@ if __name__ == "__main__":
     k = 12
     l = 2
     g = 3
-    Xorbas_matrix()
+    #Xorbas_matrix()
+    #generate_parity_check_matrix()
+    print(generate_generator_matrix_from_check_matrix(generate_parity_check_matrix()))
     # matrix = init_matrix(k,l,g)
     # search_matrix(k, l, g)
     # search_matrix_iteration(k, l, g)

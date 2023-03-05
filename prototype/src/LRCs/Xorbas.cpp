@@ -97,10 +97,52 @@ namespace REPAIR
     bool Xorbas_Class::encode(char **data_ptrs, char **coding_ptrs, int blocksize)
     {
         return true;
+    };
+    bool Xorbas_Class::xorbas_make_matrix(int k, int g, int l, int *final_matrix)
+    {
+        int r = (k + l - 1) / l;
+        int *matrix = NULL;
 
+        matrix = reed_sol_vandermonde_coding_matrix(k, g , 8);
+        if (matrix == NULL)
+        {
+            std::cout << "matrix == NULL" << std::endl;
+        }
+
+        // final_matrix = (int *)malloc(sizeof(int) * k * (g + l));
+        if (final_matrix == NULL)
+        {
+            std::cout << "final_matrix == NULL" << std::endl;
+        }
+        bzero(final_matrix, sizeof(int) * k * (g + l));
+
+        for (int i = 0; i < g; i++)
+        {
+            for (int j = 0; j < k; j++)
+            {
+                final_matrix[i * k + j] = matrix[i * k + j];
+            }
+        }
+
+        for (int i = 0; i < l; i++)
+        {
+            for (int j = 0; j < k; j++)
+            {
+                if (i * r <= j && j < (i + 1) * r)
+                {
+                    final_matrix[(i + g) * k + j] = 1;
+                }
+            }
+        }
+
+        free(matrix);
+        return true;
     };
     bool Xorbas_Class::decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize)
     {
+        std::vector<int> new_matrix((g + l) * k, 0);
+        xorbas_make_matrix(k, g, l, new_matrix.data());
+        jerasure_matrix_encode(k, g + l, 8, new_matrix.data(), data_ptrs, coding_ptrs, blocksize);
         return true;
-    }
+    };
 }

@@ -152,6 +152,7 @@ namespace REPAIR
     public:
         using Code_Placement::Code_Placement;
         ~Xorbas_Class(){};
+        bool xorbas_make_matrix(int k, int g, int l, int *final_matrix);
         bool check_parameter() override;
         int calculate_distance() override;
         void generate_best_placement() override;
