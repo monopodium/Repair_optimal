@@ -3,7 +3,7 @@ namespace REPAIR
 {
     bool Azure_LRC_Class::check_parameter()
     {
-        if (n <= k + l)
+        if (m_n <= m_k + m_l)
         {
             std::cout << "Parameters do not meet requirements!" << std::endl;
             return false;
@@ -12,17 +12,17 @@ namespace REPAIR
     };
     int Azure_LRC_Class::calculate_distance()
     {
-        d = g + 2;
-        return d;
+        m_d = m_g + 2;
+        return m_d;
     };
     void Azure_LRC_Class::generate_best_placement()
     {
-        int b = d - 1;
-        for (int i = 0; i < n; i++)
+        int b = m_d - 1;
+        for (int i = 0; i < m_n; i++)
         {
             m_best_placement_raw.push_back(Cluster(i, b));
         }
-        for (int i = 0; i < l; i++)
+        for (int i = 0; i < m_l; i++)
         {
             std::vector<std::string> group = m_stripe_information[i];
             int cur_group_len = group.size();
@@ -30,7 +30,7 @@ namespace REPAIR
             {
                 for (Cluster each_cluster : m_best_placement_raw)
                 {
-                    if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + g >= each_cluster.return_block_number() + cur_group_len)
+                    if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + m_g >= each_cluster.return_block_number() + cur_group_len)
                     {
                         for (std::string block : group)
                         {
@@ -49,7 +49,7 @@ namespace REPAIR
                     int number_in_group = std::min(b, cur_group_len - j * b);
                     for (Cluster each_cluster : m_best_placement_raw)
                     {
-                        if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + g >=
+                        if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + m_g >=
                             each_cluster.return_block_number() + number_in_group)
                         {
                             for (int ii = 0; ii < number_in_group; ii++)
@@ -75,7 +75,7 @@ namespace REPAIR
                 break;
             }
         }
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < m_n; i++)
         {
             if (m_best_placement_raw[i].return_block_number() == 0)
             {
@@ -83,40 +83,40 @@ namespace REPAIR
             }
         }
     };
-    void Azure_LRC_Class::nkr_to_klgr(int n, int k, int r, int &l, int &g)
+    void Azure_LRC_Class::nkr_to_klgr(int n, int k, int r)
     {
-        l = ceil(k, r);
-        g = n - k - l;
+        m_l = ceil(k, r);
+        m_g = n - k - m_l;
     };
-    void Azure_LRC_Class::klgr_to_nkr(int k, int l, int g, int r, int &n)
+    void Azure_LRC_Class::klgr_to_nkr(int k, int l, int g, int r)
     {
-        n = k + l + g;
+        m_n = k + l + g;
     };
     void Azure_LRC_Class::generate_stripe_information()
     {
         int group_ptr = -1;
-        for (int i = 0; i < k; i++)
+        for (int i = 0; i < m_k; i++)
         {
             std::string block = index_to_str("D", i);
-            if (i % r == 0)
+            if (i % m_r == 0)
             {
                 std::vector<std::string> group;
                 m_stripe_information.push_back(group);
                 group_ptr++;
             }
-            m_stripe_information[int(i / r)].push_back(block);
+            m_stripe_information[int(i / m_r)].push_back(block);
             m_block_to_groupnumber[block] = group_ptr;
         }
         std::vector<std::string> group;
         m_stripe_information.push_back(group);
         group_ptr++;
-        for (int i = 0; i < g; i++)
+        for (int i = 0; i < m_g; i++)
         {
             std::string block = index_to_str("G", i);
             m_stripe_information[group_ptr].push_back(block);
             m_block_to_groupnumber[block] = group_ptr;
         }
-        for (int i = 0; i < l; i++)
+        for (int i = 0; i < m_l; i++)
         {
             std::string block = index_to_str("L", i);
             m_stripe_information[i].push_back(block);
@@ -125,7 +125,7 @@ namespace REPAIR
     };
     void Azure_LRC_Class::generate_block_repair_request()
     {
-        for (int i = 0; i < l; i++)
+        for (int i = 0; i < m_l; i++)
         {
             for (std::string item : m_stripe_information[i])
             {
@@ -156,9 +156,9 @@ namespace REPAIR
     void Azure_LRC_Class::return_group_number(){};
     bool Azure_LRC_Class::encode(char **data_ptrs, char **coding_ptrs, int blocksize)
     {
-        std::vector<int> new_matrix((g + l) * k, 0);
-        azure_lrc_make_matrix(k, g, l, new_matrix.data());
-        jerasure_matrix_encode(k, g + l, 8, new_matrix.data(), data_ptrs, coding_ptrs, blocksize);
+        std::vector<int> new_matrix((m_g + m_l) * m_k, 0);
+        azure_lrc_make_matrix(m_k, m_g, m_l, new_matrix.data());
+        jerasure_matrix_encode(m_k, m_g + m_l, 8, new_matrix.data(), data_ptrs, coding_ptrs, blocksize);
         return true;
     };
     bool Azure_LRC_Class::decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize){

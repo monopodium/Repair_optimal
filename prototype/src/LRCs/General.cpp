@@ -47,7 +47,7 @@ namespace REPAIR
     };
     int Cluster::remaind()
     {
-        return m_upperbound - m_cluster_id;
+        return m_upperbound - m_blocks.size();
     };
     std::vector<std::string> Cluster::return_all_blocks()
     {
@@ -60,17 +60,55 @@ namespace REPAIR
     void Code_Placement::print_information()
     {
         std::cout << "-------------debug_information-------------" << std::endl;
-        std::cout << "n k r" << std::endl;
-        std::cout << n << " " << k << " " << r << std::endl;
+        std::cout << "m_n k r" << std::endl;
+        std::cout << m_n << " " << m_k << " " << m_r << std::endl;
+    };
+    std::string Code_Placement::s_index_to_string(int index)
+    {
+        std::string block;
+        if (index < m_k)
+        {
+            block = index_to_str("D", index);
+        }
+        if (m_k <= index && index < m_k + m_g)
+        {
+            block = index_to_str("G", index - m_k);
+        }
+        if (m_k + m_g <= index)
+        {
+            block = index_to_str("L", index - m_k - m_g);
+        }
+        return block;
+    }
+    void Code_Placement::repair_request(int index, std::vector<int> &vec)
+    {
+        std::string block = s_index_to_string(index);
+        for (auto each_block : m_block_repair_request[block])
+        {
+            vec.push_back(block_to_index(each_block));
+        }
     };
     void Code_Placement::set_parameter(int n_in, int k_in, int r_in, int w)
     {
-        n = n_in;
-        k = k_in;
-        r = r_in;
-        nkr_to_klgr(n, k, r, l, g);
+        m_n = n_in;
+        m_k = k_in;
+        m_r = r_in;
+        nkr_to_klgr(m_n, m_k, m_r);
         check_parameter();
-        // klgr_to_nkr(k, l, g, r, n);
+        m_raw_stripe.clear();
+        m_stripe_information.clear();
+        m_block_repair_request.clear();
+
+        m_random_placement_raw.clear();
+        m_random_placement_map.clear();
+        m_flat_placement_raw.clear();
+        m_flat_placement_map.clear();
+        m_best_placement_raw.clear();
+        m_best_placement_map.clear();
+        m_block_repair_cost.clear();
+        m_block_to_groupnumber.clear();
+        m_first = true;
+        // klgr_to_nkr(k, , g, r, m_n);
     };
     REPAIR::Placement Code_Placement::generate_placement(REPAIR::PlacementType placement_type, int random_seed)
     {
@@ -79,6 +117,9 @@ namespace REPAIR
             generate_raw_information();
             generate_stripe_information();
             generate_block_repair_request();
+            calculate_distance();
+            generate_flat_placement();
+            generate_best_placement();
             m_first = false;
         }
         Placement placement_return;
@@ -91,12 +132,10 @@ namespace REPAIR
         }
         else if (placement_type == REPAIR::Flat)
         {
-            generate_flat_placement();
             placement_map = m_flat_placement_map;
         }
         else if (placement_type == REPAIR::Best_Placement)
         {
-            generate_best_placement();
             placement_map = m_best_placement_map;
         }
         else
@@ -104,20 +143,24 @@ namespace REPAIR
             std::cout << "wrong type" << std::endl;
         }
         // 这三个循环的顺序是重要的
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < m_n; i++)
         {
-            if (i < k)
+            int cluster_id;
+            std::string block;
+            if (i < m_k)
             {
-                placement_return.push_back(placement_map[index_to_str("D", i)]);
+                block = index_to_str("D", i);
             }
-            if (k <= i && i < k + g)
+            if (m_k <= i && i < m_k + m_g)
             {
-                placement_return.push_back(placement_map[index_to_str("G", i - k)]);
+                block = index_to_str("G", i - m_k);
             }
-            if (k + g <= i)
+            if (m_k + m_g <= i)
             {
-                placement_return.push_back(placement_map[index_to_str("L", i - k - g)]);
+                block = index_to_str("L", i - m_k - m_g);
             }
+            cluster_id = placement_map[block];
+            placement_return.push_back(cluster_id);
         }
         return placement_return;
     }
@@ -148,22 +191,22 @@ namespace REPAIR
     double Code_Placement::return_NRC()
     {
         int cost_sum = 0;
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < m_n; i++)
         {
             std::string block = m_raw_stripe[i];
             cost_sum = cost_sum + m_block_repair_cost[block];
         }
-        return double(cost_sum / k);
+        return double(cost_sum / m_k);
     };
     double Code_Placement::return_DRC()
     {
         int cost_sum = 0;
-        for (int i = 0; i < k; i++)
+        for (int i = 0; i < m_k; i++)
         {
             std::string block = index_to_str("D", i);
             cost_sum = cost_sum + m_block_repair_cost[block];
         }
-        return double(cost_sum / k);
+        return double(cost_sum / m_k);
     };
     void Code_Placement::generate_repair_cost(std::map<std::string, int> m_placement_map)
     {
@@ -186,57 +229,65 @@ namespace REPAIR
     };
     void Code_Placement::generate_raw_information()
     {
-        for (int i = 0; i < k; i++)
+        for (int i = 0; i < m_k; i++)
         {
             m_raw_stripe.push_back(index_to_str("D", i));
         }
-        for (int i = 0; i < l; i++)
+        for (int i = 0; i < m_l; i++)
         {
             m_raw_stripe.push_back(index_to_str("L", i));
         }
-        for (int i = 0; i < g; i++)
+        for (int i = 0; i < m_g; i++)
         {
             m_raw_stripe.push_back(index_to_str("G", i));
         }
     };
     void Code_Placement::generate_random_placement(int random_seed)
     {
+        m_random_placement_raw.clear();
+        m_random_placement_map.clear();
         std::default_random_engine eng{static_cast<long unsigned int>(random_seed)};
         std::vector<std::string> raw_stripe(m_raw_stripe);
         std::random_shuffle(raw_stripe.begin(), raw_stripe.end());
         int count = 0;
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < m_n; i++)
         {
 
             // float a = 1.0;
             // std::uniform_real_distribution<int> urd(&a, d);
-            int blocks_in_cluster = 3; // urd(eng);
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_int_distribution<int> urd(1, m_d - 1);
+            // std::default_random_engine eng(time(0));
+            int blocks_in_cluster = urd(gen); // urd(eng);
             int cluster_id = m_random_placement_raw.size();
-            Cluster new_cluster = Cluster(cluster_id, d);
-            if (count + blocks_in_cluster > n)
+            Cluster new_cluster = Cluster(cluster_id, m_d - 1);
+            if (count + blocks_in_cluster > m_n)
             {
-                blocks_in_cluster = n - count;
+                blocks_in_cluster = m_n - count;
             }
             for (int j = 0; j < blocks_in_cluster; j++)
             {
                 if (new_cluster.isfull())
                 {
+                    std::cout << "n " << m_n << " k " << m_k << " r " << m_r << " g " << m_g << " d " << m_d << std::endl;
+                    std::cout << "blocks_in_cluster" << blocks_in_cluster << std::endl;
                     std::cout << "random new_cluster.isfull()!!" << std::endl;
                 }
-                srand(unsigned(random_seed));
+                //  srand(unsigned(random_seed));
                 std::string selected_block = raw_stripe[count + j];
                 int group_number = m_block_to_groupnumber[selected_block];
                 new_cluster.add_new_block(selected_block, group_number);
-                m_flat_placement_map[selected_block] = cluster_id;
+                m_random_placement_map[selected_block] = cluster_id;
             }
             count = count + blocks_in_cluster;
             m_random_placement_raw.push_back(new_cluster);
-            if (count == n)
+            if (count == m_n)
             {
                 break;
             }
         }
-        if (!check_cluster_information(m_random_placement_raw, m_flat_placement_map))
+        if (!check_cluster_information(m_random_placement_raw, m_random_placement_map))
         {
             std::cout << "random check_cluster_information(m_random_placement_raw)" << std::endl;
         }
@@ -262,7 +313,7 @@ namespace REPAIR
                 blocks_in_cluster.insert(block);
             }
         }
-        if (int(blocks_in_cluster.size()) != n)
+        if (int(blocks_in_cluster.size()) != m_n)
         {
             return false;
         }
@@ -271,10 +322,10 @@ namespace REPAIR
 
     void Code_Placement::generate_flat_placement()
     {
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < m_n; i++)
         {
             std::string block = m_raw_stripe[i];
-            Cluster new_cluster = Cluster(i, d - 1);
+            Cluster new_cluster = Cluster(i, m_d - 1);
             int group_number = m_block_to_groupnumber[block];
             new_cluster.add_new_block(block, group_number);
             m_flat_placement_raw.push_back(new_cluster);
@@ -288,23 +339,23 @@ namespace REPAIR
     bool Code_Placement::decode_in_group_xor(int group_data_number, char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize)
     {
         std::vector<int> last_matrix(group_data_number, 1);
-        jerasure_matrix_decode(group_data_number, 1, w, last_matrix.data(), 0, erasures, data_ptrs, coding_ptrs, blocksize);
+        jerasure_matrix_decode(group_data_number, 1, m_w, last_matrix.data(), 0, erasures, data_ptrs, coding_ptrs, blocksize);
         return true;
     }
     void Code_Placement::return_repair_request(int block_index, std::vector<int> &repair_request)
     {
         std::string block;
-        if (block_index < k)
+        if (block_index < m_k)
         {
             block = index_to_str("D", block_index);
         }
-        else if (block_index < k + g)
+        else if (block_index < m_k + m_g)
         {
-            block = index_to_str("G", block_index - k);
+            block = index_to_str("G", block_index - m_k);
         }
         else
         {
-            block = index_to_str("L", block_index - k - g);
+            block = index_to_str("L", block_index - m_k - m_g);
         }
         for (std::string repair_block : m_block_repair_request[block])
         {
@@ -318,6 +369,40 @@ namespace REPAIR
         {
             index = index * 10 + block[i] - '0';
         }
+        if (block[0] == 'G')
+        {
+            index = index + m_k;
+        }
+        if (block[0] == 'L')
+        {
+            index = index + m_k + m_g;
+        }
         return index;
+    }
+    void Code_Placement::print_placement_raw(PlacementType placement_type)
+    {
+        PlacementRaw placment;
+        if (placement_type == Random)
+        {
+            placment = m_random_placement_raw;
+        }
+        else if (placement_type == Best_Placement)
+        {
+            placment = m_best_placement_raw;
+        }
+        else
+        {
+            placment = m_flat_placement_raw;
+        }
+        for (auto cluster : placment)
+        {
+            std::cout << "cluster id " << cluster.return_id() << " | ";
+            for (auto block : cluster.return_all_blocks())
+            {
+                std::cout << block << " ";
+            }
+            std::cout << " | " << std::endl;
+        }
+        std::cout << std::endl;
     }
 }

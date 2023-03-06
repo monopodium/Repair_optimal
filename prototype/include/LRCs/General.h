@@ -46,27 +46,30 @@ namespace REPAIR
         virtual void return_repair_request(int block_index,std::vector<int> &repair_request);
         // virtual void generate_best_placement() = 0;
         virtual int calculate_distance() = 0;
-        virtual void nkr_to_klgr(int n, int k, int r, int &l, int &g) = 0;
-        virtual void klgr_to_nkr(int k, int l, int g, int r, int &n) = 0;
+        virtual void nkr_to_klgr(int n, int k, int r) = 0;
+        virtual void klgr_to_nkr(int k, int l, int g, int r) = 0;
         virtual bool check_parameter() = 0;
         virtual bool encode(char **data_ptrs, char **coding_ptrs, int blocksize)=0;
         virtual bool decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize)=0;
         int block_to_index(std::string block);
+        typedef std::vector<Cluster> PlacementRaw;
+        void print_placement_raw(PlacementType placement_type);
+        void repair_request(int index,std::vector<int> &vec);
     protected:
-        int n = 0;
-        int k = 0;
-        int r = 0;
-        int l = 0;
-        int g = 0;
-        int d = 0;
-        int w = 8;
+        int m_n = 0;
+        int m_k = 0;
+        int m_r = 0;
+        int m_l = 0;
+        int m_g = 0;
+        int m_d = 0;
+        int m_w = 8;
         bool m_if_debug;
         bool m_first = true;
         std::vector<std::string> m_raw_stripe;
         std::vector<std::vector<std::string>> m_stripe_information;
         RepairRequest m_block_repair_request;
 
-        typedef std::vector<Cluster> PlacementRaw;
+        
         PlacementRaw m_random_placement_raw;
         std::map<std::string, int> m_random_placement_map;
 
@@ -93,6 +96,8 @@ namespace REPAIR
         bool check_cluster_information(std::vector<REPAIR::Cluster> placement, std::map<std::string, int> placement_map);
         void generate_flat_placement();
         bool decode_in_group_xor(int group_data_number, char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize);
+        
+        std::string s_index_to_string(int index);
     };
     class Optimal_LRC_Class : public Code_Placement
     {
@@ -102,8 +107,8 @@ namespace REPAIR
         bool check_parameter() override;
         int calculate_distance() override;
         void generate_best_placement() override;
-        void nkr_to_klgr(int n, int k, int r, int &l, int &g) override;
-        void klgr_to_nkr(int k, int l, int g, int r, int &n) override;
+        void nkr_to_klgr(int n, int k, int r) override;
+        void klgr_to_nkr(int k, int l, int g, int r) override;
 
         void generate_stripe_information() override;
         void generate_block_repair_request() override;
@@ -120,8 +125,8 @@ namespace REPAIR
         bool check_parameter() override;
         int calculate_distance() override;
         void generate_best_placement() override;
-        void nkr_to_klgr(int n, int k, int r, int &l, int &g) override;
-        void klgr_to_nkr(int k, int l, int g, int r, int &n) override;
+        void nkr_to_klgr(int n, int k, int r) override;
+        void klgr_to_nkr(int k, int l, int g, int r) override;
 
         void generate_stripe_information() override;
         void generate_block_repair_request() override;
@@ -138,8 +143,8 @@ namespace REPAIR
         bool check_parameter() override;
         int calculate_distance() override;
         void generate_best_placement() override;
-        void nkr_to_klgr(int n, int k, int r, int &l, int &g) override;
-        void klgr_to_nkr(int k, int l, int g, int r, int &n) override;
+        void nkr_to_klgr(int n, int k, int r) override;
+        void klgr_to_nkr(int k, int l, int g, int r) override;
 
         void generate_stripe_information() override;
         void generate_block_repair_request() override;
@@ -156,8 +161,8 @@ namespace REPAIR
         bool check_parameter() override;
         int calculate_distance() override;
         void generate_best_placement() override;
-        void nkr_to_klgr(int n, int k, int r, int &l, int &g) override;
-        void klgr_to_nkr(int k, int l, int g, int r, int &n) override;
+        void nkr_to_klgr(int n, int k, int r) override;
+        void klgr_to_nkr(int k, int l, int g, int r) override;
 
         void generate_stripe_information() override;
         void generate_block_repair_request() override;

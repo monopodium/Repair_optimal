@@ -24,7 +24,7 @@ aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src/   PROJECT_SRC)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src/LRCs/   PROJECT_SRC)
 
 foreach (_target
-        client)
+        client test_tools)
     add_executable(${_target}            
             ${CMAKE_CURRENT_SOURCE_DIR}/src/proxy.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/src/ToolBox.cpp

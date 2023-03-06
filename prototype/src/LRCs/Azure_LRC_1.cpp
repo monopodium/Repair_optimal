@@ -3,7 +3,7 @@ namespace REPAIR
 {
     bool Azure_LRC_1_Class::check_parameter()
     {
-        if (k + l > n)
+        if (m_k + m_l > m_n)
         {
             return false;
         }
@@ -11,21 +11,21 @@ namespace REPAIR
     };
     int Azure_LRC_1_Class::calculate_distance()
     {
-        d = g + 2;
-        return d;
+        m_d = m_l + 2;
+        return m_d;
     };
     void Azure_LRC_1_Class::generate_best_placement()
     {
-        Cluster new_cluster = Cluster(m_best_placement_raw.size(), d - 1);
+        Cluster new_cluster = Cluster(m_best_placement_raw.size(), m_d - 1);
         m_best_placement_raw.push_back(new_cluster);
         for (std::vector<std::string> each_group : m_stripe_information)
         {
-            if (each_group.size() <= d - 1)
+            if (each_group.size() <= m_d - 1)
             {
                 Cluster last_cluster = m_best_placement_raw[m_best_placement_raw.size() - 1];
                 if (last_cluster.remaind() < each_group.size())
                 {
-                    m_best_placement_raw.push_back(Cluster(m_best_placement_raw.size(), d - 1));
+                    m_best_placement_raw.push_back(Cluster(m_best_placement_raw.size(), m_d - 1));
                 }
                 last_cluster = m_best_placement_raw[m_best_placement_raw.size() - 1];
                 for (std::string block : each_group)
@@ -36,17 +36,17 @@ namespace REPAIR
             }
             else
             {
-                for (int i = 0; i < ceil(int(each_group.size()), d - 1); i++)
+                for (int i = 0; i < ceil(int(each_group.size()), m_d - 1); i++)
                 {
 
-                    int each_c = std::min(int(each_group.size() - i * (d - 1)), d - 1);
+                    int each_c = std::min(int(each_group.size() - i * (m_d - 1)), m_d - 1);
 
                     if (m_best_placement_raw[m_best_placement_raw.size() - 1].remaind() < each_c)
                     {
-                        m_best_placement_raw.push_back(Cluster(m_best_placement_raw.size(), d - 1));
+                        m_best_placement_raw.push_back(Cluster(m_best_placement_raw.size(), m_d - 1));
                     }
                     Cluster last_cluster = m_best_placement_raw[m_best_placement_raw.size() - 1];
-                    for (int j = i * (d - 1); j < each_c + i * (d - 1); j++)
+                    for (int j = i * (m_d - 1); j < each_c + i * (m_d - 1); j++)
                     {
                         std::string block = each_group[j];
                         last_cluster.add_new_block(block, m_block_to_groupnumber[block]);
@@ -56,22 +56,22 @@ namespace REPAIR
             }
         }
     };
-    void Azure_LRC_1_Class::nkr_to_klgr(int n, int k, int r, int &l, int &g)
+    void Azure_LRC_1_Class::nkr_to_klgr(int n, int k, int r)
     {
-        l = ceil(k, r) + 1;
-        g = n - k - l;
+        m_l = ceil(k, r) + 1;
+        m_g = n - k - m_l;
     };
-    void Azure_LRC_1_Class::klgr_to_nkr(int k, int l, int g, int r, int &n)
+    void Azure_LRC_1_Class::klgr_to_nkr(int k, int l, int g, int r)
     {
-        n = k + l + g;
+        m_n = k + l + g;
     };
     void Azure_LRC_1_Class::generate_stripe_information()
     {
-        for (int i = 0; i < l - 1; i++)
+        for (int i = 0; i < m_l - 1; i++)
         {
             std::vector<std::string> group;
             m_stripe_information.push_back(group);
-            for (int j = i * r; j < std::min(k, (i + 1) * r); j++)
+            for (int j = i * m_r; j < std::min(m_k, (i + 1) * m_r); j++)
             {
                 group.push_back(index_to_str("D", i));
                 m_block_to_groupnumber[index_to_str("D", i)] = i;
@@ -79,12 +79,12 @@ namespace REPAIR
         }
         std::vector<std::string> group;
         m_stripe_information.push_back(group);
-        for (int i = 0; i < g; i++)
+        for (int i = 0; i < m_g; i++)
         {
             group.push_back(index_to_str("G", i));
-            m_block_to_groupnumber[index_to_str("G", i)] = l;
+            m_block_to_groupnumber[index_to_str("G", i)] = m_l;
         }
-        for (int i = 0; i < l; i++)
+        for (int i = 0; i < m_l; i++)
         {
             m_stripe_information[i].push_back(index_to_str("L", i));
             m_block_to_groupnumber[index_to_str("L", i)] = i;
@@ -111,13 +111,13 @@ namespace REPAIR
     void Azure_LRC_1_Class::return_group_number(){};
     bool Azure_LRC_1_Class::encode(char **data_ptrs, char **coding_ptrs, int blocksize)
     {
-        std::vector<int> new_matrix((g + l - 1) * k, 0);
-        azure_lrc_make_matrix(k, g, l - 1, new_matrix.data());
-        jerasure_matrix_encode(k, g + l - 1, w, new_matrix.data(), data_ptrs, coding_ptrs, blocksize);
+        std::vector<int> new_matrix((m_g + m_l - 1) * m_k, 0);
+        azure_lrc_make_matrix(m_k, m_g, m_l - 1, new_matrix.data());
+        jerasure_matrix_encode(m_k, m_g + m_l - 1, m_w, new_matrix.data(), data_ptrs, coding_ptrs, blocksize);
 
         // 生成全局校验块的局部校验块
-        std::vector<int> last_matrix(g, 1);
-        jerasure_matrix_encode(g, 1, w, last_matrix.data(), coding_ptrs, &coding_ptrs[g + l - 1], blocksize);
+        std::vector<int> last_matrix(m_g, 1);
+        jerasure_matrix_encode(m_g, 1, m_w, last_matrix.data(), coding_ptrs, &coding_ptrs[m_g + m_l - 1], blocksize);
         return true;
     }
         bool Azure_LRC_1_Class::decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize){
