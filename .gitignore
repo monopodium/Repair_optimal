@@ -1,4 +1,5 @@
 tools/*
+prototype/build/*
 prototype/cmake/*
 prototype/memcached/*
 prototype/packages/*
