@@ -110,6 +110,26 @@ namespace REPAIR
         m_first = true;
         // klgr_to_nkr(k, , g, r, m_n);
     };
+    int Code_Placement::k_data_block_num()
+    {
+        return m_k;
+    };
+    int Code_Placement::g_global_block_num()
+    {
+        return m_g;
+    };
+    int Code_Placement::l_local_block_num()
+    {
+        return m_l;
+    };
+    int Code_Placement::n_all_block_num()
+    {
+        return m_n;
+    };
+    int Code_Placement::r_group_block_num()
+    {
+        return m_r;
+    };
     REPAIR::Placement Code_Placement::generate_placement(REPAIR::PlacementType placement_type, int random_seed)
     {
         if (m_first)
@@ -336,12 +356,6 @@ namespace REPAIR
             std::cout << "random check_cluster_information(m_random_placement_raw)" << std::endl;
         }
     };
-    bool Code_Placement::decode_in_group_xor(int group_data_number, char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize)
-    {
-        std::vector<int> last_matrix(group_data_number, 1);
-        jerasure_matrix_decode(group_data_number, 1, m_w, last_matrix.data(), 0, erasures, data_ptrs, coding_ptrs, blocksize);
-        return true;
-    }
     void Code_Placement::return_repair_request(int block_index, std::vector<int> &repair_request)
     {
         std::string block;
@@ -404,5 +418,11 @@ namespace REPAIR
             std::cout << " | " << std::endl;
         }
         std::cout << std::endl;
+    }
+    bool Code_Placement::decode_in_group_xor(int group_data_number, char **data_ptrs, char **coding_ptrs, int blocksize)
+    {
+        std::vector<int> last_matrix(group_data_number, 1);
+        jerasure_matrix_encode(group_data_number, 1, 8, last_matrix.data(), data_ptrs, coding_ptrs, blocksize);
+        return true;
     }
 }

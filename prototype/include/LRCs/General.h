@@ -51,10 +51,17 @@ namespace REPAIR
         virtual bool check_parameter() = 0;
         virtual bool encode(char **data_ptrs, char **coding_ptrs, int blocksize)=0;
         virtual bool decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize)=0;
-        int block_to_index(std::string block);
+        virtual int block_to_index(std::string block);
         typedef std::vector<Cluster> PlacementRaw;
-        void print_placement_raw(PlacementType placement_type);
-        void repair_request(int index,std::vector<int> &vec);
+        virtual void print_placement_raw(PlacementType placement_type);
+        virtual void repair_request(int index,std::vector<int> &vec);
+        virtual int k_data_block_num();
+        virtual int g_global_block_num();
+        virtual int l_local_block_num();
+        virtual int n_all_block_num();
+        virtual int r_group_block_num();
+        virtual bool decode_in_group_xor(int group_data_number, char **data_ptrs, char **coding_ptrs, int blocksize);
+
     protected:
         int m_n = 0;
         int m_k = 0;
@@ -95,7 +102,7 @@ namespace REPAIR
         
         bool check_cluster_information(std::vector<REPAIR::Cluster> placement, std::map<std::string, int> placement_map);
         void generate_flat_placement();
-        bool decode_in_group_xor(int group_data_number, char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize);
+        
         
         std::string s_index_to_string(int index);
     };

@@ -191,17 +191,40 @@ namespace REPAIR
         for (int i = 0; i < m_l; i++)
         {
             std::vector<std::string> group = m_stripe_information[i];
-            for (std::string block : group)
+            for (size_t j = 0; j < group.size(); j++)
             {
-                std::vector<std::string> repair_request;
-                for (std::string other_block : group)
+                if (j == group.size())
                 {
-                    if (block != other_block)
+                    if (group.size() > m_g + m_l)
                     {
-                        repair_request.push_back(other_block);
+                        std::vector<std::string> repair_request;
+                        for (int lll = 0; lll < m_l; lll++)
+                        {
+                            if (i != lll)
+                            {
+                                repair_request.push_back(index_to_str("L", lll));
+                            }
+                        }
+                        for (int lll = 0; lll < m_g; lll++)
+                        {
+                            repair_request.push_back(index_to_str("G", lll));
+                        }
+                        break;
                     }
                 }
-                m_block_repair_request[block] = repair_request;
+                else
+                {
+                    std::string block = group[j];
+                    std::vector<std::string> repair_request;
+                    for (std::string other_block : group)
+                    {
+                        if (block != other_block)
+                        {
+                            repair_request.push_back(other_block);
+                        }
+                    }
+                    m_block_repair_request[block] = repair_request;
+                }
             }
         }
 
@@ -229,34 +252,106 @@ namespace REPAIR
         xorbas_make_matrix(m_k, m_g, m_l, new_matrix.data());
         jerasure_matrix_encode(m_k, m_g + m_l, 8, new_matrix.data(), data_ptrs, coding_ptrs, blocksize);
         return true;
-        return true;
     };
     bool Xorbas_Class::xorbas_make_matrix(int k, int g, int l, int *final_matrix)
     {
-        int r = (k + l - 1) / l;
+        int r = ceil(k, l);
         int *matrix = NULL;
-
-        matrix = reed_sol_vandermonde_coding_matrix(k, g, 8);
-        if (matrix == NULL)
-        {
-            std::cout << "matrix == NULL" << std::endl;
-        }
-
-        // final_matrix = (int *)malloc(sizeof(int) * k * (g + l));
+        int alpha = 2;
+        std::vector<int> H_in_paper;
         if (final_matrix == NULL)
         {
             std::cout << "final_matrix == NULL" << std::endl;
         }
         bzero(final_matrix, sizeof(int) * k * (g + l));
+        for (int i = 0; i < k + g; i++)
+        {
+            H_in_paper.push_back(1);
+        }
+        std::vector<int> one_line;
+        one_line.push_back(1);
+        for (int i = 0; i < k + g - 1; i++)
+        {
+            int alpha1 = galois_single_multiply(alpha, one_line[one_line.size() - 1], 8);
+            one_line.push_back(alpha1);
+        }
 
+        std::vector<int> two_line(one_line);
+        for (size_t i = 0; i < std::max(g - 1, 0); i++)
+        {
+            if (i == 0)
+            {
+                for (size_t i = 0; i < one_line.size(); i++)
+                {
+                    H_in_paper.push_back(one_line[i]);
+                }
+            }
+            else
+            {
+                for (size_t j = 0; j < one_line.size(); j++)
+                {
+                    two_line[j] = galois_single_multiply(one_line[j], two_line[j], 8);
+                }
+                for (size_t j = 0; j < two_line.size(); j++)
+                {
+                    H_in_paper.push_back(two_line[j]);
+                }
+            }
+        }
+        std::vector<int> g_g_matrix;
         for (int i = 0; i < g; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                g_g_matrix.push_back(H_in_paper[i * (k + g) + k + j]);
+            }
+        }
+        std::vector<int> invert(g_g_matrix.size());
+        jerasure_invert_matrix(g_g_matrix.data(), invert.data(), g, 8);
+        int *part_matrix = jerasure_matrix_multiply(invert.data(), H_in_paper.data(), g, g, g, g + k, 8);
+        std::vector<int> G_g_k;
+
+        for (size_t i = 0; i < g; i++)
+        {
+            for (size_t j = 0; j < k; j++)
+            {
+                G_g_k.push_back(part_matrix[i * (k + g) + j]);
+            }
+        }
+        std::vector<int> G_g_k_T;
+        for (size_t i = 0; i < k; i++)
+        {
+            for (size_t j = 0; j < g; j++)
+            {
+                G_g_k_T.push_back(G_g_k[j * k + i]);
+            }
+        }
+        std::vector<int> G_in_paper;
+        for (int i = 0; i < k; i++)
         {
             for (int j = 0; j < k; j++)
             {
-                final_matrix[i * k + j] = matrix[i * k + j];
+                if (i == j)
+                {
+                    G_in_paper.push_back(1);
+                }
+                else
+                {
+                    G_in_paper.push_back(0);
+                }
+            }
+            for (int j = k; j < k + g; j++)
+            {
+                G_in_paper.push_back(G_g_k_T[i * g + j - k]);
             }
         }
-
+        for (size_t i = 0; i < g; i++)
+        {
+            for (size_t j = 0; j < k; j++)
+            {
+                final_matrix[i * k + j] = G_in_paper[j * (k + g) + i + k];
+            }
+        }
         for (int i = 0; i < l; i++)
         {
             for (int j = 0; j < k; j++)
@@ -267,8 +362,17 @@ namespace REPAIR
                 }
             }
         }
-
-        free(matrix);
+        if (m_if_debug)
+        {
+            for (int i = 0; i < g + l; i++)
+            {
+                for (int j = 0; j < k; j++)
+                {
+                    std::cout << " " << final_matrix[i * k + j];
+                }
+                std::cout << std::endl;
+            }
+        }
         return true;
     };
     bool Xorbas_Class::decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize)

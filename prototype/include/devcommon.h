@@ -11,4 +11,8 @@
 #include <algorithm>
 #include <set>
 #include <thread>
+#include <functional>
+#include <mutex>
+#include <libmemcached/memcached.h>
+#include <chrono> 
 #endif

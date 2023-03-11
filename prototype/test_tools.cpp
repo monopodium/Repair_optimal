@@ -22,8 +22,19 @@ int main()
     for (auto each_nkr : xorbas_n_k_r)
     {
         std::cout << "=====random====" << std::endl;
-        m_Xorbas_encoder.set_parameter(each_nkr[0], each_nkr[1], each_nkr[2]);
+
+        int n = each_nkr[0];
+        int k = each_nkr[1];
+        int r = each_nkr[2];
+
+        m_Xorbas_encoder.set_parameter(n, k, r);
         m_Xorbas_encoder.set_debug(true);
+        int g = m_Xorbas_encoder.g_global_block_num();
+        int l = m_Xorbas_encoder.l_local_block_num();
+        // int *final_matrix;
+
+        std::vector<int> final_matrix(k*(g+l), 0);
+        m_Xorbas_encoder.xorbas_make_matrix(k, g, l, final_matrix.data());
         seed++;
         REPAIR::Placement pppp = m_Xorbas_encoder.generate_placement(REPAIR::Random, seed);
         std::cout << "n = " << each_nkr[0] << " "

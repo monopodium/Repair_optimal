@@ -62,5 +62,10 @@ namespace REPAIR
         int value_size_bytes;
         int block_size_bytes;
     } StripeItem;
+    typedef struct CrossNetworkCore
+    {
+        memcached_st *networkcore;
+        std::mutex mMutex;
+    } CrossNetworkCore;
 }
 #endif

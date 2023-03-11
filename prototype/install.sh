@@ -1,7 +1,7 @@
 CRT_DIR=$(pwd)
 set -e
 
-MEMCACHED_INSTALL_DIR=$CRT_DIR"/memcached"
+MEMCACHED_INSTALL_DIR=$CRT_DIR"/run_memcached/memcached"
 JERASURE_INSTALL_DIR=$CRT_DIR"/third_party/jerasure"
 GF_COMPLETE_INSTALL_DIR=$CRT_DIR"/third_party/gf-complete"
 XML_INSTALL_DIR=$CRT_DIR"/third_party/tinyxml2"
