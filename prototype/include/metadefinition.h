@@ -67,5 +67,16 @@ namespace REPAIR
         memcached_st *networkcore;
         std::mutex mMutex;
     } CrossNetworkCore;
+    class MyRand
+    {
+    public:
+        int operator()(int n)
+        {
+            struct timespec tp;
+            clock_gettime(CLOCK_THREAD_CPUTIME_ID, &tp);
+            srand(tp.tv_nsec);
+            return rand() % n;
+        }
+    };
 }
 #endif

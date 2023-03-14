@@ -1,243 +1,101 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Clusters>
-	<Cluster id="0" proxy="0.0.0.0:50005">
+	<Cluster id="0" proxy="10.0.0.51:50005">
 		<datanodes>
-			<datanode uri="0.0.0.0:8000" />
-			<datanode uri="0.0.0.0:8001" />
-			<datanode uri="0.0.0.0:8002" />
-			<datanode uri="0.0.0.0:8003" />
-			<datanode uri="0.0.0.0:8004" />
-			<datanode uri="0.0.0.0:8005" />
-			<datanode uri="0.0.0.0:8006" />
-			<datanode uri="0.0.0.0:8007" />
-			<datanode uri="0.0.0.0:8008" />
-			<datanode uri="0.0.0.0:8009" />
-			<datanode uri="0.0.0.0:8010" />
-			<datanode uri="0.0.0.0:8011" />
-			<datanode uri="0.0.0.0:8012" />
-			<datanode uri="0.0.0.0:8013" />
-			<datanode uri="0.0.0.0:8014" />
-			<datanode uri="0.0.0.0:8015" />
-			<datanode uri="0.0.0.0:8016" />
-			<datanode uri="0.0.0.0:8017" />
-			<datanode uri="0.0.0.0:8018" />
-			<datanode uri="0.0.0.0:8019" />
+			<datanode uri="10.0.0.51:8000" />
+			<datanode uri="10.0.0.51:8001" />
+			<datanode uri="10.0.0.51:8002" />
+			<datanode uri="10.0.0.51:8003" />
+			<datanode uri="10.0.0.51:8004" />
+			<datanode uri="10.0.0.51:8005" />
+			<datanode uri="10.0.0.51:8006" />
+			<datanode uri="10.0.0.51:8007" />
+			<datanode uri="10.0.0.51:8008" />
+			<datanode uri="10.0.0.51:8009" />
 		</datanodes>
 	</Cluster>
-	<Cluster id="1" proxy="0.0.0.0:50015">
+	<Cluster id="1" proxy="10.0.0.52:50005">
 		<datanodes>
-			<datanode uri="0.0.0.0:8100" />
-			<datanode uri="0.0.0.0:8101" />
-			<datanode uri="0.0.0.0:8102" />
-			<datanode uri="0.0.0.0:8103" />
-			<datanode uri="0.0.0.0:8104" />
-			<datanode uri="0.0.0.0:8105" />
-			<datanode uri="0.0.0.0:8106" />
-			<datanode uri="0.0.0.0:8107" />
-			<datanode uri="0.0.0.0:8108" />
-			<datanode uri="0.0.0.0:8109" />
-			<datanode uri="0.0.0.0:8110" />
-			<datanode uri="0.0.0.0:8111" />
-			<datanode uri="0.0.0.0:8112" />
-			<datanode uri="0.0.0.0:8113" />
-			<datanode uri="0.0.0.0:8114" />
-			<datanode uri="0.0.0.0:8115" />
-			<datanode uri="0.0.0.0:8116" />
-			<datanode uri="0.0.0.0:8117" />
-			<datanode uri="0.0.0.0:8118" />
-			<datanode uri="0.0.0.0:8119" />
+			<datanode uri="10.0.0.52:8000" />
+			<datanode uri="10.0.0.52:8001" />
+			<datanode uri="10.0.0.52:8002" />
+			<datanode uri="10.0.0.52:8003" />
+			<datanode uri="10.0.0.52:8004" />
+			<datanode uri="10.0.0.52:8005" />
+			<datanode uri="10.0.0.52:8006" />
+			<datanode uri="10.0.0.52:8007" />
+			<datanode uri="10.0.0.52:8008" />
+			<datanode uri="10.0.0.52:8009" />
 		</datanodes>
 	</Cluster>
-	<Cluster id="2" proxy="0.0.0.0:50025">
+	<Cluster id="2" proxy="10.0.0.53:50005">
 		<datanodes>
-			<datanode uri="0.0.0.0:8200" />
-			<datanode uri="0.0.0.0:8201" />
-			<datanode uri="0.0.0.0:8202" />
-			<datanode uri="0.0.0.0:8203" />
-			<datanode uri="0.0.0.0:8204" />
-			<datanode uri="0.0.0.0:8205" />
-			<datanode uri="0.0.0.0:8206" />
-			<datanode uri="0.0.0.0:8207" />
-			<datanode uri="0.0.0.0:8208" />
-			<datanode uri="0.0.0.0:8209" />
-			<datanode uri="0.0.0.0:8210" />
-			<datanode uri="0.0.0.0:8211" />
-			<datanode uri="0.0.0.0:8212" />
-			<datanode uri="0.0.0.0:8213" />
-			<datanode uri="0.0.0.0:8214" />
-			<datanode uri="0.0.0.0:8215" />
-			<datanode uri="0.0.0.0:8216" />
-			<datanode uri="0.0.0.0:8217" />
-			<datanode uri="0.0.0.0:8218" />
-			<datanode uri="0.0.0.0:8219" />
+			<datanode uri="10.0.0.53:8000" />
+			<datanode uri="10.0.0.53:8001" />
+			<datanode uri="10.0.0.53:8002" />
+			<datanode uri="10.0.0.53:8003" />
+			<datanode uri="10.0.0.53:8004" />
+			<datanode uri="10.0.0.53:8005" />
+			<datanode uri="10.0.0.53:8006" />
+			<datanode uri="10.0.0.53:8007" />
+			<datanode uri="10.0.0.53:8008" />
+			<datanode uri="10.0.0.53:8009" />
 		</datanodes>
 	</Cluster>
-	<Cluster id="3" proxy="0.0.0.0:50035">
+	<Cluster id="3" proxy="10.0.0.54:50005">
 		<datanodes>
-			<datanode uri="0.0.0.0:8300" />
-			<datanode uri="0.0.0.0:8301" />
-			<datanode uri="0.0.0.0:8302" />
-			<datanode uri="0.0.0.0:8303" />
-			<datanode uri="0.0.0.0:8304" />
-			<datanode uri="0.0.0.0:8305" />
-			<datanode uri="0.0.0.0:8306" />
-			<datanode uri="0.0.0.0:8307" />
-			<datanode uri="0.0.0.0:8308" />
-			<datanode uri="0.0.0.0:8309" />
-			<datanode uri="0.0.0.0:8310" />
-			<datanode uri="0.0.0.0:8311" />
-			<datanode uri="0.0.0.0:8312" />
-			<datanode uri="0.0.0.0:8313" />
-			<datanode uri="0.0.0.0:8314" />
-			<datanode uri="0.0.0.0:8315" />
-			<datanode uri="0.0.0.0:8316" />
-			<datanode uri="0.0.0.0:8317" />
-			<datanode uri="0.0.0.0:8318" />
-			<datanode uri="0.0.0.0:8319" />
+			<datanode uri="10.0.0.54:8000" />
+			<datanode uri="10.0.0.54:8001" />
+			<datanode uri="10.0.0.54:8002" />
+			<datanode uri="10.0.0.54:8003" />
+			<datanode uri="10.0.0.54:8004" />
+			<datanode uri="10.0.0.54:8005" />
+			<datanode uri="10.0.0.54:8006" />
+			<datanode uri="10.0.0.54:8007" />
+			<datanode uri="10.0.0.54:8008" />
+			<datanode uri="10.0.0.54:8009" />
 		</datanodes>
 	</Cluster>
-	<Cluster id="4" proxy="0.0.0.0:50045">
+	<Cluster id="4" proxy="10.0.0.55:50005">
 		<datanodes>
-			<datanode uri="0.0.0.0:8400" />
-			<datanode uri="0.0.0.0:8401" />
-			<datanode uri="0.0.0.0:8402" />
-			<datanode uri="0.0.0.0:8403" />
-			<datanode uri="0.0.0.0:8404" />
-			<datanode uri="0.0.0.0:8405" />
-			<datanode uri="0.0.0.0:8406" />
-			<datanode uri="0.0.0.0:8407" />
-			<datanode uri="0.0.0.0:8408" />
-			<datanode uri="0.0.0.0:8409" />
-			<datanode uri="0.0.0.0:8410" />
-			<datanode uri="0.0.0.0:8411" />
-			<datanode uri="0.0.0.0:8412" />
-			<datanode uri="0.0.0.0:8413" />
-			<datanode uri="0.0.0.0:8414" />
-			<datanode uri="0.0.0.0:8415" />
-			<datanode uri="0.0.0.0:8416" />
-			<datanode uri="0.0.0.0:8417" />
-			<datanode uri="0.0.0.0:8418" />
-			<datanode uri="0.0.0.0:8419" />
+			<datanode uri="10.0.0.55:8000" />
+			<datanode uri="10.0.0.55:8001" />
+			<datanode uri="10.0.0.55:8002" />
+			<datanode uri="10.0.0.55:8003" />
+			<datanode uri="10.0.0.55:8004" />
+			<datanode uri="10.0.0.55:8005" />
+			<datanode uri="10.0.0.55:8006" />
+			<datanode uri="10.0.0.55:8007" />
+			<datanode uri="10.0.0.55:8008" />
+			<datanode uri="10.0.0.55:8009" />
 		</datanodes>
 	</Cluster>
-	<Cluster id="5" proxy="0.0.0.0:50055">
+	<Cluster id="5" proxy="10.0.0.56:50005">
 		<datanodes>
-			<datanode uri="0.0.0.0:8500" />
-			<datanode uri="0.0.0.0:8501" />
-			<datanode uri="0.0.0.0:8502" />
-			<datanode uri="0.0.0.0:8503" />
-			<datanode uri="0.0.0.0:8504" />
-			<datanode uri="0.0.0.0:8505" />
-			<datanode uri="0.0.0.0:8506" />
-			<datanode uri="0.0.0.0:8507" />
-			<datanode uri="0.0.0.0:8508" />
-			<datanode uri="0.0.0.0:8509" />
-			<datanode uri="0.0.0.0:8510" />
-			<datanode uri="0.0.0.0:8511" />
-			<datanode uri="0.0.0.0:8512" />
-			<datanode uri="0.0.0.0:8513" />
-			<datanode uri="0.0.0.0:8514" />
-			<datanode uri="0.0.0.0:8515" />
-			<datanode uri="0.0.0.0:8516" />
-			<datanode uri="0.0.0.0:8517" />
-			<datanode uri="0.0.0.0:8518" />
-			<datanode uri="0.0.0.0:8519" />
+			<datanode uri="10.0.0.56:8000" />
+			<datanode uri="10.0.0.56:8001" />
+			<datanode uri="10.0.0.56:8002" />
+			<datanode uri="10.0.0.56:8003" />
+			<datanode uri="10.0.0.56:8004" />
+			<datanode uri="10.0.0.56:8005" />
+			<datanode uri="10.0.0.56:8006" />
+			<datanode uri="10.0.0.56:8007" />
+			<datanode uri="10.0.0.56:8008" />
+			<datanode uri="10.0.0.56:8009" />
 		</datanodes>
 	</Cluster>
-	<Cluster id="6" proxy="0.0.0.0:50065">
+	<Cluster id="6" proxy="10.0.0.58:50005">
 		<datanodes>
-			<datanode uri="0.0.0.0:8600" />
-			<datanode uri="0.0.0.0:8601" />
-			<datanode uri="0.0.0.0:8602" />
-			<datanode uri="0.0.0.0:8603" />
-			<datanode uri="0.0.0.0:8604" />
-			<datanode uri="0.0.0.0:8605" />
-			<datanode uri="0.0.0.0:8606" />
-			<datanode uri="0.0.0.0:8607" />
-			<datanode uri="0.0.0.0:8608" />
-			<datanode uri="0.0.0.0:8609" />
-			<datanode uri="0.0.0.0:8610" />
-			<datanode uri="0.0.0.0:8611" />
-			<datanode uri="0.0.0.0:8612" />
-			<datanode uri="0.0.0.0:8613" />
-			<datanode uri="0.0.0.0:8614" />
-			<datanode uri="0.0.0.0:8615" />
-			<datanode uri="0.0.0.0:8616" />
-			<datanode uri="0.0.0.0:8617" />
-			<datanode uri="0.0.0.0:8618" />
-			<datanode uri="0.0.0.0:8619" />
-		</datanodes>
-	</Cluster>
-	<Cluster id="7" proxy="0.0.0.0:50075">
-		<datanodes>
-			<datanode uri="0.0.0.0:8700" />
-			<datanode uri="0.0.0.0:8701" />
-			<datanode uri="0.0.0.0:8702" />
-			<datanode uri="0.0.0.0:8703" />
-			<datanode uri="0.0.0.0:8704" />
-			<datanode uri="0.0.0.0:8705" />
-			<datanode uri="0.0.0.0:8706" />
-			<datanode uri="0.0.0.0:8707" />
-			<datanode uri="0.0.0.0:8708" />
-			<datanode uri="0.0.0.0:8709" />
-			<datanode uri="0.0.0.0:8710" />
-			<datanode uri="0.0.0.0:8711" />
-			<datanode uri="0.0.0.0:8712" />
-			<datanode uri="0.0.0.0:8713" />
-			<datanode uri="0.0.0.0:8714" />
-			<datanode uri="0.0.0.0:8715" />
-			<datanode uri="0.0.0.0:8716" />
-			<datanode uri="0.0.0.0:8717" />
-			<datanode uri="0.0.0.0:8718" />
-			<datanode uri="0.0.0.0:8719" />
-		</datanodes>
-	</Cluster>
-	<Cluster id="8" proxy="0.0.0.0:50085">
-		<datanodes>
-			<datanode uri="0.0.0.0:8800" />
-			<datanode uri="0.0.0.0:8801" />
-			<datanode uri="0.0.0.0:8802" />
-			<datanode uri="0.0.0.0:8803" />
-			<datanode uri="0.0.0.0:8804" />
-			<datanode uri="0.0.0.0:8805" />
-			<datanode uri="0.0.0.0:8806" />
-			<datanode uri="0.0.0.0:8807" />
-			<datanode uri="0.0.0.0:8808" />
-			<datanode uri="0.0.0.0:8809" />
-			<datanode uri="0.0.0.0:8810" />
-			<datanode uri="0.0.0.0:8811" />
-			<datanode uri="0.0.0.0:8812" />
-			<datanode uri="0.0.0.0:8813" />
-			<datanode uri="0.0.0.0:8814" />
-			<datanode uri="0.0.0.0:8815" />
-			<datanode uri="0.0.0.0:8816" />
-			<datanode uri="0.0.0.0:8817" />
-			<datanode uri="0.0.0.0:8818" />
-			<datanode uri="0.0.0.0:8819" />
-		</datanodes>
-	</Cluster>
-	<Cluster id="9" proxy="0.0.0.0:50095">
-		<datanodes>
-			<datanode uri="0.0.0.0:8900" />
-			<datanode uri="0.0.0.0:8901" />
-			<datanode uri="0.0.0.0:8902" />
-			<datanode uri="0.0.0.0:8903" />
-			<datanode uri="0.0.0.0:8904" />
-			<datanode uri="0.0.0.0:8905" />
-			<datanode uri="0.0.0.0:8906" />
-			<datanode uri="0.0.0.0:8907" />
-			<datanode uri="0.0.0.0:8908" />
-			<datanode uri="0.0.0.0:8909" />
-			<datanode uri="0.0.0.0:8910" />
-			<datanode uri="0.0.0.0:8911" />
-			<datanode uri="0.0.0.0:8912" />
-			<datanode uri="0.0.0.0:8913" />
-			<datanode uri="0.0.0.0:8914" />
-			<datanode uri="0.0.0.0:8915" />
-			<datanode uri="0.0.0.0:8916" />
-			<datanode uri="0.0.0.0:8917" />
-			<datanode uri="0.0.0.0:8918" />
-			<datanode uri="0.0.0.0:8919" />
+			<datanode uri="10.0.0.58:8000" />
+			<datanode uri="10.0.0.58:8001" />
+			<datanode uri="10.0.0.58:8002" />
+			<datanode uri="10.0.0.58:8003" />
+			<datanode uri="10.0.0.58:8004" />
+			<datanode uri="10.0.0.58:8005" />
+			<datanode uri="10.0.0.58:8006" />
+			<datanode uri="10.0.0.58:8007" />
+			<datanode uri="10.0.0.58:8008" />
+			<datanode uri="10.0.0.58:8009" />
 		</datanodes>
 	</Cluster>
 </Clusters>

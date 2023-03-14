@@ -70,7 +70,7 @@ namespace REPAIR
         int m_g = 0;
         int m_d = 0;
         int m_w = 8;
-        bool m_if_debug;
+        bool m_if_debug = false;
         bool m_first = true;
         std::vector<std::string> m_raw_stripe;
         std::vector<std::vector<std::string>> m_stripe_information;
@@ -102,8 +102,6 @@ namespace REPAIR
         
         bool check_cluster_information(std::vector<REPAIR::Cluster> placement, std::map<std::string, int> placement_map);
         void generate_flat_placement();
-        
-        
         std::string s_index_to_string(int index);
     };
     class Optimal_LRC_Class : public Code_Placement

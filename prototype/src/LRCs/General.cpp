@@ -266,9 +266,9 @@ namespace REPAIR
     {
         m_random_placement_raw.clear();
         m_random_placement_map.clear();
-        std::default_random_engine eng{static_cast<long unsigned int>(random_seed)};
+        // std::default_random_engine eng{static_cast<long unsigned int>(random_seed)};
         std::vector<std::string> raw_stripe(m_raw_stripe);
-        std::random_shuffle(raw_stripe.begin(), raw_stripe.end());
+        std::random_shuffle(raw_stripe.begin(), raw_stripe.end(), MyRand());
         int count = 0;
         for (int i = 0; i < m_n; i++)
         {

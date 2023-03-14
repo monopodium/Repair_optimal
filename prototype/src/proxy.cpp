@@ -59,7 +59,8 @@ namespace REPAIR
         }
         if (if_cross)
         {
-            if(!cross_network_core(network_core, key, key_size, value_ptr, value_size)){
+            if (!cross_network_core(network_core, key, key_size, value_ptr, value_size))
+            {
                 return false;
             }
         }
@@ -83,12 +84,12 @@ namespace REPAIR
     bool Proxy::SetParameter(ECSchema input_ecschema)
     {
         m_encode_parameter = input_ecschema;
-        std::cout << "m_encode_parameter.partial_decoding" << m_encode_parameter.partial_decoding << std::endl;
-        std::cout << "m_encode_parameter.encodetype" << m_encode_parameter.encodetype << std::endl;
-        std::cout << "m_encode_parameter.placementtype" << m_encode_parameter.placementtype << std::endl;
-        std::cout << "m_encode_parameter.n_block" << m_encode_parameter.n_block << std::endl;
-        std::cout << "m_encode_parameter.k_datablock" << m_encode_parameter.k_datablock << std::endl;
-        std::cout << "m_encode_parameter.r_datapergroup" << m_encode_parameter.r_datapergroup << std::endl;
+        // std::cout << "m_encode_parameter.partial_decoding" << m_encode_parameter.partial_decoding << std::endl;
+        // std::cout << "m_encode_parameter.encodetype" << m_encode_parameter.encodetype << std::endl;
+        // std::cout << "m_encode_parameter.placementtype" << m_encode_parameter.placementtype << std::endl;
+        // std::cout << "m_encode_parameter.n_block" << m_encode_parameter.n_block << std::endl;
+        // std::cout << "m_encode_parameter.k_datablock" << m_encode_parameter.k_datablock << std::endl;
+        // std::cout << "m_encode_parameter.r_datapergroup" << m_encode_parameter.r_datapergroup << std::endl;
         if (m_encode_parameter.encodetype == Xorbas)
         {
             m_encoder = &m_Xorbas_encoder;
@@ -112,7 +113,7 @@ namespace REPAIR
     bool Proxy::init_cluster_meta()
     {
 
-        std::cout << "m_config_path:" << m_config_path << std::endl;
+        //std::cout << "m_config_path:" << m_config_path << std::endl;
         tinyxml2::XMLDocument xml;
         xml.LoadFile(m_config_path.c_str());
         tinyxml2::XMLElement *root = xml.RootElement();
@@ -126,9 +127,10 @@ namespace REPAIR
         for (tinyxml2::XMLElement *cluster = root->FirstChildElement(); cluster != nullptr; cluster = cluster->NextSiblingElement())
         {
             std::string cluster_id(cluster->Attribute("id"));
-            std::string proxy(cluster->Attribute("proxy"));
+            std::string proxy(cluster->Attribute("proxy"));    
             std::cout << "cluster_id: " << cluster_id << " , proxy: " << proxy << std::endl;
             m_Cluster_info[std::stoi(cluster_id)].Cluster_id = std::stoi(cluster_id);
+            m_cluster_ids.push_back(std::stoi(cluster_id));
             auto pos = proxy.find(':');
             m_Cluster_info[std::stoi(cluster_id)].proxy_ip = proxy.substr(0, pos);
             m_Cluster_info[std::stoi(cluster_id)].proxy_port = std::stoi(proxy.substr(pos + 1, proxy.size()));
@@ -151,18 +153,18 @@ namespace REPAIR
             }
         }
 
-        for (auto it : m_Cluster_info)
-        {
-            std::cout << "it.first:" << it.first << " " << std::endl;
-            std::cout << "cluster_id" << it.second.Cluster_id << std::endl;
-            std::cout << "proxy_ip" << it.second.proxy_ip << std::endl;
-            std::cout << "proxy_port" << it.second.proxy_port << std::endl;
-            for (auto item : it.second.nodes)
-            {
-                std::cout << " nodes " << item;
-            }
-            std::cout << std::endl;
-        }
+        // for (auto it : m_Cluster_info)
+        // {
+        //     std::cout << "it.first:" << it.first << " " << std::endl;
+        //     std::cout << "cluster_id" << it.second.Cluster_id << std::endl;
+        //     std::cout << "proxy_ip" << it.second.proxy_ip << std::endl;
+        //     std::cout << "proxy_port" << it.second.proxy_port << std::endl;
+        //     for (auto item : it.second.nodes)
+        //     {
+        //         std::cout << " nodes " << item;
+        //     }
+        //     std::cout << std::endl;
+        // }
     }
 
     bool Proxy::Set(std::string key, std::string value)
@@ -205,7 +207,11 @@ namespace REPAIR
         std::vector<int> nodes_id;
 
         // Optimal_LRC_Class new_Optimal_LRC = Optimal_LRC_Class(n, k, r);
-        m_encoder->generate_placement(placement_type);
+        Placement placement_plan = m_encoder->generate_placement(placement_type);
+
+        std::vector<int> cluster_ids_dis(m_cluster_ids);
+        std::random_shuffle(cluster_ids_dis.begin(), cluster_ids_dis.end(), MyRand());
+        std::vector<int> all_node_ids;
 
         m_encoder->encode(data, coding, block_size);
 
@@ -217,12 +223,24 @@ namespace REPAIR
 
         for (int j = 0; j < n; j++)
         {
+
+            int cluster_id = cluster_ids_dis[placement_plan[j]%cluster_ids_dis.size()];
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_int_distribution<int> urd(0, m_Cluster_info[cluster_id].nodes.size() - 1);
+            int random_number = urd(gen);
+            int node_id = m_Cluster_info[cluster_id].nodes[random_number];
+            while (std::find(all_node_ids.begin(), all_node_ids.end(), cluster_id * 100 + node_id) != all_node_ids.end())
+            {
+                random_number = (random_number + 1) % m_Cluster_info[cluster_id].nodes.size();
+                node_id = m_Cluster_info[cluster_id].nodes[random_number];
+            }
+            all_node_ids.push_back(cluster_id * 100 + node_id);
+
             std::string shard_id = key + std::to_string(j);
-            // std::pair<std::string, int> &ip_and_port = nodes_ip_and_port[i * send_num + j];
-            int node_id = j;
             stripe_this.node_ids.push_back(node_id);
-            std::cout << "==============" << std::endl;
-            std::cout << "shard_id " << shard_id << ", node_id " << node_id << std::endl;
+            // std::cout << "==============" << std::endl;
+            // std::cout << "shard_id " << shard_id << ", node_id " << node_id << std::endl;
             if (j < k)
             {
                 senders.push_back(std::thread(send_to_datanode, memcached_list[node_id], shard_id,
@@ -316,15 +334,16 @@ namespace REPAIR
             int node_id = m_Stripe_info.at(key).node_ids[request_index];
             int cluster_id = m_Node_info[node_id].Cluster_id;
             bool cross_cluster = false;
+
             if (std::find(cluster_list.begin(), cluster_list.end(), cluster_id) == cluster_list.end())
             {
                 cluster_list.push_back(cluster_id);
                 cross_cluster = true;
             }
 
-            std::cout << "++++++++++repair++++++++++" << std::endl;
-            std::cout << "  shard_id:  " << shard_id
-                      << "  node_id " << node_id << std::endl;
+            // std::cout << "++++++++++repair++++++++++" << std::endl;
+            // std::cout << "  shard_id:  " << shard_id
+            //           << "  node_id " << node_id << std::endl;
             memcached_st *memcached = memcached_list[node_id];
             cross_cluster = true;
             receiver.push_back(std::thread(get_from_datanode, memcached_list[node_id], shard_id,

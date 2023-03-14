@@ -14,5 +14,7 @@
 #include <functional>
 #include <mutex>
 #include <libmemcached/memcached.h>
-#include <chrono> 
+#include <chrono>
+#include <time.h>
+#include <fstream>
 #endif
