@@ -13,7 +13,7 @@ NETWORKCORE_IP='10.0.0.61'
 ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
 ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -a enp4s0f1 -d 986710'
 echo 'ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -a enp4s0f1 -d 986710''>>$result_path
-RUN_TIMES=10
+RUN_TIMES=1
 for i in $(seq 0 $NUM)
 do
     block_size=${BLOCK_SIZE_ARRAY[$i]}
@@ -23,7 +23,7 @@ do
     do
         placement=${PLACEMENT_PLAN[$j]}
         echo './prototype/cmake/build/client false Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''>>$result_path
-        #./prototype/cmake/build/client false Xorbas $placement $n_k_r $block_size $RUN_TIMES
+        ./prototype/cmake/build/client false Xorbas $placement $n_k_r $block_size $RUN_TIMES
     done
      bash main_mechine.sh 0
 done
@@ -46,14 +46,14 @@ do
     do
         placement=${PLACEMENT_PLAN[$j]}
         echo './prototype/cmake/build/client false Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''>>$result_path
-        #./prototype/cmake/build/client false Xorbas $placement $n_k_r $block_size $RUN_TIMES
+        ./prototype/cmake/build/client false Xorbas $placement $n_k_r $block_size $RUN_TIMES
     done
     block_size=4096
     for j in $(seq 0 $PLACEMENT_NUM)
     do
         placement=${PLACEMENT_PLAN[$j]}
         echo './prototype/cmake/build/client false Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''>>$result_path
-        #./prototype/cmake/build/client false Xorbas $placement $n_k_r $block_size $RUN_TIMES
+        ./prototype/cmake/build/client false Xorbas $placement $n_k_r $block_size $RUN_TIMES
     done
     bash main_mechine.sh 0
 done
@@ -80,14 +80,14 @@ do
     do
         placement=${PLACEMENT_PLAN[$j]}
         echo './prototype/cmake/build/client false Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''>>$result_path
-        #./prototype/cmake/build/client false Xorbas $placement $n_k_r $block_size $RUN_TIMES
+        ./prototype/cmake/build/client false Xorbas $placement $n_k_r $block_size $RUN_TIMES
     done
     block_size=4096
     for j in $(seq 0 $PLACEMENT_NUM)
     do
         placement=${PLACEMENT_PLAN[$j]}
         echo './prototype/cmake/build/client false Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''>>$result_path
-        #./prototype/cmake/build/client false Xorbas $placement $n_k_r $block_size $RUN_TIMES
+        ./prototype/cmake/build/client false Xorbas $placement $n_k_r $block_size $RUN_TIMES
     done
     bash main_mechine.sh 0
     ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
