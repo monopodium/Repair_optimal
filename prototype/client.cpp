@@ -10,8 +10,9 @@ int main(int argc, char **argv)
         exit(-1);
     }
     std::ofstream outfile;
+
     std::string result_path = "/home/msms/codes/Repair_optimal/result_xorbas.txt";
-    
+
     bool partial_decoding;
     REPAIR::EncodeType encode_type;
     REPAIR::PlacementType placement_type;
@@ -63,12 +64,13 @@ int main(int argc, char **argv)
     r = std::stoi(std::string(argv[6]));
     value_size_kbytes = std::stoi(std::string(argv[7]));
     run_times = std::stoi(std::string(argv[8]));
-    int totalvalue_size_kbytes = value_size_kbytes * 128;
+    int totalvalue_size_kbytes = value_size_kbytes * 100;
     int value_number = totalvalue_size_kbytes / value_size_kbytes;
     // std::cout << "test!" << std::endl;
     std::string config_path = "/home/msms/codes/Repair_optimal/prototype/config/ClusterInformation.xml";
     std::string networkcore_ip_port = "10.0.0.61:12222";
     REPAIR::Proxy proxy(config_path, networkcore_ip_port);
+
     if (proxy.SetParameter({partial_decoding, encode_type, placement_type, n, k, r}))
     {
         std::cout << "set parameter successfully!" << std::endl;
@@ -80,22 +82,38 @@ int main(int argc, char **argv)
     std::vector<std::string> key_list;
     std::string key1;
     std::string value1;
-    REPAIR::random_generate_kv(key1, value1, 6, value_size_kbytes * 1024);
-    std::cout << "value_number:" << value_number << std::endl;
-    //outfile << "./client partial_decoding encode_type placement_type n k r value_size_kbytes run_times" << std::endl;
+    std::string traces_path = "/home/msms/codes/Repair_optimal/prototype/traces/file_size_" + std::to_string(value_size_kbytes) + "K" + ".data";
+    //std::cout<<"traces_path:"<<traces_path<<std::endl;
+    std::ifstream infile(traces_path);
+    if (infile.is_open())
+    {
+        getline(infile, value1);
+        if (value1.size()!=value_size_kbytes*1024)
+        {
+            std::cout<<"read traces fail! value1.size()"<<value1.size()<<std::endl;
+            REPAIR::random_generate_kv(key1, value1, 6, value_size_kbytes * 1024);
+        }
+    }
+    else
+    {
+        std::cout<<"read traces fail!"<<std::endl;
+        REPAIR::random_generate_kv(key1, value1, 6, value_size_kbytes * 1024);
+    }
+    // std::cout << "value_number:" << value_number << std::endl;
+    // outfile << "./client partial_decoding encode_type placement_type n k r value_size_kbytes run_times" << std::endl;
     outfile.open(result_path, std::ios::app);
-    
-    outfile << "partial_decoding:"<<partial_decoding<<" encode_type: "<<encode_type
-    <<" placement_type: "<<placement_type<<" n: "<<n<<" k: "<<k<<" r: "<<r
-    <<" value_size_kbytes: "<<value_size_kbytes<<" run_times: "<<run_times<<std::endl;
+
+    outfile << "partial_decoding:" << partial_decoding << " encode_type: " << encode_type
+            << " placement_type: " << placement_type << " n: " << n << " k: " << k << " r: " << r
+            << " value_size_kbytes: " << value_size_kbytes << " run_times: " << run_times << std::endl;
     outfile.close();
     for (int i = 0; i < value_number; i++)
     {
         std::string key;
         std::string value00000;
-        REPAIR::random_generate_kv(key, value00000, 6, 6);
+        REPAIR::random_generate_kv(key, value00000, 6, 1);
         // std::cout << key.size() << std::endl;
-        // std::cout << key << std::endl;
+        //std::cout << key << std::endl;
         // std::cout << value1.size() << std::endl;
 
         proxy.Set(key, value1);
@@ -166,12 +184,12 @@ int main(int argc, char **argv)
     double repair_rate_miB = (key_list.size() * value_size_kbytes * run_times * n * 1000) / (k * 1024 * double(duration1.count()));
     double repair_rate_min = (key_list.size() * value_size_kbytes * n * 1000) / (k * 1024 * max_rate_duration);
     double repair_rate_max = (key_list.size() * value_size_kbytes * n * 1000) / (k * 1024 * min_rate_duration);
-    
+
     outfile.open(result_path, std::ios::app);
     outfile << "repair_Rate_MiB/(second): " << repair_rate_miB << std::endl;
     outfile << "repair_Rate_MiB_min/(second): " << repair_rate_min << std::endl;
     outfile << "repair_Rate_MiB_max/(second): " << repair_rate_max << std::endl;
-    outfile << std::endl; 
+    outfile << std::endl;
     outfile.close();
     int MiB = 1048576;
     for (auto key : key_list)

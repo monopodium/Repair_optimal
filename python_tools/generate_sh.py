@@ -4,7 +4,7 @@ import os
 current_path = os.getcwd()
 parent_path = os.path.dirname(current_path)
 datanode_number_per_Cluster = 10
-memcached_port_start = 8000
+memcached_port_start = 21400
 datanode_port_start = memcached_port_start
 Clusterid_start = 0
 networkcore = 12222
@@ -37,7 +37,7 @@ if_test = False
 
 proxy_ip_list = [
     ["10.0.0.51", 50005],
-    ["10.0.0.52", 50005],
+    # ["10.0.0.52", 50005],
     ["10.0.0.53", 50005],
     ["10.0.0.54", 50005],
     ["10.0.0.55", 50005],
@@ -89,11 +89,11 @@ def generate_run_memcached_file():
             print("Cluster_id", Cluster_id)
             for each_datanode in memcached_ip_port[Cluster_id]:
                 print(each_datanode)
-                f.write("./memcached/bin/memcached -m 128 -p " +
-                        str(each_datanode[1])+" --max-item-size=5242880 -vv -d\n")
+                f.write("./memcached/bin/memcached -m 1024 -p " +
+                        str(each_datanode[1])+" --max-item-size=16777216 -vv -d\n")
             f.write("\n")
-        f.write("./memcached/bin/memcached -m 128 -p " +
-                str(networkcore)+" --max-item-size=5242880 -vv -d\n")
+        f.write("./memcached/bin/memcached -m 1024 -p " +
+                str(networkcore)+" --max-item-size=16777216 -vv -d\n")
         f.write("\n")
 
 
@@ -146,22 +146,36 @@ def generater_Cluster_information_xml():
 def generate_run_memcached_file_cluster():
     file_name = parent_path + "/prototype/run_memcached/cluster_run_memcached.sh"
     with open(file_name, 'w') as f:
+        f.write('#! /bin/bash')
+        f.write("\n")
         f.write("kill -9 $(pidof memcached)\n")
         f.write("\n")
-        if not if_test:
-            f.write("{\n")            
+        # if not if_test:
+        #     f.write("{\n")            
         # for Cluster_id in memcached_ip_port.keys():
         #     print("Cluster_id", Cluster_id)
         for each_datanode in memcached_ip_port[0]:
             print(each_datanode)
-            f.write("./memcached/bin/memcached -m 128 -p " +
-                    str(each_datanode[1])+" --max-item-size=5242880 -vv -d\n")
-        if not if_test:
-            f.write("} &> /dev/null")  
+            f.write("./memcached/bin/memcached -m 1024 -p " +
+                    str(each_datanode[1])+" --max-item-size=16777216 -d\n")
+        # if not if_test:
+        #     f.write("} &> /dev/null")  
         f.write("\n")
-        # f.write("./memcached/bin/memcached -m 128 -p " +
-        #         str(networkcore)+" --max-item-size=5242880 -vv -d\n")
-        # f.write("\n")
+    file_name = parent_path + "/prototype/run_memcached/networkcore.sh"
+    with open(file_name, 'w') as f:
+        f.write('#! /bin/bash')
+        f.write("\n")
+        f.write("kill -9 $(pidof memcached)\n")
+        f.write("\n") 
+        # if not if_test:
+        #     f.write("{\n") 
+        # f.write("nohup ./memcached/bin/memcached -m 1024 -p " +
+        #         str(networkcore)+" --max-item-size=16777216 -d > log_IP_"+str(each_datanode[1])+".log 2>&1\n")
+        f.write("./memcached/bin/memcached -m 1024 -p " +
+                str(networkcore)+" --max-item-size=16777216 -d\n")
+        # if not if_test:
+        #     f.write("} &> /dev/null") 
+        f.write("\n")                    
 
 if __name__ == "__main__":
     generate_Cluster_info_dict()

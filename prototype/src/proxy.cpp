@@ -37,7 +37,7 @@ namespace REPAIR
         memcached_return_t ret = memcached_set(memcached, (const char *)key.data(), (size_t)key_size, value, (size_t)value_size, (time_t)0, (uint32_t)0);
         if (memcached_failed(ret))
         {
-            std::cout << "memcached_set fail" << std::endl;
+            std::cout << "memcached_set fail:" << ret << std::endl;
         }
         return true;
     };
@@ -113,7 +113,7 @@ namespace REPAIR
     bool Proxy::init_cluster_meta()
     {
 
-        //std::cout << "m_config_path:" << m_config_path << std::endl;
+        // std::cout << "m_config_path:" << m_config_path << std::endl;
         tinyxml2::XMLDocument xml;
         xml.LoadFile(m_config_path.c_str());
         tinyxml2::XMLElement *root = xml.RootElement();
@@ -127,8 +127,8 @@ namespace REPAIR
         for (tinyxml2::XMLElement *cluster = root->FirstChildElement(); cluster != nullptr; cluster = cluster->NextSiblingElement())
         {
             std::string cluster_id(cluster->Attribute("id"));
-            std::string proxy(cluster->Attribute("proxy"));    
-            std::cout << "cluster_id: " << cluster_id << " , proxy: " << proxy << std::endl;
+            std::string proxy(cluster->Attribute("proxy"));
+            // std::cout << "cluster_id: " << cluster_id << " , proxy: " << proxy << std::endl;
             m_Cluster_info[std::stoi(cluster_id)].Cluster_id = std::stoi(cluster_id);
             m_cluster_ids.push_back(std::stoi(cluster_id));
             auto pos = proxy.find(':');
@@ -137,7 +137,7 @@ namespace REPAIR
             for (tinyxml2::XMLElement *node = cluster->FirstChildElement()->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
             {
                 std::string node_uri(node->Attribute("uri"));
-                std::cout << "____node: " << node_uri << std::endl;
+                // std::cout << "____node: " << node_uri << std::endl;
                 m_Cluster_info[std::stoi(cluster_id)].nodes.push_back(node_id);
                 m_Node_info[node_id].Node_id = node_id;
                 auto pos = node_uri.find(':');
@@ -224,7 +224,7 @@ namespace REPAIR
         for (int j = 0; j < n; j++)
         {
 
-            int cluster_id = cluster_ids_dis[placement_plan[j]%cluster_ids_dis.size()];
+            int cluster_id = cluster_ids_dis[placement_plan[j] % cluster_ids_dis.size()];
             std::random_device rd;
             std::mt19937 gen(rd());
             std::uniform_int_distribution<int> urd(0, m_Cluster_info[cluster_id].nodes.size() - 1);
@@ -238,6 +238,8 @@ namespace REPAIR
             all_node_ids.push_back(cluster_id * 100 + node_id);
 
             std::string shard_id = key + std::to_string(j);
+
+            //node_id = j;
             stripe_this.node_ids.push_back(node_id);
             // std::cout << "==============" << std::endl;
             // std::cout << "shard_id " << shard_id << ", node_id " << node_id << std::endl;
@@ -334,10 +336,16 @@ namespace REPAIR
             int node_id = m_Stripe_info.at(key).node_ids[request_index];
             int cluster_id = m_Node_info[node_id].Cluster_id;
             bool cross_cluster = false;
-
-            if (std::find(cluster_list.begin(), cluster_list.end(), cluster_id) == cluster_list.end())
+            if (m_encode_parameter.encodetype != Flat)
             {
-                cluster_list.push_back(cluster_id);
+                if (std::find(cluster_list.begin(), cluster_list.end(), cluster_id) == cluster_list.end())
+                {
+                    cluster_list.push_back(cluster_id);
+                    cross_cluster = true;
+                }
+            }
+            else
+            {
                 cross_cluster = true;
             }
 
@@ -345,7 +353,7 @@ namespace REPAIR
             // std::cout << "  shard_id:  " << shard_id
             //           << "  node_id " << node_id << std::endl;
             memcached_st *memcached = memcached_list[node_id];
-            cross_cluster = true;
+            // cross_cluster = true;
             receiver.push_back(std::thread(get_from_datanode, memcached_list[node_id], shard_id,
                                            shard_id.size(), data[i], &m_networkcore, cross_cluster));
         }

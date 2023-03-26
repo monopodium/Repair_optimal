@@ -4,6 +4,7 @@ prototype/cmake/*
 prototype/run_memcached/memcached/*
 prototype/packages/*
 prototype/third_party/*
+prototype/run_memcached/*
 *a.txt
 .history/*
 .vscode
@@ -20,6 +21,7 @@ prototype/third_party/*
 *compile_commands.json
 *CTestTestfile.cmake
 *_deps
+*.data
 
 # Compiled Object files
 *.slo
