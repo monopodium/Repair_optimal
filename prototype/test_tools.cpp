@@ -3,9 +3,9 @@
 int main()
 {
 
-    REPAIR::Xorbas_Class m_Xorbas_encoder;
+    REPAIR::Optimal_LRC_Class m_Optimal_LRC_encoder;
 
-    std::vector<std::vector<int>> xorbas_n_k_r = {
+    std::vector<std::vector<int>> optimal_lrc_n_k_r = {
         {16, 10, 5},
         {15, 10, 5},
         {14, 10, 5},
@@ -19,7 +19,7 @@ int main()
 
     REPAIR::Placement pppp;
     int seed = 999;
-    for (auto each_nkr : xorbas_n_k_r)
+    for (auto each_nkr : optimal_lrc_n_k_r)
     {
         std::cout << "=====random====" << std::endl;
 
@@ -60,7 +60,7 @@ int main()
 
         m_Xorbas_encoder.print_placement_raw(REPAIR::Random);
     }
-    for (auto each_nkr : xorbas_n_k_r)
+    for (auto each_nkr : optimal_lrc_n_k_r)
     {
         std::cout << "=====flat====" << std::endl;
         m_Xorbas_encoder.set_parameter(each_nkr[0], each_nkr[1], each_nkr[2]);
@@ -73,7 +73,7 @@ int main()
         std::cout << std::endl;
         m_Xorbas_encoder.print_placement_raw(REPAIR::Flat);
     }
-    for (auto each_nkr : xorbas_n_k_r)
+    for (auto each_nkr : optimal_lrc_n_k_r)
     {
         std::cout << "=====Best_Placement====" << std::endl;
         m_Xorbas_encoder.set_parameter(each_nkr[0], each_nkr[1], each_nkr[2]);

@@ -1,0 +1,162 @@
+#different size
+./prototype/cmake/build/client false Xorbas Flat 12 8 4 1 10
+partial_decoding:0 encode_type: 0 placement_type: 1 n: 12 k: 8 r: 4 value_size_kbytes: 1 run_times: 10
+DRC(micro second): 871.072
+DRC_min(micro second): 843.858
+DRC_max(micro second): 908.098
+repair_Rate_MiB/(second): 0.144397
+repair_Rate_MiB_min/(second): 0.141723
+repair_Rate_MiB_max/(second): 0.145801
+
+./prototype/cmake/build/client false Xorbas Random 12 8 4 1 10
+partial_decoding:0 encode_type: 0 placement_type: 0 n: 12 k: 8 r: 4 value_size_kbytes: 1 run_times: 10
+DRC(micro second): 872.765
+DRC_min(micro second): 852.53
+DRC_max(micro second): 897.405
+repair_Rate_MiB/(second): 0.143546
+repair_Rate_MiB_min/(second): 0.141084
+repair_Rate_MiB_max/(second): 0.145575
+
+./prototype/cmake/build/client false Xorbas Best_Placement 12 8 4 1 10
+partial_decoding:0 encode_type: 0 placement_type: 2 n: 12 k: 8 r: 4 value_size_kbytes: 1 run_times: 10
+DRC(micro second): 861.896
+DRC_min(micro second): 849.322
+DRC_max(micro second): 872.395
+repair_Rate_MiB/(second): 0.145563
+repair_Rate_MiB_min/(second): 0.143458
+repair_Rate_MiB_max/(second): 0.148339
+
+./prototype/cmake/build/client false Xorbas Flat 12 8 4 4 10
+partial_decoding:0 encode_type: 0 placement_type: 1 n: 12 k: 8 r: 4 value_size_kbytes: 4 run_times: 10
+DRC(micro second): 868.138
+DRC_min(micro second): 856.08
+DRC_max(micro second): 896.354
+repair_Rate_MiB/(second): 0.580181
+repair_Rate_MiB_min/(second): 0.571211
+repair_Rate_MiB_max/(second): 0.59952
+
+./prototype/cmake/build/client false Xorbas Random 12 8 4 4 10
+partial_decoding:0 encode_type: 0 placement_type: 0 n: 12 k: 8 r: 4 value_size_kbytes: 4 run_times: 10
+DRC(micro second): 877.363
+DRC_min(micro second): 865.251
+DRC_max(micro second): 885.738
+repair_Rate_MiB/(second): 0.582841
+repair_Rate_MiB_min/(second): 0.567322
+repair_Rate_MiB_max/(second): 0.637755
+
+./prototype/cmake/build/client false Xorbas Best_Placement 12 8 4 4 10
+partial_decoding:0 encode_type: 0 placement_type: 2 n: 12 k: 8 r: 4 value_size_kbytes: 4 run_times: 10
+DRC(micro second): 874.18
+DRC_min(micro second): 839.509
+DRC_max(micro second): 889.937
+repair_Rate_MiB/(second): 0.571951
+repair_Rate_MiB_min/(second): 0.564334
+repair_Rate_MiB_max/(second): 0.584112
+
+./prototype/cmake/build/client false Xorbas Flat 12 8 4 16 10
+partial_decoding:0 encode_type: 0 placement_type: 1 n: 12 k: 8 r: 4 value_size_kbytes: 16 run_times: 10
+DRC(micro second): 1084.97
+DRC_min(micro second): 1066.41
+DRC_max(micro second): 1101.94
+repair_Rate_MiB/(second): 1.84934
+repair_Rate_MiB_min/(second): 1.8315
+repair_Rate_MiB_max/(second): 1.86451
+
+./prototype/cmake/build/client false Xorbas Random 12 8 4 16 10
+partial_decoding:0 encode_type: 0 placement_type: 0 n: 12 k: 8 r: 4 value_size_kbytes: 16 run_times: 10
+DRC(micro second): 1074.7
+DRC_min(micro second): 1058.57
+DRC_max(micro second): 1087.93
+repair_Rate_MiB/(second): 1.88265
+repair_Rate_MiB_min/(second): 1.8315
+repair_Rate_MiB_max/(second): 1.9802
+
+./prototype/cmake/build/client false Xorbas Best_Placement 12 8 4 16 10
+partial_decoding:0 encode_type: 0 placement_type: 2 n: 12 k: 8 r: 4 value_size_kbytes: 16 run_times: 10
+DRC(micro second): 1072.86
+DRC_min(micro second): 1061.77
+DRC_max(micro second): 1084.07
+repair_Rate_MiB/(second): 1.86532
+repair_Rate_MiB_min/(second): 1.84388
+repair_Rate_MiB_max/(second): 1.88917
+
+./prototype/cmake/build/client false Xorbas Flat 12 8 4 256 10
+partial_decoding:0 encode_type: 0 placement_type: 1 n: 12 k: 8 r: 4 value_size_kbytes: 256 run_times: 10
+DRC(micro second): 3115.61
+DRC_min(micro second): 3016.93
+DRC_max(micro second): 3189.02
+repair_Rate_MiB/(second): 10.3264
+repair_Rate_MiB_min/(second): 9.90303
+repair_Rate_MiB_max/(second): 10.5564
+
+./prototype/cmake/build/client false Xorbas Random 12 8 4 256 10
+partial_decoding:0 encode_type: 0 placement_type: 0 n: 12 k: 8 r: 4 value_size_kbytes: 256 run_times: 10
+DRC(micro second): 3108.6
+DRC_min(micro second): 3024.58
+DRC_max(micro second): 3168.51
+repair_Rate_MiB/(second): 10.4108
+repair_Rate_MiB_min/(second): 10.1673
+repair_Rate_MiB_max/(second): 10.7239
+
+./prototype/cmake/build/client false Xorbas Best_Placement 12 8 4 256 10
+partial_decoding:0 encode_type: 0 placement_type: 2 n: 12 k: 8 r: 4 value_size_kbytes: 256 run_times: 10
+DRC(micro second): 3110.65
+DRC_min(micro second): 2985.85
+DRC_max(micro second): 3180.1
+repair_Rate_MiB/(second): 10.4907
+repair_Rate_MiB_min/(second): 10.1609
+repair_Rate_MiB_max/(second): 10.7
+
+./prototype/cmake/build/client false Xorbas Flat 12 8 4 1024 10
+partial_decoding:0 encode_type: 0 placement_type: 1 n: 12 k: 8 r: 4 value_size_kbytes: 1024 run_times: 10
+DRC(micro second): 6869.65
+DRC_min(micro second): 6808.11
+DRC_max(micro second): 7032.68
+repair_Rate_MiB/(second): 18.8045
+repair_Rate_MiB_min/(second): 18.6643
+repair_Rate_MiB_max/(second): 19.0665
+
+./prototype/cmake/build/client false Xorbas Random 12 8 4 1024 10
+partial_decoding:0 encode_type: 0 placement_type: 0 n: 12 k: 8 r: 4 value_size_kbytes: 1024 run_times: 10
+DRC(micro second): 6906.35
+DRC_min(micro second): 6839.34
+DRC_max(micro second): 7026.34
+repair_Rate_MiB/(second): 18.7379
+repair_Rate_MiB_min/(second): 18.5132
+repair_Rate_MiB_max/(second): 18.9817
+
+./prototype/cmake/build/client false Xorbas Best_Placement 12 8 4 1024 10
+partial_decoding:0 encode_type: 0 placement_type: 2 n: 12 k: 8 r: 4 value_size_kbytes: 1024 run_times: 10
+DRC(micro second): 6922.16
+DRC_min(micro second): 6850.84
+DRC_max(micro second): 7072.57
+repair_Rate_MiB/(second): 18.7093
+repair_Rate_MiB_min/(second): 18.5382
+repair_Rate_MiB_max/(second): 18.9517
+
+./prototype/cmake/build/client false Xorbas Flat 12 8 4 4096 10
+partial_decoding:0 encode_type: 0 placement_type: 1 n: 12 k: 8 r: 4 value_size_kbytes: 4096 run_times: 10
+DRC(micro second): 28135.7
+DRC_min(micro second): 27777.1
+DRC_max(micro second): 28339.4
+repair_Rate_MiB/(second): 18.5822
+repair_Rate_MiB_min/(second): 18.3158
+repair_Rate_MiB_max/(second): 18.8814
+
+./prototype/cmake/build/client false Xorbas Random 12 8 4 4096 10
+partial_decoding:0 encode_type: 0 placement_type: 0 n: 12 k: 8 r: 4 value_size_kbytes: 4096 run_times: 10
+DRC(micro second): 27599
+DRC_min(micro second): 26877
+DRC_max(micro second): 28049.5
+repair_Rate_MiB/(second): 18.7819
+repair_Rate_MiB_min/(second): 18.5633
+repair_Rate_MiB_max/(second): 19.0099
+
+./prototype/cmake/build/client false Xorbas Best_Placement 12 8 4 4096 10
+partial_decoding:0 encode_type: 0 placement_type: 2 n: 12 k: 8 r: 4 value_size_kbytes: 4096 run_times: 10
+DRC(micro second): 27348.8
+DRC_min(micro second): 27012.3
+DRC_max(micro second): 27595.6
+repair_Rate_MiB/(second): 18.7046
+repair_Rate_MiB_min/(second): 18.5606
+repair_Rate_MiB_max/(second): 18.9672
