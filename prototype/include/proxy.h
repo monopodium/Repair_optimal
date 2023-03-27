@@ -46,7 +46,7 @@ namespace REPAIR
         Azure_LRC_Class m_Azure_LRC_encoder;
         Azure_LRC_1_Class m_Azure_LRC_1_encoder;
         Xorbas_Class m_Xorbas_encoder;
-        Code_Placement *m_encoder;
+        std::shared_ptr<Code_Placement> m_encoder;
         std::map<int, memcached_st *> memcached_list;
         
         std::pair<std::string, int> networkcore_port_ip;

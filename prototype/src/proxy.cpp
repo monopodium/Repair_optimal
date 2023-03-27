@@ -92,19 +92,19 @@ namespace REPAIR
         // std::cout << "m_encode_parameter.r_datapergroup" << m_encode_parameter.r_datapergroup << std::endl;
         if (m_encode_parameter.encodetype == Xorbas)
         {
-            m_encoder = &m_Xorbas_encoder;
+            m_encoder = std::make_shared<REPAIR::Xorbas_Class>();
         }
         else if (m_encode_parameter.encodetype == Optimal_LRC)
         {
-            m_encoder = &m_Optimal_LRC_encoder;
+            m_encoder = std::make_shared<REPAIR::Optimal_LRC_Class>();
         }
         else if (m_encode_parameter.encodetype == Azure_LRC_1)
         {
-            m_encoder = &m_Azure_LRC_1_encoder;
+            m_encoder = std::make_shared<REPAIR::Azure_LRC_1_Class>();
         }
         else
         {
-            m_encoder = &m_Azure_LRC_encoder;
+            m_encoder = std::make_shared<REPAIR::Azure_LRC_Class>();
         }
         m_encoder->set_parameter(m_encode_parameter.n_block, m_encode_parameter.k_datablock, m_encode_parameter.r_datapergroup);
         return true;

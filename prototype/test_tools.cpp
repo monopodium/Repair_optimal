@@ -27,19 +27,19 @@ int main()
         int k = each_nkr[1];
         int r = each_nkr[2];
 
-        m_Xorbas_encoder.set_parameter(n, k, r);
-        m_Xorbas_encoder.set_debug(true);
-        int g = m_Xorbas_encoder.g_global_block_num();
-        int l = m_Xorbas_encoder.l_local_block_num();
+        m_Optimal_LRC_encoder.set_parameter(n, k, r);
+        m_Optimal_LRC_encoder.set_debug(true);
+        int g = m_Optimal_LRC_encoder.g_global_block_num();
+        int l = m_Optimal_LRC_encoder.l_local_block_num();
         // int *final_matrix;
 
         std::vector<int> final_matrix(k*(g+l), 0);
-        m_Xorbas_encoder.xorbas_make_matrix(k, g, l, final_matrix.data());
+        //m_Optimal_LRC_encoder.xorbas_make_matrix(k, g, l, final_matrix.data());
         seed++;
-        REPAIR::Placement pppp = m_Xorbas_encoder.generate_placement(REPAIR::Random, seed);
+        REPAIR::Placement pppp = m_Optimal_LRC_encoder.generate_placement(REPAIR::Random, seed);
         std::cout << "n = " << each_nkr[0] << " "
                   << "k = " << each_nkr[1] << " "
-                  << "r = " << each_nkr[2] << " d = " << m_Xorbas_encoder.calculate_distance() << std::endl;
+                  << "r = " << each_nkr[2] << " d = " << m_Optimal_LRC_encoder.calculate_distance() << std::endl;
         for (auto each_i : pppp)
         {
             std::cout << each_i << " ";
@@ -48,7 +48,7 @@ int main()
         for (int i = 0; i < each_nkr[0]; i++)
         {
             std::vector<int> vec;
-            m_Xorbas_encoder.repair_request(i, vec);
+            m_Optimal_LRC_encoder.repair_request(i, vec);
             std::cout << "i:" << i << std::endl;
             for (auto jjj : vec)
             {
@@ -58,33 +58,33 @@ int main()
         }
         std::cout << std::endl;
 
-        m_Xorbas_encoder.print_placement_raw(REPAIR::Random);
+        m_Optimal_LRC_encoder.print_placement_raw(REPAIR::Random);
     }
     for (auto each_nkr : optimal_lrc_n_k_r)
     {
         std::cout << "=====flat====" << std::endl;
-        m_Xorbas_encoder.set_parameter(each_nkr[0], each_nkr[1], each_nkr[2]);
-        REPAIR::Placement pppp = m_Xorbas_encoder.generate_placement(REPAIR::Flat);
+        m_Optimal_LRC_encoder.set_parameter(each_nkr[0], each_nkr[1], each_nkr[2]);
+        REPAIR::Placement pppp = m_Optimal_LRC_encoder.generate_placement(REPAIR::Flat);
         std::cout << each_nkr[0] << " " << each_nkr[1] << " " << each_nkr[2] << " " << std::endl;
         for (auto each_i : pppp)
         {
             std::cout << each_i << " ";
         }
         std::cout << std::endl;
-        m_Xorbas_encoder.print_placement_raw(REPAIR::Flat);
+        m_Optimal_LRC_encoder.print_placement_raw(REPAIR::Flat);
     }
     for (auto each_nkr : optimal_lrc_n_k_r)
     {
         std::cout << "=====Best_Placement====" << std::endl;
-        m_Xorbas_encoder.set_parameter(each_nkr[0], each_nkr[1], each_nkr[2]);
-        REPAIR::Placement pppp = m_Xorbas_encoder.generate_placement(REPAIR::Best_Placement);
+        m_Optimal_LRC_encoder.set_parameter(each_nkr[0], each_nkr[1], each_nkr[2]);
+        REPAIR::Placement pppp = m_Optimal_LRC_encoder.generate_placement(REPAIR::Best_Placement);
         std::cout << each_nkr[0] << " " << each_nkr[1] << " " << each_nkr[2] << " " << std::endl;
         for (auto each_i : pppp)
         {
             std::cout << each_i << " ";
         }
         std::cout << std::endl;
-        m_Xorbas_encoder.print_placement_raw(REPAIR::Best_Placement);
+        m_Optimal_LRC_encoder.print_placement_raw(REPAIR::Best_Placement);
     }
     return 0;
 }
