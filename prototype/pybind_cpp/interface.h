@@ -11,7 +11,6 @@ public:
     void set_parameter(int n_in, int k_in, int r_in, int w = 8);
     std::pair<double, double> return_DRC_NRC(REPAIR::PlacementType placement_type, int random_seed = 10);
     REPAIR::Placement generate_placement(REPAIR::PlacementType placement_type, int random_seed = 10);
-    void return_repair_request(int block_index,std::vector<int> &repair_request);
     int calculate_distance();
     void nkr_to_klgr(int n, int k, int r);
     void klgr_to_nkr(int k, int l, int g, int r);

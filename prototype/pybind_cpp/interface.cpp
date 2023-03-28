@@ -36,9 +36,6 @@ void CodePyInterface::CreateEncoder(REPAIR::EncodeType encodetype)
         return m_encoder->generate_placement(placement_type, random_seed);
 
     };
-    void CodePyInterface::return_repair_request(int block_index,std::vector<int> &repair_request){
-        m_encoder->return_repair_request(block_index,repair_request);
-    };
     int CodePyInterface::calculate_distance(){
         return m_encoder->calculate_distance();
     };
@@ -56,6 +53,11 @@ void CodePyInterface::CreateEncoder(REPAIR::EncodeType encodetype)
     };
     void CodePyInterface::repair_request(int index,std::vector<int> &vec){
         m_encoder->repair_request(index, vec);
+        std::cout<<"repair request: "<<m_encoder->s_index_to_string(index)<<": "<<std::flush;
+        for(auto each_index:vec){
+            std::cout<<" "<<m_encoder->s_index_to_string(each_index)<<std::flush;
+        }
+        std::cout<<std::endl<<std::flush;
     };
     int CodePyInterface::k_data_block_num(){
         return m_encoder->k_data_block_num();
@@ -72,3 +74,4 @@ void CodePyInterface::CreateEncoder(REPAIR::EncodeType encodetype)
     int CodePyInterface::r_group_block_num(){
         return m_encoder->r_group_block_num();
     };
+ 

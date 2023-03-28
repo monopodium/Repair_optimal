@@ -43,7 +43,6 @@ namespace REPAIR
         void set_parameter(int n_in, int k_in, int r_in, int w = 8);
         virtual std::pair<double, double> return_DRC_NRC(REPAIR::PlacementType placement_type, int random_seed = 10);
         virtual REPAIR::Placement generate_placement(REPAIR::PlacementType placement_type, int random_seed = 10);
-        virtual void return_repair_request(int block_index,std::vector<int> &repair_request);
         // virtual void generate_best_placement() = 0;
         virtual int calculate_distance() = 0;
         virtual void nkr_to_klgr(int n, int k, int r) = 0;
@@ -61,7 +60,7 @@ namespace REPAIR
         virtual int n_all_block_num();
         virtual int r_group_block_num();
         virtual bool decode_in_group_xor(int group_data_number, char **data_ptrs, char **coding_ptrs, int blocksize);
-
+        std::string s_index_to_string(int index);
     protected:
         int m_n = 0;
         int m_k = 0;
@@ -102,7 +101,7 @@ namespace REPAIR
         
         bool check_cluster_information(std::vector<REPAIR::Cluster> placement, std::map<std::string, int> placement_map);
         void generate_flat_placement();
-        std::string s_index_to_string(int index);
+        
     };
     class Optimal_LRC_Class : public Code_Placement
     {

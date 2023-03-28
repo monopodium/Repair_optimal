@@ -314,7 +314,7 @@ namespace REPAIR
             }
         }
         std::vector<int> repair_request;
-        m_encoder->return_repair_request(index, repair_request);
+        m_encoder->repair_request(index, repair_request);
         std::vector<char *> v_data(repair_request.size());
         std::vector<char *> v_coding(1);
         char **data = (char **)v_data.data();
