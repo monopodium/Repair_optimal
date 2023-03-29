@@ -356,26 +356,6 @@ namespace REPAIR
             std::cout << "random check_cluster_information(m_random_placement_raw)" << std::endl;
         }
     };
-    void Code_Placement::return_repair_request(int block_index, std::vector<int> &repair_request)
-    {
-        std::string block;
-        if (block_index < m_k)
-        {
-            block = index_to_str("D", block_index);
-        }
-        else if (block_index < m_k + m_g)
-        {
-            block = index_to_str("G", block_index - m_k);
-        }
-        else
-        {
-            block = index_to_str("L", block_index - m_k - m_g);
-        }
-        for (std::string repair_block : m_block_repair_request[block])
-        {
-            repair_request.push_back(block_to_index(repair_block));
-        }
-    }
     int Code_Placement::block_to_index(std::string block)
     {
         int index = 0;
@@ -408,16 +388,26 @@ namespace REPAIR
         {
             placment = m_flat_placement_raw;
         }
+        for (auto group:m_stripe_information){
+            std::cout<<"group "<< " | " << std::flush;
+            for(auto each_block:group){
+                std::cout << each_block <<" "<<std::flush; 
+            }
+            std::cout << " | " << std::endl
+                      << std::flush;
+        }
         for (auto cluster : placment)
         {
-            std::cout << "cluster id " << cluster.return_id() << " | ";
+            std::cout << "cluster id " << cluster.return_id() << " | " << std::flush;
             for (auto block : cluster.return_all_blocks())
             {
-                std::cout << block << " ";
+                std::cout << block << " " << std::flush;
             }
-            std::cout << " | " << std::endl;
+            std::cout << " | " << std::endl
+                      << std::flush;
         }
-        std::cout << std::endl;
+        std::cout << std::endl
+                  << std::flush;
     }
     bool Code_Placement::decode_in_group_xor(int group_data_number, char **data_ptrs, char **coding_ptrs, int blocksize)
     {

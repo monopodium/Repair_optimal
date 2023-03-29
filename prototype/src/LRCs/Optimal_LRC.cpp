@@ -12,39 +12,28 @@ namespace REPAIR
     };
     int Optimal_LRC_Class::calculate_distance()
     {
-        int gl = ceil(m_n, m_r + 1) - m_l;
-        if (ceil(m_g + 1, m_r) > gl)
-        {
-            m_d = m_g + gl + 2;
-        }
-        else
-        {
-            m_d = m_g + gl + 1;
-        }
+        nkr_to_klgr(m_n, m_k, m_r);
+        m_d = m_g + ceil(m_g + 1, m_r) + 1;
         return m_d;
     };
     void Optimal_LRC_Class::generate_best_placement()
     {
-        Cluster new_cluster = Cluster(m_best_placement_raw.size(), m_d - 1);
-        m_best_placement_raw.push_back(new_cluster);
         for (std::vector<std::string> each_group : m_stripe_information)
         {
             if (int(each_group.size()) <= m_d - 1)
             {
-                Cluster last_cluster = m_best_placement_raw[m_best_placement_raw.size() - 1];
-                if (last_cluster.remaind() < int(each_group.size()))
-                {
-                    m_best_placement_raw.push_back(Cluster(m_best_placement_raw.size(), m_d - 1));
-                }
-                last_cluster = m_best_placement_raw[m_best_placement_raw.size() - 1];
+                Cluster new_cluster = Cluster(m_best_placement_raw.size(), m_d - 1);
                 for (std::string block : each_group)
                 {
-                    last_cluster.add_new_block(block, m_block_to_groupnumber[block]);
-                    m_best_placement_map[block] = last_cluster.return_id();
+                    new_cluster.add_new_block(block, m_block_to_groupnumber[block]);
+                    m_best_placement_map[block] = new_cluster.return_id();
                 }
+                m_best_placement_raw.push_back(new_cluster);
             }
             else
-            {
+            {   
+                Cluster new_cluster = Cluster(m_best_placement_raw.size(), m_d - 1);
+                m_best_placement_raw.push_back(new_cluster);
                 for (int i = 0; i < ceil(int(each_group.size()), m_d - 1); i++)
                 {
 
@@ -54,12 +43,12 @@ namespace REPAIR
                     {
                         m_best_placement_raw.push_back(Cluster(m_best_placement_raw.size(), m_d - 1));
                     }
-                    Cluster last_cluster = m_best_placement_raw[m_best_placement_raw.size() - 1];
+                    Cluster* last_cluster = &m_best_placement_raw[m_best_placement_raw.size() - 1];
                     for (int j = i * (m_d - 1); j < each_c + i * (m_d - 1); j++)
                     {
                         std::string block = each_group[j];
-                        last_cluster.add_new_block(block, m_block_to_groupnumber[block]);
-                        m_best_placement_map[block] = last_cluster.return_id();
+                        last_cluster->add_new_block(block, m_block_to_groupnumber[block]);
+                        m_best_placement_map[block] = last_cluster->return_id();
                     }
                 }
             }
