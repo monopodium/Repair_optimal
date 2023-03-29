@@ -18,8 +18,6 @@ namespace REPAIR
     };
     void Optimal_LRC_Class::generate_best_placement()
     {
-        
-        
         for (std::vector<std::string> each_group : m_stripe_information)
         {
             if (int(each_group.size()) <= m_d - 1)

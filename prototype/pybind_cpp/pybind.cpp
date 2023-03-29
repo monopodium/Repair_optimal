@@ -41,7 +41,7 @@ PYBIND11_MODULE(Code_parameters, m)
         .value("Azure_LRC", EncodeType::Azure_LRC)
         .value("Azure_LRC_1", EncodeType::Azure_LRC_1)
         .value("Optimal_LRC", EncodeType::Optimal_LRC);
-
+ 
     pybind11::enum_<PlacementType>(m, "PlacementType", pybind11::arithmetic())
         .value("Random", PlacementType::Random)
         .value("Flat", PlacementType::Flat)

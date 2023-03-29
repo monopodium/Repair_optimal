@@ -388,6 +388,14 @@ namespace REPAIR
         {
             placment = m_flat_placement_raw;
         }
+        for (auto group:m_stripe_information){
+            std::cout<<"group "<< " | " << std::flush;
+            for(auto each_block:group){
+                std::cout << each_block <<" "<<std::flush; 
+            }
+            std::cout << " | " << std::endl
+                      << std::flush;
+        }
         for (auto cluster : placment)
         {
             std::cout << "cluster id " << cluster.return_id() << " | " << std::flush;

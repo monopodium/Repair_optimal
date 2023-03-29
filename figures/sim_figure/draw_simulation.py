@@ -3,7 +3,7 @@ import sys
 sys.path.append("draw_pic")
 sys.path.append("/home/ms/Repair_optimal/prototype/cmake/build")
 import Code_parameters
-from parameter import PARAMETERS_OPT
+from parameter import PARAMETERS_OPT,NEW_AZURE_LRC_1
 
 
 if __name__ == '__main__':
@@ -12,7 +12,7 @@ if __name__ == '__main__':
     encoder.CreateEncoder(Code_parameters.EncodeType.Azure_LRC_1)
     seed = 999
     
-    for each_nkr in PARAMETERS_OPT:
+    for each_nkr in NEW_AZURE_LRC_1:
         print("=====Best_placement====")
         
         placement_type = Code_parameters.PlacementType.Best_Placement
@@ -28,9 +28,9 @@ if __name__ == '__main__':
         print("d - 1:")
         print(encoder.calculate_distance() - 1)
         print(pppp)
-        for i in range(n):
-            vec = []
-            encoder.repair_request(i, vec)
+        # for i in range(n):
+        #     vec = []
+        #     encoder.repair_request(i, vec)
         encoder.print_placement_raw(placement_type)
     # for each_nkr in PARAMETERS_OPT:
     #     print("=====flat====")

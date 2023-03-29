@@ -11,6 +11,7 @@ namespace REPAIR
     };
     int Azure_LRC_1_Class::calculate_distance()
     {
+        nkr_to_klgr(m_n, m_k, m_r);
         m_d = m_g + 2;
         return m_d;
     };
@@ -62,27 +63,35 @@ namespace REPAIR
     };
     void Azure_LRC_1_Class::generate_stripe_information()
     {
-        for (int i = 0; i < m_l - 1; i++)
+        for (int i = 0; i < m_l-1 ; i++)
         {
             std::vector<std::string> group;
-            m_stripe_information.push_back(group);
             for (int j = i * m_r; j < std::min(m_k, (i + 1) * m_r); j++)
             {
-                group.push_back(index_to_str("D", i));
-                m_block_to_groupnumber[index_to_str("D", i)] = i;
+                group.push_back(index_to_str("D", j));
+                m_block_to_groupnumber[index_to_str("D", j)] = i;
             }
+            m_stripe_information.push_back(group);
         }
-        std::vector<std::string> group;
-        m_stripe_information.push_back(group);
+        std::vector<std::string> group;   
         for (int i = 0; i < m_g; i++)
         {
             group.push_back(index_to_str("G", i));
             m_block_to_groupnumber[index_to_str("G", i)] = m_l;
         }
+        m_stripe_information.push_back(group);
+
         for (int i = 0; i < m_l; i++)
         {
             m_stripe_information[i].push_back(index_to_str("L", i));
             m_block_to_groupnumber[index_to_str("L", i)] = i;
+        }
+        std::cout<<"????????????"<<std::endl;
+        for(auto vector_info:m_stripe_information){
+            for(auto vec:vector_info){
+                std::cout<<vec<<" ";
+            }
+            std::cout<<std::endl;
         }
     };
     void Azure_LRC_1_Class::generate_block_repair_request()
@@ -115,7 +124,7 @@ namespace REPAIR
         jerasure_matrix_encode(m_g, 1, m_w, last_matrix.data(), coding_ptrs, &coding_ptrs[m_g + m_l - 1], blocksize);
         return true;
     }
-        bool Azure_LRC_1_Class::decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize){
+    bool Azure_LRC_1_Class::decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize){
 
     }
     bool Azure_LRC_1_Class::azure_lrc_make_matrix(int k, int g, int l, int *final_matrix)
