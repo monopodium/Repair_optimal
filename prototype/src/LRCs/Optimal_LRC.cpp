@@ -5,7 +5,7 @@ namespace REPAIR
     {
         if (m_n % (m_r + 1) == 1)
         {
-            std::cout << "Parameters do not meet requirements!" << std::endl;
+            //std::cout << "Parameters do not meet requirements!" << std::endl;
             return false;
         }
         return true;

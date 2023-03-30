@@ -40,10 +40,7 @@ namespace REPAIR
     void Cluster::add_new_block(std::string new_block, int group_number)
     {
         m_blocks.push_back(new_block);
-        if (m_from_groups.size() == 0)
-        {
-            m_from_groups.insert(group_number);
-        }
+        m_from_groups.insert(group_number);
     };
     int Cluster::remaind()
     {
@@ -132,6 +129,7 @@ namespace REPAIR
     };
     REPAIR::Placement Code_Placement::generate_placement(REPAIR::PlacementType placement_type, int random_seed)
     {
+
         if (m_first)
         {
             generate_raw_information();
@@ -144,7 +142,9 @@ namespace REPAIR
         }
         Placement placement_return;
         std::map<std::string, int> placement_map;
-
+        if(!check_parameter()){
+            return placement_return;
+        }
         if (placement_type == REPAIR::Random)
         {
             generate_random_placement(random_seed);
@@ -184,10 +184,15 @@ namespace REPAIR
         }
         return placement_return;
     }
-    std::pair<double, double> Code_Placement::return_DRC_NRC(REPAIR::PlacementType placement_type, int random_seed)
+    std::pair<double, double> Code_Placement::return_DRC_NRC(REPAIR::PlacementType placement_type,int seed)
     {
+        if(!check_parameter()){
+            return std::make_pair(-1.0, -1.0);
+        }
+        generate_placement(placement_type, seed);
         if (placement_type == REPAIR::Random)
         {
+
             generate_repair_cost(m_random_placement_map);
         }
         else if (placement_type == REPAIR::Flat)
