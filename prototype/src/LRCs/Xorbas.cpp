@@ -3,7 +3,10 @@ namespace REPAIR
 {
     bool Xorbas_Class::check_parameter()
     {
-
+        if (m_n <= m_k + m_l)
+        {
+            return false;
+        }
         return true;
     };
     int Xorbas_Class::calculate_distance()

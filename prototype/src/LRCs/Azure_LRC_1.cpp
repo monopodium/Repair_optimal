@@ -3,7 +3,7 @@ namespace REPAIR
 {
     bool Azure_LRC_1_Class::check_parameter()
     {
-        if (m_k + m_l > m_n)
+        if (m_k + m_l >= m_n)
         {
             return false;
         }

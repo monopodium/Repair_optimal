@@ -9,7 +9,7 @@ public:
     void set_debug(bool if_debug);
     void print_information();
     void set_parameter(int n_in, int k_in, int r_in, int w = 8);
-    std::pair<double, double> return_DRC_NRC(REPAIR::PlacementType placement_type, int random_seed = 10);
+    std::pair<double, double> return_DRC_NRC(REPAIR::PlacementType placement_type,int seed = 10);
     REPAIR::Placement generate_placement(REPAIR::PlacementType placement_type, int random_seed = 10);
     int calculate_distance();
     void nkr_to_klgr(int n, int k, int r);

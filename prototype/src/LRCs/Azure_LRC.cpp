@@ -5,13 +5,14 @@ namespace REPAIR
     {
         if (m_n <= m_k + m_l)
         {
-            std::cout << "Parameters do not meet requirements!" << std::endl;
+            //std::cout << "Parameters do not meet requirements!" << std::endl;
             return false;
         }
         return true;
     };
     int Azure_LRC_Class::calculate_distance()
     {
+        nkr_to_klgr(m_n, m_k, m_r);
         m_d = m_g + 2;
         return m_d;
     };
@@ -28,8 +29,9 @@ namespace REPAIR
             int cur_group_len = group.size();
             if (b >= cur_group_len)
             {
-                for (Cluster each_cluster : m_best_placement_raw)
+                for (Cluster &each_cluster : m_best_placement_raw)
                 {
+                    // /
                     if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + m_g >= each_cluster.return_block_number() + cur_group_len)
                     {
                         for (std::string block : group)
@@ -47,15 +49,15 @@ namespace REPAIR
                 for (int j = 0; j < cluster_number; j++)
                 {
                     int number_in_group = std::min(b, cur_group_len - j * b);
-                    for (Cluster each_cluster : m_best_placement_raw)
+                    for (Cluster &each_cluster : m_best_placement_raw)
                     {
                         if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + m_g >=
                             each_cluster.return_block_number() + number_in_group)
                         {
                             for (int ii = 0; ii < number_in_group; ii++)
                             {
-                                each_cluster.add_new_block(group[j + ii], i);
-                                m_best_placement_map[group[j + ii]] = each_cluster.return_id();
+                                each_cluster.add_new_block(group[j * b + ii], i);
+                                m_best_placement_map[group[j * b + ii]] = each_cluster.return_id();
                             }
                             break;
                         }
@@ -63,7 +65,7 @@ namespace REPAIR
                 }
             }
         }
-        for (Cluster each_cluster : m_best_placement_raw)
+        for (Cluster &each_cluster : m_best_placement_raw)
         {
             if (each_cluster.return_block_number() == 0)
             {
@@ -150,6 +152,9 @@ namespace REPAIR
                     repair_request.push_back(other_item);
                 }
             }
+            for(int i = 0;i < m_k - m_g + 1;i++){
+                repair_request.push_back(s_index_to_string(i));
+            }
             m_block_repair_request[item] = repair_request;
         }
     };
@@ -161,7 +166,8 @@ namespace REPAIR
         jerasure_matrix_encode(m_k, m_g + m_l, 8, new_matrix.data(), data_ptrs, coding_ptrs, blocksize);
         return true;
     };
-    bool Azure_LRC_Class::decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize){
+    bool Azure_LRC_Class::decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize)
+    {
         return true;
     }
     bool Azure_LRC_Class::azure_lrc_make_matrix(int k, int g, int l, int *final_matrix)
