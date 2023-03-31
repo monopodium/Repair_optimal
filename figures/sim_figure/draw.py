@@ -14,6 +14,7 @@ def draw_bars_diff_placement(x_labels, y_NRC, y_DRC, legends, yticks,
     legends的结构如下:[legend1, legend2, legend3]
 
     '''
+    x_labels = [str(item) for item in x_labels]
     check_flag = True
     for i in range(len(y_NRC)-1):
         if len(y_NRC[i]) != len(y_NRC[i + 1]):
@@ -76,55 +77,63 @@ def draw_bars_diff_placement(x_labels, y_NRC, y_DRC, legends, yticks,
     plt.yticks(fontsize=14)
     plt.legend(handles=plt_list, labels=legends, loc='best', fontsize=14,
                frameon=False)
-    plt.show()
+    #plt.show()
     plt.savefig(file_name)
 
 
 def draw_bars_diff_code(x_labels, y_NRC, y_DRC, legends, yticks,
                         colors=["#2878B5", "#9AC9DB", "#C82423", "#F8AC8C"],
-                        tick_step=2, group_gap=0.4, bar_gap=0,
+                        tick_step=1.4, group_gap=0.35, bar_gap=0,
                         file_name="pic1.pdf"):
-    xticks = np.arange(len(x_labels)) * tick_step
+    xticks = np.arange(len(x_labels)) * tick_step + 1
+    print(xticks)
     group_num = len(y_NRC)
     group_width = tick_step - group_gap
     bar_span = group_width / group_num
+    print(bar_span)
+    dpi_p = 100
     bar_width = bar_span - bar_gap
     baseline_x = xticks
-
+    
+    plt.figure(dpi=dpi_p,figsize=(21,5)) #dpi=1000,
+    plt.grid(axis='y',color = '#27202b', linestyle = '-.', linewidth = 0.5,alpha=0.5)
+    #plt.plot(whatever)
+    #plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
     plt_list = []
     for index, y in enumerate(y_NRC):
         x_index = baseline_x + (index-1)*bar_span
         y_new = len(y)*[0]
         for i in range(len(y)):
-            if not y[i]:
+            if y[i] is None:
                 y_new[i] = 0
             else:
                 y_new[i] = y[i]
         tmp_bar = plt.bar(x_index, y_new, bar_width, color=colors[index],
                           edgecolor="black", linewidth=1, zorder=0)
         plt_list.append(tmp_bar)
-        for a, b in zip(x_index, y):
-            if b is not None:
-                plt.text(a, b+0.05, np.round(b, decimals=1), ha='center',
-                         va='bottom', fontsize=8)
-
-        tmp_scatter = plt.scatter(x_index, y_DRC[index], s=80, marker='_',
-                                  c='k', zorder=1)
-
+        # for a, b in zip(x_index, y):
+        #     if b is not None:
+        #         plt.text(a, b+0.05, np.round(b, decimals=1), ha='center',
+        #                  va='bottom', fontsize=8)
+        tmp_scatter = plt.scatter(x_index, y_DRC[index], s=2*bar_span*dpi_p, marker='_',#"_"bar_span*dpi_p
+                                  c='k', zorder=1,linewidth=3)##007d23
+    print("bar_span*dpi_p/8",bar_span*dpi_p/8)
     plt_list.append(tmp_scatter)
-    plt.ylabel('Repair Cost (#Blocks)', fontsize=18)
-    plt.xlabel('Coding Parameter', fontsize=18)
+    plt.ylabel('Repair Cost (#Blocks)', fontsize=20)
+    plt.xlabel('Coding Parameter', fontsize=20)
     ax = plt.gca()
-    plt.xlim([xticks[0] - 2 * bar_width, xticks[-1] + 2 * bar_width])
-    ax.spines['left'].set_position(('data', xticks[0] - 2 * bar_width))
-    ax.spines['right'].set_position(('data', xticks[-1] + 2 * bar_width))
-    ax.set_yticks(yticks)
-
-    plt.xticks(xticks, x_labels, fontsize=14)
-    plt.xticks(rotation=45, fontsize=14)
-    plt.yticks(fontsize=14)
-    plt.legend(handles=plt_list, labels=legends, loc='best',
-               fontsize=11, frameon=False)
-    plt.show()
-    plt.savefig(file_name)
+    xlinm_position_left = xticks[0] - 4 * bar_width
+    xlinm_position_right = xticks[-1] + 5 * bar_width
+    plt.xlim([xlinm_position_left, xlinm_position_right])
+    ax.spines['left'].set_position(('data', xlinm_position_left))
+    ax.spines['right'].set_position(('data', xlinm_position_right))
+    #ax.set_yticks(yticks, fontsize=14)
+    plt.xticks(xticks + 0.5*bar_span, x_labels,rotation=45, fontsize=12)
+    #plt.xticks(rotation=45, fontsize=14)
+    plt.yticks(yticks, fontsize=14)
+    plt.legend(handles=plt_list, labels=legends, loc='upper left',#loc='best'
+               fontsize=13, frameon=True,edgecolor="w",framealpha=1,facecolor="w")
+    #plt.show()
+    
+    plt.savefig(file_name, bbox_inches='tight',dpi=dpi_p)#,dpi=300
 

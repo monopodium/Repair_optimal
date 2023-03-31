@@ -46,6 +46,7 @@ def time_to_MiBs(y1, size_MB, k):
 def draw(x, y1, y2, y3, xlabel, ylabel, yticks, name):
     fig, ax = plt.subplots(figsize=(1.7 * 2, 1.1 * 2), dpi=300, constrained_layout=True)
     #设置自变量的范围和个数
+    plt.figure(dpi=300,figsize=(24,8))
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
     #画图
