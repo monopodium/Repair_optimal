@@ -86,11 +86,9 @@ def draw_bars_diff_code(x_labels, y_NRC, y_DRC, legends, yticks,
                         tick_step=1.4, group_gap=0.35, bar_gap=0,
                         file_name="pic1.pdf"):
     xticks = np.arange(len(x_labels)) * tick_step + 1
-    print(xticks)
     group_num = len(y_NRC)
     group_width = tick_step - group_gap
     bar_span = group_width / group_num
-    print(bar_span)
     dpi_p = 100
     bar_width = bar_span - bar_gap
     baseline_x = xticks
@@ -117,7 +115,6 @@ def draw_bars_diff_code(x_labels, y_NRC, y_DRC, legends, yticks,
         #                  va='bottom', fontsize=8)
         tmp_scatter = plt.scatter(x_index, y_DRC[index], s=2*bar_span*dpi_p, marker='_',#"_"bar_span*dpi_p
                                   c='k', zorder=1,linewidth=3)##007d23
-    print("bar_span*dpi_p/8",bar_span*dpi_p/8)
     plt_list.append(tmp_scatter)
     plt.ylabel('Repair Cost (#Blocks)', fontsize=20)
     plt.xlabel('Coding Parameter', fontsize=20)

@@ -95,12 +95,6 @@ namespace REPAIR
             m_stripe_information[i].push_back(block);
             m_block_to_groupnumber[block] = i;
         }
-        for(auto group:m_stripe_information){
-            for(auto block:group){
-                std::cout<<"block"<<block;
-            }
-            std::cout<<std::endl;
-        }
         if (int(m_stripe_information.size()) != m_l)
         {
             std::cout << "Optimal_LRC_Class, error" << std::endl;

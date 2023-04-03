@@ -86,13 +86,6 @@ namespace REPAIR
             m_stripe_information[i].push_back(index_to_str("L", i));
             m_block_to_groupnumber[index_to_str("L", i)] = i;
         }
-        std::cout<<"????????????"<<std::endl;
-        for(auto vector_info:m_stripe_information){
-            for(auto vec:vector_info){
-                std::cout<<vec<<" ";
-            }
-            std::cout<<std::endl;
-        }
     };
     void Azure_LRC_1_Class::generate_block_repair_request()
     {

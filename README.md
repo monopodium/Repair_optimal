@@ -17,3 +17,6 @@ https://www.cnblogs.com/andrewwang/p/11088163.html
 https://stackoverflow.com/questions/61860208/running-graphical-linux-desktop-applications-from-wsl-2-error-e233-cannot-op
 export DISPLAY=:0.0.0.0
 export LIBGL_ALWAYS_INDIRECT=1
+
+## 记录一个github和overleaf联动的方法
+
