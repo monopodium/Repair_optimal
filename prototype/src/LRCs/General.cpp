@@ -207,9 +207,9 @@ namespace REPAIR
         {
             std::cout << "wrong type" << std::endl;
         }
-
-        print_information();
-
+        if(m_if_debug){
+            print_information();
+        }
         return std::make_pair(return_DRC(), return_NRC());
     };
 
@@ -221,7 +221,8 @@ namespace REPAIR
             std::string block = m_raw_stripe[i];
             cost_sum = cost_sum + m_block_repair_cost[block];
         }
-        return double(cost_sum / m_k);
+        // std::cout<<" cost_sum "<<cost_sum<<" m_k "<< m_k<<"double(cost_sum / m_k)"<<double(cost_sum / m_k)<<std::endl;
+        return double(cost_sum) / double(m_k);
     };
     double Code_Placement::return_DRC()
     {
@@ -231,7 +232,8 @@ namespace REPAIR
             std::string block = index_to_str("D", i);
             cost_sum = cost_sum + m_block_repair_cost[block];
         }
-        return double(cost_sum / m_k);
+        // std::cout<<" cost_sum "<<cost_sum<<" m_k "<< m_k <<" double(cost_sum / m_k) "<<double(cost_sum / m_k)<<std::endl;
+        return double(cost_sum)/double(m_k);
     };
     void Code_Placement::generate_repair_cost(std::map<std::string, int> m_placement_map)
     {

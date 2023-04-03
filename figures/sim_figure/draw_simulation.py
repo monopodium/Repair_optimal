@@ -41,6 +41,7 @@ def draw_diff_code_best_placement():
             each_encoder = encoder[i]
             each_encoder.set_parameter(n, k, r, 8)
             DRC_NRC = each_encoder.return_DRC_NRC(placement_type, seed)
+            print(DRC_NRC)
             if int(DRC_NRC[0])==-1:
                 DRC_NRC = (None,None)
             y_DRC[i].append(DRC_NRC[0])
