@@ -19,6 +19,7 @@ namespace REPAIR
         bool isfull();
         void add_new_block(std::string new_block, int group_number);
         int remaind();
+        int return_nonparity_number();
         std::vector<std::string> return_all_blocks();
         int return_block_number();
 

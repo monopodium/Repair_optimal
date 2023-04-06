@@ -118,7 +118,7 @@ namespace REPAIR
         return true;
     }
     bool Azure_LRC_1_Class::decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize){
-
+        
     }
     bool Azure_LRC_1_Class::azure_lrc_make_matrix(int k, int g, int l, int *final_matrix)
     {

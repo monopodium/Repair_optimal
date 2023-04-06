@@ -10,6 +10,19 @@ namespace REPAIR
     {
         return m_blocks.size();
     }
+    int Cluster::return_nonparity_number()
+    {
+        int count = 0;
+        for(auto block:m_blocks){
+            if(block[0]=='D'){
+                count++;
+            }
+            if(block[0]=='G'){
+                count++;
+            }
+        }
+        return count;
+    }
     void Cluster::set_upperbound(int upperbound)
     {
         m_upperbound = upperbound;
