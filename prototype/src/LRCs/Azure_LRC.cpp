@@ -16,67 +16,191 @@ namespace REPAIR
         m_d = m_g + 2;
         return m_d;
     };
-    void Azure_LRC_Class::generate_best_placement()
+    // void Azure_LRC_Class::generate_best_placement()
+    // {
+    //     int b = m_d - 1;
+    //     for (int i = 0; i < m_n; i++)
+    //     {
+    //         m_best_placement_raw.push_back(Cluster(i, b));
+    //     }
+    //     for (int i = 0; i < m_l; i++)
+    //     {
+    //         std::vector<std::string> group = m_stripe_information[i];
+    //         int cur_group_len = group.size();
+    //         if (b >= cur_group_len)
+    //         {
+    //             for (Cluster &each_cluster : m_best_placement_raw)
+    //             {
+    //                 // /
+    //                 if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + m_g >= each_cluster.return_block_number() + cur_group_len)
+    //                 {
+    //                     for (std::string block : group)
+    //                     {
+    //                         each_cluster.add_new_block(block, i);
+    //                         m_best_placement_map[block] = each_cluster.return_id();
+    //                     }
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //         else
+    //         {
+    //             int cluster_number = ceil(cur_group_len, b);
+    //             for (int j = 0; j < cluster_number; j++)
+    //             {
+    //                 int number_in_group = std::min(b, cur_group_len - j * b);
+    //                 for (Cluster &each_cluster : m_best_placement_raw)
+    //                 {
+    //                     if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + m_g >=
+    //                         each_cluster.return_block_number() + number_in_group)
+    //                     {
+    //                         for (int ii = 0; ii < number_in_group; ii++)
+    //                         {
+    //                             each_cluster.add_new_block(group[j * b + ii], i);
+    //                             m_best_placement_map[group[j * b + ii]] = each_cluster.return_id();
+    //                         }
+    //                         break;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     for (Cluster &each_cluster : m_best_placement_raw)
+    //     {
+    //         if (each_cluster.return_block_number() == 0)
+    //         {
+    //             for (std::string block : m_stripe_information[m_stripe_information.size() - 1])
+    //             {
+    //                 each_cluster.add_new_block(block, m_stripe_information.size() - 1);
+    //                 m_best_placement_map[block] = each_cluster.return_id();
+    //             }
+    //             break;
+    //         }
+    //     }
+    //     for (int i = 0; i < m_n; i++)
+    //     {
+    //         if (m_best_placement_raw[i].return_block_number() == 0)
+    //         {
+    //             m_best_placement_raw.erase(m_best_placement_raw.begin() + i);
+    //         }
+    //     }
+    // };
+     void Azure_LRC_Class::generate_best_placement()
     {
-        int b = m_d - 1;
         for (int i = 0; i < m_n; i++)
         {
-            m_best_placement_raw.push_back(Cluster(i, b));
+            m_best_placement_raw.push_back(Cluster(i, m_d - 1));
         }
-        for (int i = 0; i < m_l; i++)
+        int p_cluster = 0;
+        if (m_g >= m_r)
         {
-            std::vector<std::string> group = m_stripe_information[i];
-            int cur_group_len = group.size();
-            if (b >= cur_group_len)
+            for (size_t i = 0; i < m_stripe_information.size() - 1; i++)
             {
-                for (Cluster &each_cluster : m_best_placement_raw)
+                std::vector<std::string> group = m_stripe_information[i];
+                if (m_best_placement_raw[p_cluster].return_nonparity_number()+group.size()-1> m_g)
                 {
-                    // /
-                    if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + m_g >= each_cluster.return_block_number() + cur_group_len)
-                    {
-                        for (std::string block : group)
-                        {
-                            each_cluster.add_new_block(block, i);
-                            m_best_placement_map[block] = each_cluster.return_id();
-                        }
-                        break;
-                    }
+                    
+                    p_cluster++;
                 }
-            }
-            else
-            {
-                int cluster_number = ceil(cur_group_len, b);
-                for (int j = 0; j < cluster_number; j++)
+                for (size_t j = 0; j < group.size() - 1; j++)
                 {
-                    int number_in_group = std::min(b, cur_group_len - j * b);
-                    for (Cluster &each_cluster : m_best_placement_raw)
-                    {
-                        if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + m_g >=
-                            each_cluster.return_block_number() + number_in_group)
-                        {
-                            for (int ii = 0; ii < number_in_group; ii++)
-                            {
-                                each_cluster.add_new_block(group[j * b + ii], i);
-                                m_best_placement_map[group[j * b + ii]] = each_cluster.return_id();
-                            }
-                            break;
-                        }
-                    }
+                    std::string block = group[j];
+                    int group_number = m_block_to_groupnumber[block];
+                    int cluster_id = m_best_placement_raw[p_cluster].return_id();
+                    m_best_placement_raw[p_cluster].add_new_block(block, group_number);
+                    m_best_placement_map[block] = cluster_id;
                 }
             }
         }
-        for (Cluster &each_cluster : m_best_placement_raw)
+        else
         {
-            if (each_cluster.return_block_number() == 0)
+            std::vector<std::vector<std::string>> remain_list;
+            for (size_t i = 0; i < m_stripe_information.size() - 1; i++)
             {
-                for (std::string block : m_stripe_information[m_stripe_information.size() - 1])
+                std::vector<std::string> group = m_stripe_information[i];
+                int remain = group.size() - 1;
+                while (remain >= m_d - 1)
                 {
-                    each_cluster.add_new_block(block, m_stripe_information.size() - 1);
-                    m_best_placement_map[block] = each_cluster.return_id();
+                    for (int j = 0; j < m_d - 1; j++)
+                    {
+                        std::string block = group[group.size() - 1 - remain + j];
+                        int group_number = m_block_to_groupnumber[block];
+                        int cluster_id = m_best_placement_raw[p_cluster].return_id();
+                        m_best_placement_raw[p_cluster].add_new_block(block, group_number);
+                        m_best_placement_map[block] = cluster_id;
+                    }
+                    remain = remain - (m_d - 1);
+                    p_cluster++;
                 }
+                if (remain > 0)
+                {
+                    int begin = group.size() - 1 - remain;
+                    int end = group.size() - 1;
+                    std::vector<std::string> Arrs2(group.begin() + begin, group.begin() + end);
+                    remain_list.push_back(Arrs2);
+                }
+            }
+            for (size_t j = 0; j < remain_list.size(); j++)
+            {
+                if (m_best_placement_raw[p_cluster].return_nonparity_number() + remain_list[j].size() > m_g)
+                {
+                    std::cout<<"m_best_placement_raw[p_cluster].return_nonparity_number():"<<m_best_placement_raw[p_cluster].return_nonparity_number()<<std::endl;
+                    p_cluster++;
+                }
+                for (auto block : remain_list[j])
+                {
+                    int group_number = m_block_to_groupnumber[block];
+                    int cluster_id = m_best_placement_raw[p_cluster].return_id();
+                    m_best_placement_raw[p_cluster].add_new_block(block, group_number);
+                    m_best_placement_map[block] = cluster_id;
+                }
+            }
+        }
+        std::vector<std::string> global_parity = m_stripe_information[m_stripe_information.size() - 1];
+        int remain = global_parity.size();
+        int global_ptr = 0;
+        for (size_t i = 0; i < m_best_placement_raw.size(); i++)
+        {
+            Cluster *each_cluster = &m_best_placement_raw[i];
+            while (each_cluster->return_nonparity_number() < m_g)
+            {
+                std::string block = global_parity[global_ptr];
+                int group_number = m_block_to_groupnumber[block];
+                int cluster_id = each_cluster->return_id();
+                each_cluster->add_new_block(block, group_number);
+                m_best_placement_map[block] = cluster_id;
+                global_ptr = global_ptr + 1;
+                if (global_ptr == remain)
+                {
+                    break;
+                }
+            }
+            if (global_ptr == remain)
+            {
                 break;
             }
         }
+
+        for(size_t i = 0; i < m_best_placement_raw.size(); i++){
+            if(m_best_placement_raw[i].return_block_number()==0){
+                p_cluster = i;
+                break;
+            }
+        }
+        for (int i = 0; i < m_stripe_information.size() - 1; i++)
+        {
+            std::string last_data = m_stripe_information[i][m_stripe_information[i].size() - 2];
+            std::string local_block = m_stripe_information[i][m_stripe_information[i].size() - 1];
+            int last_cluster_number = m_best_placement_map[last_data];
+            int input_cluster_ptr = last_cluster_number;
+            if(m_best_placement_raw[last_cluster_number].return_nonparity_number() > m_g){
+                input_cluster_ptr = p_cluster;
+            }
+            int group_number = m_block_to_groupnumber[local_block];
+            m_best_placement_raw[input_cluster_ptr].add_new_block(local_block, group_number);
+            m_best_placement_map[local_block] = input_cluster_ptr;
+        }
+
         for (int i = 0; i < m_n; i++)
         {
             if (m_best_placement_raw[i].return_block_number() == 0)
@@ -84,7 +208,11 @@ namespace REPAIR
                 m_best_placement_raw.erase(m_best_placement_raw.begin() + i);
             }
         }
-    };
+        if (!check_cluster_information(m_best_placement_raw, m_best_placement_map))
+        {
+            std::cout << "!!!best Azure_LRC check_cluster_information() error" << std::endl;
+        }
+    };   
     void Azure_LRC_Class::nkr_to_klgr(int n, int k, int r)
     {
         m_l = ceil(k, r);
