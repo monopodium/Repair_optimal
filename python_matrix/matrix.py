@@ -51,7 +51,6 @@ def init_matrix(k, l, g):
     V = GF.Vandermonde(
         GF([[17, 12, 3, 4], [17, 12, 5, 6]])._primitive_element, 4, 4)
     # xx = galois.Array.Random((1,4),GF(0),GF(2),seed = 2,dtype=int)
-    print(V)
     matrix_g = np.vander(x, N, True)
     matrix_g = matrix_g.transpose()
     matrix_full = np.vstack(
@@ -140,9 +139,9 @@ def if_Target_matrix_final(k, l, g, matrix_full):
     matrix_full = matrix_full.astype(np.int32)
     matrix_full = matrix_full.view(GF)
     # i为错误的数量，
-    for i in range(g+l, g+1, -1):
+    for i in range(g+1, g, -1):
         failures_number = i
-        survival_number = k + l + g - failures_number
+        survival_number = n - failures_number
         list_to_combine1 = [list(item) for item in list(
             itertools.combinations(list(range(0, n)), survival_number))]
 
@@ -154,13 +153,14 @@ def if_Target_matrix_final(k, l, g, matrix_full):
 
             else:
                 list_to_combine2 = [list(each_item) for each_item in list(
-                    itertools.combinations(item, n-g-l))]
+                    itertools.combinations(item, k))]
                 small_flag = 0
                 for sub_matrix in list_to_combine2:
-                    if check_info_theo(k, l, g, r, item):
-                        if (np.linalg.det(matrix_full[item]) != 0):
-                            small_flag = 1
+                    #if check_info_theo(k, l, g, r, item):
+                    if (np.linalg.det(matrix_full[sub_matrix]) != 0):
+                        small_flag = 1
                 if small_flag == 0:
+                    print(item)
                     azure_lrc_flag = 0
                     break
             if azure_lrc_flag == 0:
@@ -278,7 +278,6 @@ def search_matrix_iteration(k, l, g):
         x = np.array([2, 3, 5, 7, 11, 13])
         x = x.view(GF)
         x = np.hstack((x, GF.Random(int(k/2), low=0, high=15, seed=seed1)))
-        print(x)
         x3 = np.hstack((x1, x2))
         x3 = GF.Random(k, low=0, high=int(two_w), seed=seed1)
 
@@ -314,7 +313,7 @@ def search_matrix_iteration(k, l, g):
 
 def generate_parity_check_matrix(k=10, m=4, r=5, l=2):
     #GF = galois.GF(two_w)
-    alpha = GF(2)
+    alpha = GF(3)
 
     H_in_paper = []
     
@@ -326,16 +325,15 @@ def generate_parity_check_matrix(k=10, m=4, r=5, l=2):
     for i in range(k+m-1):
         alpha1 = alpha*alpha1
         init2 = np.append(init2, alpha1)
-
-    init2 = np.array([int(i) for i in init2])
-    init2 = init2.view(GF)
-    H_in_paper.append(init2)
-    x_n = init2
-    for i in range(m-2):
-        x_n = init2*x_n
-        H_in_paper.append(x_n)
+    if m >= 2:
+        init2 = np.array([int(i) for i in init2])
+        init2 = init2.view(GF)
+        H_in_paper.append(init2)
+        x_n = init2
+        for i in range(m-2):
+            x_n = init2*x_n
+            H_in_paper.append(x_n)
     H_in_paper = np.array(H_in_paper)
-    print(H_in_paper)
     return H_in_paper
 
 def generate_generator_matrix_from_check_matrix(H_in_paper,k=10, m=4, r=5, l=2):
@@ -346,21 +344,29 @@ def generate_generator_matrix_from_check_matrix(H_in_paper,k=10, m=4, r=5, l=2):
     H_in_paper = H_in_paper.view(GF)
     m_m_matrix = H_in_paper[:,k:]
     
-    print(type(m_m_matrix))
     part_matrix = np.dot(np.linalg.inv(m_m_matrix),H_in_paper)[:,:k]
-    print("part_matrix")
-    print(part_matrix)
     part_matrix = part_matrix.T
-    print("part_matrix.T")
-    print(part_matrix)
     G_in_paper = np.hstack((np.eye(k, dtype=int),part_matrix))
     for each_line in G_in_paper:
         sum = GF(0)
         for each_number in each_line:
             sum = sum + each_number
-        print(sum)
-            
-    print(G_in_paper)
+    matrix_l_origin = []
+    for i in range(l):
+        matrix_l_origin.append([])
+        for j in range(k):
+            if i * r <= j < (i+1)*r:
+                matrix_l_origin[i].append(1)
+            else:
+                matrix_l_origin[i].append(0)
+    matrix_l = np.array(matrix_l_origin)
+    final_matrix = np.vstack((G_in_paper.T,matrix_l))
+    final_matrix = final_matrix.astype(np.int32)
+    print(final_matrix)
+    print(GF(1)+GF(1))
+    print(final_matrix[k]+final_matrix[k+1]+final_matrix[k+2]+final_matrix[k+3]+final_matrix[k+4]+final_matrix[k+5]+final_matrix[k+6])
+    #print(final_matrix[k]+final_matrix[k+1]+final_matrix[k+2]+final_matrix[k+3]+final_matrix[k+4]+final_matrix[k+5]+final_matrix[k+6])
+    return(final_matrix)
     #check
     
     
@@ -379,36 +385,26 @@ def Xorbas_matrix(k=10, m=4, r=5, l=2):
     new_sum = G_in_paper[1]
     for i in range(1, k+m):
         new_sum = new_sum + G_in_paper[i]
-    print("new_sum1",new_sum)
-    
+
     k_k_matrix = G_in_paper[:k, :]
     final_matrix = np.dot(G_in_paper, np.linalg.inv(k_k_matrix))
-
-    print(G_in_paper)
-    print(k_k_matrix)
-    print(type(final_matrix))
-    print(final_matrix)
     
     new_sum = final_matrix[k]
     for i in range(k+1, k+m+l):
         new_sum = new_sum + final_matrix[i]
-    print(new_sum)
-    
-    print(final_matrix)
-    
-    print(G_in_paper.shape)
-    print(GF(1)+GF(1)+GF(1)+GF(1)+GF(1))
+    return final_matrix
+
 
 
 if __name__ == "__main__":
-    k = 12
+    k = 10
     l = 2
-    g = 3
+    g = 5
     #Xorbas_matrix()
     #generate_parity_check_matrix()
-    print(generate_generator_matrix_from_check_matrix(generate_parity_check_matrix()))
+    #print(generate_generator_matrix_from_check_matrix(generate_parity_check_matrix()))
     # matrix = init_matrix(k,l,g)
     # search_matrix(k, l, g)
     # search_matrix_iteration(k, l, g)
     # matrix = init_matrix_by_file("/home/msms/OOPPO/oppo_project/afile.dat")
-    # if_Target_matrix_final(k,l,g,matrix)
+    if_Target_matrix_final(k,l,g,generate_generator_matrix_from_check_matrix(generate_parity_check_matrix(k, g, math.ceil(k/l),l),k, g, math.ceil(k/l),l))
