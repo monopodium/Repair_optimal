@@ -1,0 +1,3 @@
+[submodule "LRC"]
+	path = LRC
+	url = https://github.com/monopodium/LRCs
