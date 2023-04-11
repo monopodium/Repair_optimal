@@ -16,75 +16,79 @@ namespace REPAIR
         m_d = m_g + 2;
         return m_d;
     };
-    // void Azure_LRC_Class::generate_best_placement()
-    // {
-    //     int b = m_d - 1;
-    //     for (int i = 0; i < m_n; i++)
-    //     {
-    //         m_best_placement_raw.push_back(Cluster(i, b));
-    //     }
-    //     for (int i = 0; i < m_l; i++)
-    //     {
-    //         std::vector<std::string> group = m_stripe_information[i];
-    //         int cur_group_len = group.size();
-    //         if (b >= cur_group_len)
-    //         {
-    //             for (Cluster &each_cluster : m_best_placement_raw)
-    //             {
-    //                 // /
-    //                 if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + m_g >= each_cluster.return_block_number() + cur_group_len)
-    //                 {
-    //                     for (std::string block : group)
-    //                     {
-    //                         each_cluster.add_new_block(block, i);
-    //                         m_best_placement_map[block] = each_cluster.return_id();
-    //                     }
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //         else
-    //         {
-    //             int cluster_number = ceil(cur_group_len, b);
-    //             for (int j = 0; j < cluster_number; j++)
-    //             {
-    //                 int number_in_group = std::min(b, cur_group_len - j * b);
-    //                 for (Cluster &each_cluster : m_best_placement_raw)
-    //                 {
-    //                     if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + m_g >=
-    //                         each_cluster.return_block_number() + number_in_group)
-    //                     {
-    //                         for (int ii = 0; ii < number_in_group; ii++)
-    //                         {
-    //                             each_cluster.add_new_block(group[j * b + ii], i);
-    //                             m_best_placement_map[group[j * b + ii]] = each_cluster.return_id();
-    //                         }
-    //                         break;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     for (Cluster &each_cluster : m_best_placement_raw)
-    //     {
-    //         if (each_cluster.return_block_number() == 0)
-    //         {
-    //             for (std::string block : m_stripe_information[m_stripe_information.size() - 1])
-    //             {
-    //                 each_cluster.add_new_block(block, m_stripe_information.size() - 1);
-    //                 m_best_placement_map[block] = each_cluster.return_id();
-    //             }
-    //             break;
-    //         }
-    //     }
-    //     for (int i = 0; i < m_n; i++)
-    //     {
-    //         if (m_best_placement_raw[i].return_block_number() == 0)
-    //         {
-    //             m_best_placement_raw.erase(m_best_placement_raw.begin() + i);
-    //         }
-    //     }
-    // };
+/**
+    void Azure_LRC_Class::generate_best_placement()
+    {
+        int b = m_d - 1;
+        for (int i = 0; i < m_n; i++)
+        {
+            m_best_placement_raw.push_back(Cluster(i, b));
+        }
+        for (int i = 0; i < m_l; i++)
+        {
+            std::vector<std::string> group = m_stripe_information[i];
+            int cur_group_len = group.size();
+            if (b >= cur_group_len)
+            {
+                for (Cluster &each_cluster : m_best_placement_raw)
+                {
+                    // /
+                    if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + m_g >= each_cluster.return_block_number() + cur_group_len)
+                    {
+                        for (std::string block : group)
+                        {
+                            each_cluster.add_new_block(block, i);
+                            m_best_placement_map[block] = each_cluster.return_id();
+                        }
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                int cluster_number = ceil(cur_group_len, b);
+                for (int j = 0; j < cluster_number; j++)
+                {
+                    int number_in_group = std::min(b, cur_group_len - j * b);
+                    for (Cluster &each_cluster : m_best_placement_raw)
+                    {
+                        if (int(each_cluster.is_from_new_group(i)) + each_cluster.form_group_number() + m_g >=
+                            each_cluster.return_block_number() + number_in_group)
+                        {
+                            for (int ii = 0; ii < number_in_group; ii++)
+                            {
+                                each_cluster.add_new_block(group[j * b + ii], i);
+                                m_best_placement_map[group[j * b + ii]] = each_cluster.return_id();
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        for (Cluster &each_cluster : m_best_placement_raw)
+        {
+            if (each_cluster.return_block_number() == 0)
+            {
+                for (std::string block : m_stripe_information[m_stripe_information.size() - 1])
+                {
+                    each_cluster.add_new_block(block, m_stripe_information.size() - 1);
+                    m_best_placement_map[block] = each_cluster.return_id();
+                }
+                break;
+            }
+        }
+        for (int i = 0; i < m_n; i++)
+        {
+            if (m_best_placement_raw[i].return_block_number() == 0)
+            {
+                m_best_placement_raw.erase(m_best_placement_raw.begin() + i);
+            }
+        }
+    };
+**/
+
+
      void Azure_LRC_Class::generate_best_placement()
     {
         for (int i = 0; i < m_n; i++)
@@ -144,7 +148,6 @@ namespace REPAIR
             {
                 if (m_best_placement_raw[p_cluster].return_nonparity_number() + remain_list[j].size() > m_g)
                 {
-                    std::cout<<"m_best_placement_raw[p_cluster].return_nonparity_number():"<<m_best_placement_raw[p_cluster].return_nonparity_number()<<std::endl;
                     p_cluster++;
                 }
                 for (auto block : remain_list[j])
@@ -212,7 +215,8 @@ namespace REPAIR
         {
             std::cout << "!!!best Azure_LRC check_cluster_information() error" << std::endl;
         }
-    };   
+    };
+
     void Azure_LRC_Class::nkr_to_klgr(int n, int k, int r)
     {
         m_l = ceil(k, r);
@@ -273,14 +277,14 @@ namespace REPAIR
         for (std::string item : m_stripe_information[m_stripe_information.size() - 1])
         {
             std::vector<std::string> repair_request;
-            for (std::string other_item : m_stripe_information[m_stripe_information.size() - 1])
-            {
-                if (other_item != item)
-                {
-                    repair_request.push_back(other_item);
-                }
-            }
-            for(int i = 0;i < m_k - m_g + 1;i++){
+            // for (std::string other_item : m_stripe_information[m_stripe_information.size() - 1])
+            // {
+            //     if (other_item != item)
+            //     {
+            //         repair_request.push_back(other_item);
+            //     }
+            // }
+            for(int i = 0;i < m_k;i++){
                 repair_request.push_back(s_index_to_string(i));
             }
             m_block_repair_request[item] = repair_request;

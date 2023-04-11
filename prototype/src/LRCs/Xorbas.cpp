@@ -204,7 +204,6 @@ namespace REPAIR
             {
                 if (m_best_placement_raw[p_cluster].return_nonparity_number() + remain_list[j].size() > m_g)
                 {
-                    std::cout<<"m_best_placement_raw[p_cluster].return_nonparity_number():"<<m_best_placement_raw[p_cluster].return_nonparity_number()<<std::endl;
                     p_cluster++;
                 }
                 for (auto block : remain_list[j])
