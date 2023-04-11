@@ -6,7 +6,16 @@ parameter_option = [(7, 4, 2), (10, 6, 3), (12, 8, 4), (15, 10, 5), (16, 10, 5)]
 data_size_option = [1, 4, 16, 256, 1024, 4096]
 bindwith_option = [493355, 657806, 986710, 1973420, 9867100]
 all_result = {}
-default_data = {"placement": "Random", "parameter": (12, 8, 4), "data_size": 1024, "bindwith": 986710, "DRC": 1, "NRR": 1, "maxDRC": 1, "minDRC": 1, "maxNRR": 1, "minNRR": 1}
+default_data = {"placement": "Random",
+                "parameter": (12, 8, 4), 
+                "data_size": 1024, 
+                "bindwith": 986710, 
+                "DRC": 1, 
+                "NRR": 1, 
+                "maxDRC": 1, 
+                "minDRC": 1, 
+                "maxNRR": 1, 
+                "minNRR": 1}
 
 
 def draw_bar(x, y1, y2, y3, xlabel, ylabel, yticks, name, yerr1, yerr2, yerr3):

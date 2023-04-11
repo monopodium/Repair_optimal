@@ -14,6 +14,7 @@ def draw_bars_diff_placement(x_labels, y_NRC, y_DRC, legends, yticks,
     legends的结构如下:[legend1, legend2, legend3]
 
     '''
+    dpi_p = 300
     x_labels = [str(item) for item in x_labels]
     check_flag = True
     for i in range(len(y_NRC)-1):
@@ -39,6 +40,7 @@ def draw_bars_diff_placement(x_labels, y_NRC, y_DRC, legends, yticks,
     xticks = np.arange(len(x_labels)) * tick_step + bar_width
     baseline_x = xticks
     plt_list = []
+    plt.figure(dpi=dpi_p,figsize=(21,5))
     for index, y in enumerate(y_NRC):
         x_index = baseline_x + (index-1)*bar_span
         y_new = x_index * [0]
@@ -52,8 +54,8 @@ def draw_bars_diff_placement(x_labels, y_NRC, y_DRC, legends, yticks,
         plt_list.append(tmp_bar)
         for a, b in zip(x_index, y):
             if b is not None:
-                plt.text(a + 0.3, b + 0.05, np.round(b, decimals=1),
-                         ha='center', va='bottom', fontsize=10)
+                plt.text(a, b + 0.05, np.round(b, decimals=1),
+                         ha='center', va='bottom', fontsize=8)
 
     x_index = baseline_x - bar_span
     tmp_scatter = plt.scatter(x_index, y_DRC[0], s=80, marker='_', c='k', zorder=1)
@@ -75,10 +77,10 @@ def draw_bars_diff_placement(x_labels, y_NRC, y_DRC, legends, yticks,
     plt.xticks(xticks, x_labels, fontsize=14)
     plt.xticks(rotation=45, fontsize=14)
     plt.yticks(fontsize=14)
-    plt.legend(handles=plt_list, labels=legends, loc='best', fontsize=14,
+    plt.legend(handles=plt_list, labels=legends, loc='upper left', fontsize=14,
                frameon=False)
     #plt.show()
-    plt.savefig(file_name)
+    plt.savefig(file_name, bbox_inches='tight',dpi=dpi_p)
 
 
 def draw_bars_diff_code(x_labels, y_NRC, y_DRC, legends, yticks,
@@ -89,7 +91,7 @@ def draw_bars_diff_code(x_labels, y_NRC, y_DRC, legends, yticks,
     group_num = len(y_NRC)
     group_width = tick_step - group_gap
     bar_span = group_width / group_num
-    dpi_p = 100
+    dpi_p = 300
     bar_width = bar_span - bar_gap
     baseline_x = xticks
     
