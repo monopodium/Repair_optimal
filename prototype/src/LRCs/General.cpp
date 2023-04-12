@@ -205,7 +205,7 @@ namespace REPAIR
         generate_placement(placement_type, seed);
         if (placement_type == REPAIR::Random)
         {
-
+            
             generate_repair_cost(m_random_placement_map);
         }
         else if (placement_type == REPAIR::Flat)
