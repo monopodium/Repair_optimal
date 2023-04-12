@@ -12,7 +12,7 @@ MEMCACHED_PACKAGES_DIR=$CRT_DIR"/packages/memcached-1.6.18"
 JERASURE_PACKAGES_DIR=$CRT_DIR"/packages/Jerasure"
 GF_COMPLETE_PACKAGES_DIR=$CRT_DIR"/packages/gf-complete"
 XML_PACKAGES_DIR=$CRT_DIR"/packages/tinyxml2"
-PYBIND_PACKAGES_DIR=$CRT_DIR"/packages/pybind11"
+PYBIND_PACKAGES_DIR=$CRT_DIR"/packages/pybind11-2.10.4"
 LIBMEMCACHED_PACKAGES_DIR=$CRT_DIR"/packages/libmemcached-1.0.18"
 
 PACKAGES_DIR=$CRT_DIR"/packages" 
@@ -67,7 +67,8 @@ make -j6
 make install
 
 cd $PACKAGES_DIR
-git clone git@github.com:pybind/pybind11.git
+wget https://github.com/pybind/pybind11/archive/refs/tags/v2.10.4.tar.gz
+tar -xvzf v2.10.4.tar.gz
 mv $PYBIND_PACKAGES_DIR/pybind11 $PYBIND_INSTALL_DIR
 mv $PYBIND_PACKAGES_DIR/include $PYBIND_INSTALL_DIR
 mv $PYBIND_PACKAGES_DIR/tools $PYBIND_INSTALL_DIR
