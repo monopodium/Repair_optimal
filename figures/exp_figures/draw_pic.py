@@ -230,7 +230,7 @@ def draw_NRR_diff_bandwidth_4M():
 
 
 if __name__ == '__main__':
-    analysis_file('./result_xorbas.txt')
+    analysis_file('./result_azure_lrc.txt')
     # draw_DRC_diff_object_size()
     # draw_NRR_diff_object_size()
 
