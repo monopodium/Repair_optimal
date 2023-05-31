@@ -1,3 +1,18 @@
+import Code_parameters
+Placement_types = [
+    Code_parameters.PlacementType.Flat,
+    Code_parameters.PlacementType.Random,
+    Code_parameters.PlacementType.Best_Placement
+]
+
+Code_types = {
+    "Optimal_LRC":Code_parameters.EncodeType.Optimal_LRC,
+    "Azure LRC":Code_parameters.EncodeType.Azure_LRC,
+    "Azure+1 LRC":Code_parameters.EncodeType.Azure_LRC_1#,
+    #"Xorbas":Code_parameters.EncodeType.Xorbas
+}
+
+
 PARAMETERS_OPT = [
     (6, 3, 2),
     (7, 4, 3),
@@ -298,3 +313,9 @@ NEW_AZURE_LRC = [
     (18, 12, 4),
     (18, 12, 5)
 ]
+PARAMETERS_DIFF ={
+    "Optimal_LRC":PARAMETERS_OPT,
+    "Azure LRC":PARAMETERS_OPT,
+    "Azure+1 LRC":PARAMETERS_Azure_LRC_1,
+    "Xorbas":PARAMETERS_OPT
+}

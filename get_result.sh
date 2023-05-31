@@ -67,71 +67,71 @@ NETWORKCORE_IP='10.0.0.61'
 PLACEMENT_PLAN=('Best_Placement' 'Random' 'Flat')
 PLACEMENT_NUM=${#PLACEMENT_PLAN[@]}
 PLACEMENT_NUM=`expr $PLACEMENT_NUM - 1`
-# #different paramter
-# #1k
-# BLOCK_SIZE_ARRAY=(1 4 16 256 1024 4096)
-# BLOCK_SIZE_NUM=${#BLOCK_SIZE_ARRAY[@]}
-# echo $BLOCK_SIZE_NUM
-# BLOCK_SIZE_NUM=`expr $BLOCK_SIZE_NUM - 1`
-# ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
-# ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -a enp4s0f1 -d 986710'
-# echo '#different size'>>$result_path
-# echo 'ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -a enp4s0f1 -d 986710''>>$result_path
+#different paramter
+#1k
+BLOCK_SIZE_ARRAY=(1 4 16 256 1024 4096)
+BLOCK_SIZE_NUM=${#BLOCK_SIZE_ARRAY[@]}
+echo $BLOCK_SIZE_NUM
+BLOCK_SIZE_NUM=`expr $BLOCK_SIZE_NUM - 1`
+ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
+ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -a enp4s0f1 -d 986710'
+echo '#different size'>>$result_path
+echo 'ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -a enp4s0f1 -d 986710''>>$result_path
 
-# for i2 in $(seq 0 $BLOCK_SIZE_NUM)
-# do
-#     block_size=${BLOCK_SIZE_ARRAY[$i2]}
-#     n_k_r='12 8 4'
-#     start_close_memcached 0
-#     start_close_memcached 2
-#     for j2 in $(seq 0 $PLACEMENT_NUM)
-#     do 
-#         #sleep 10s   
-#         placement=${PLACEMENT_PLAN[$j2]}
-#         echo './prototype/cmake/build/client true Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''>>$result_path
-#         echo './prototype/cmake/build/client true Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''
-#         ./prototype/cmake/build/client true Xorbas $placement $n_k_r $block_size $RUN_TIMES      
-#     done
-# done
-# ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
+for i2 in $(seq 0 $BLOCK_SIZE_NUM)
+do
+    block_size=${BLOCK_SIZE_ARRAY[$i2]}
+    n_k_r='12 8 4'
+    start_close_memcached 0
+    start_close_memcached 2
+    for j2 in $(seq 0 $PLACEMENT_NUM)
+    do 
+        #sleep 10s   
+        placement=${PLACEMENT_PLAN[$j2]}
+        echo './prototype/cmake/build/client true Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''>>$result_path
+        echo './prototype/cmake/build/client true Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''
+        ./prototype/cmake/build/client true Xorbas $placement $n_k_r $block_size $RUN_TIMES      
+    done
+done
+ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
 
-# #different paramter,1M,4M
-# N_K_R_ARRAY=('16 10 5' '15 10 5' '10 6 3' '7 4 2')
-# N_K_R_NUM=${#N_K_R_ARRAY[@]}
-# echo $N_K_R_NUM
-# N_K_R_NUM=`expr $N_K_R_NUM - 1`
-# ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
-# ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -a enp4s0f1 -d 986710'
-# echo '#different parameter'>>$result_path
-# echo 'ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -a enp4s0f1 -d 986710''>>$result_path
-# for i3 in $(seq 0 $N_K_R_NUM)
-# do
-#     n_k_r=${N_K_R_ARRAY[$i3]}
-#     block_size=1024  
-#     for j3 in $(seq 0 $PLACEMENT_NUM)
-#     do
-#         start_close_memcached 0
-#         start_close_memcached 2
-#         placement=${PLACEMENT_PLAN[$j3]}
-#         echo './prototype/cmake/build/client true Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''>>$result_path
-#         echo './prototype/cmake/build/client true Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''
-#         ./prototype/cmake/build/client true Xorbas $placement $n_k_r $block_size $RUN_TIMES
-#     done
-#     block_size=4096
-#     for j3 in $(seq 0 $PLACEMENT_NUM)
-#     do
-#         start_close_memcached 0
-#         start_close_memcached 2
-#         placement=${PLACEMENT_PLAN[$j3]}
-#         echo './prototype/cmake/build/client true Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''>>$result_path
-#         echo './prototype/cmake/build/client true Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''
-#         ./prototype/cmake/build/client true Xorbas $placement $n_k_r $block_size $RUN_TIMES
-#     done
-# done
-# ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
+#different paramter,1M,4M
+N_K_R_ARRAY=('16 10 5' '15 10 5' '10 6 3' '7 4 2')
+N_K_R_NUM=${#N_K_R_ARRAY[@]}
+echo $N_K_R_NUM
+N_K_R_NUM=`expr $N_K_R_NUM - 1`
+ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
+ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -a enp4s0f1 -d 986710'
+echo '#different parameter'>>$result_path
+echo 'ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -a enp4s0f1 -d 986710''>>$result_path
+for i3 in $(seq 0 $N_K_R_NUM)
+do
+    n_k_r=${N_K_R_ARRAY[$i3]}
+    block_size=1024  
+    for j3 in $(seq 0 $PLACEMENT_NUM)
+    do
+        start_close_memcached 0
+        start_close_memcached 2
+        placement=${PLACEMENT_PLAN[$j3]}
+        echo './prototype/cmake/build/client true Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''>>$result_path
+        echo './prototype/cmake/build/client true Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''
+        ./prototype/cmake/build/client true Xorbas $placement $n_k_r $block_size $RUN_TIMES
+    done
+    block_size=4096
+    for j3 in $(seq 0 $PLACEMENT_NUM)
+    do
+        start_close_memcached 0
+        start_close_memcached 2
+        placement=${PLACEMENT_PLAN[$j3]}
+        echo './prototype/cmake/build/client true Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''>>$result_path
+        echo './prototype/cmake/build/client true Xorbas '$placement' '$n_k_r' '$block_size' '$RUN_TIMES''
+        ./prototype/cmake/build/client true Xorbas $placement $n_k_r $block_size $RUN_TIMES
+    done
+done
+ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
 
-# #different bandwidth,1M,4M
-#Bandwidth_RATIO_ARRAY=(1 5 15 20)
+#different bandwidth,1M,4M
+Bandwidth_RATIO_ARRAY=(1 5 15 20)
 Bandwidth_ARRAY=(9867100 1973420 657806 493355)
 
 Bandwidth_ARRAY_NUM=${#Bandwidth_ARRAY[@]}

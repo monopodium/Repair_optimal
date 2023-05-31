@@ -1,0 +1,495 @@
+#different size
+ssh msms@$NETWORKCORE_IP sudo ./wondershaper/wondershaper -a enp4s0f1 -d 986710
+./prototype/cmake/build/client true Azure_LRC Best_Placement 16 12 6 1 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 16 k: 12 r: 6 value_size_kbytes: 1 run_times: 5
+DRC(micro second): 623.69
+DRC_min(micro second): 618.713
+DRC_max(micro second): 631.313
+repair_Rate_MiB/(second): 0.121203
+repair_Rate_MiB_min/(second): 0.120658
+repair_Rate_MiB_max/(second): 0.121619
+
+./prototype/cmake/build/client true Azure_LRC Random 16 12 6 1 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 16 k: 12 r: 6 value_size_kbytes: 1 run_times: 5
+DRC(micro second): 893.961
+DRC_min(micro second): 888.688
+DRC_max(micro second): 896.684
+repair_Rate_MiB/(second): 0.0861213
+repair_Rate_MiB_min/(second): 0.0860366
+repair_Rate_MiB_max/(second): 0.0863379
+
+./prototype/cmake/build/client true Azure_LRC Flat 16 12 6 1 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 16 k: 12 r: 6 value_size_kbytes: 1 run_times: 5
+DRC(micro second): 1092.97
+DRC_min(micro second): 1091.27
+DRC_max(micro second): 1095.03
+repair_Rate_MiB/(second): 0.0683669
+repair_Rate_MiB_min/(second): 0.0682484
+repair_Rate_MiB_max/(second): 0.0685011
+
+./prototype/cmake/build/client true Azure_LRC Best_Placement 16 12 6 4 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 16 k: 12 r: 6 value_size_kbytes: 4 run_times: 5
+DRC(micro second): 612.811
+DRC_min(micro second): 600.443
+DRC_max(micro second): 628.066
+repair_Rate_MiB/(second): 0.483476
+repair_Rate_MiB_min/(second): 0.480058
+repair_Rate_MiB_max/(second): 0.486973
+
+./prototype/cmake/build/client true Azure_LRC Random 16 12 6 4 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 16 k: 12 r: 6 value_size_kbytes: 4 run_times: 5
+DRC(micro second): 906.327
+DRC_min(micro second): 904.195
+DRC_max(micro second): 909.536
+repair_Rate_MiB/(second): 0.339888
+repair_Rate_MiB_min/(second): 0.338306
+repair_Rate_MiB_max/(second): 0.342351
+
+./prototype/cmake/build/client true Azure_LRC Flat 16 12 6 4 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 16 k: 12 r: 6 value_size_kbytes: 4 run_times: 5
+DRC(micro second): 1104.39
+DRC_min(micro second): 1102.17
+DRC_max(micro second): 1107.91
+repair_Rate_MiB/(second): 0.270885
+repair_Rate_MiB_min/(second): 0.269932
+repair_Rate_MiB_max/(second): 0.272207
+
+./prototype/cmake/build/client true Azure_LRC Best_Placement 16 12 6 16 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 16 k: 12 r: 6 value_size_kbytes: 16 run_times: 5
+DRC(micro second): 663.941
+DRC_min(micro second): 659.41
+DRC_max(micro second): 672.47
+repair_Rate_MiB/(second): 1.81966
+repair_Rate_MiB_min/(second): 1.80884
+repair_Rate_MiB_max/(second): 1.82789
+
+./prototype/cmake/build/client true Azure_LRC Random 16 12 6 16 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 16 k: 12 r: 6 value_size_kbytes: 16 run_times: 5
+DRC(micro second): 946.917
+DRC_min(micro second): 944.242
+DRC_max(micro second): 949.49
+repair_Rate_MiB/(second): 1.30416
+repair_Rate_MiB_min/(second): 1.30249
+repair_Rate_MiB_max/(second): 1.30576
+
+./prototype/cmake/build/client true Azure_LRC Flat 16 12 6 16 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 16 k: 12 r: 6 value_size_kbytes: 16 run_times: 5
+DRC(micro second): 1165.97
+DRC_min(micro second): 1158.32
+DRC_max(micro second): 1173.48
+repair_Rate_MiB/(second): 1.02584
+repair_Rate_MiB_min/(second): 1.01987
+repair_Rate_MiB_max/(second): 1.0392
+
+./prototype/cmake/build/client true Azure_LRC Best_Placement 16 12 6 256 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 16 k: 12 r: 6 value_size_kbytes: 256 run_times: 5
+DRC(micro second): 1327.27
+DRC_min(micro second): 1279.75
+DRC_max(micro second): 1345.44
+repair_Rate_MiB/(second): 14.7336
+repair_Rate_MiB_min/(second): 14.5815
+repair_Rate_MiB_max/(second): 14.8148
+
+./prototype/cmake/build/client true Azure_LRC Random 16 12 6 256 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 16 k: 12 r: 6 value_size_kbytes: 256 run_times: 5
+DRC(micro second): 2105.03
+DRC_min(micro second): 2075.18
+DRC_max(micro second): 2125.24
+repair_Rate_MiB/(second): 9.45787
+repair_Rate_MiB_min/(second): 9.36856
+repair_Rate_MiB_max/(second): 9.49668
+
+./prototype/cmake/build/client true Azure_LRC Flat 16 12 6 256 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 16 k: 12 r: 6 value_size_kbytes: 256 run_times: 5
+DRC(micro second): 2716.07
+DRC_min(micro second): 2691.95
+DRC_max(micro second): 2747.53
+repair_Rate_MiB/(second): 6.98753
+repair_Rate_MiB_min/(second): 6.94155
+repair_Rate_MiB_max/(second): 7.03235
+
+./prototype/cmake/build/client true Azure_LRC Best_Placement 16 12 6 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 16 k: 12 r: 6 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 3112.68
+DRC_min(micro second): 2983.51
+DRC_max(micro second): 3243.46
+repair_Rate_MiB/(second): 25.6082
+repair_Rate_MiB_min/(second): 25.2765
+repair_Rate_MiB_max/(second): 25.8481
+
+./prototype/cmake/build/client true Azure_LRC Random 16 12 6 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 16 k: 12 r: 6 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 5204.2
+DRC_min(micro second): 5118.99
+DRC_max(micro second): 5342.78
+repair_Rate_MiB/(second): 15.4054
+repair_Rate_MiB_min/(second): 15.2964
+repair_Rate_MiB_max/(second): 15.5189
+
+./prototype/cmake/build/client true Azure_LRC Flat 16 12 6 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 16 k: 12 r: 6 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 7068.66
+DRC_min(micro second): 6949.06
+DRC_max(micro second): 7201.49
+repair_Rate_MiB/(second): 10.7411
+repair_Rate_MiB_min/(second): 10.7239
+repair_Rate_MiB_max/(second): 10.7744
+
+./prototype/cmake/build/client true Azure_LRC Best_Placement 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 10936.6
+DRC_min(micro second): 10530.8
+DRC_max(micro second): 11629.1
+repair_Rate_MiB/(second): 29.4226
+repair_Rate_MiB_min/(second): 29.0909
+repair_Rate_MiB_max/(second): 30.1318
+
+./prototype/cmake/build/client true Azure_LRC Random 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 21788.1
+DRC_min(micro second): 21541.9
+DRC_max(micro second): 22340.4
+repair_Rate_MiB/(second): 14.2755
+repair_Rate_MiB_min/(second): 14.0721
+repair_Rate_MiB_max/(second): 14.6386
+
+./prototype/cmake/build/client true Azure_LRC Flat 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 25881
+DRC_min(micro second): 25331.1
+DRC_max(micro second): 26527.6
+repair_Rate_MiB/(second): 11.3507
+repair_Rate_MiB_min/(second): 11.236
+repair_Rate_MiB_max/(second): 11.5942
+
+#different parameter
+ssh msms@$NETWORKCORE_IP sudo ./wondershaper/wondershaper -a enp4s0f1 -d 986710
+./prototype/cmake/build/client true Azure_LRC Best_Placement 12 6 3 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 12 k: 6 r: 3 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 1392.54
+DRC_min(micro second): 1225.78
+DRC_max(micro second): 1496.93
+repair_Rate_MiB/(second): 79.1035
+repair_Rate_MiB_min/(second): 77.1704
+repair_Rate_MiB_max/(second): 81.3559
+
+./prototype/cmake/build/client true Azure_LRC Random 12 6 3 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 12 k: 6 r: 3 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 5056.93
+DRC_min(micro second): 4894.96
+DRC_max(micro second): 5207.54
+repair_Rate_MiB/(second): 30.0526
+repair_Rate_MiB_min/(second): 29.9625
+repair_Rate_MiB_max/(second): 30.1887
+
+./prototype/cmake/build/client true Azure_LRC Flat 12 6 3 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 12 k: 6 r: 3 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 6935.51
+DRC_min(micro second): 6769.94
+DRC_max(micro second): 7123.54
+repair_Rate_MiB/(second): 18.6278
+repair_Rate_MiB_min/(second): 18.2788
+repair_Rate_MiB_max/(second): 18.8828
+
+./prototype/cmake/build/client true Azure_LRC Best_Placement 12 6 3 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 12 k: 6 r: 3 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 5262.69
+DRC_min(micro second): 4049.5
+DRC_max(micro second): 7113.72
+repair_Rate_MiB/(second): 92.8074
+repair_Rate_MiB_min/(second): 91.2548
+repair_Rate_MiB_max/(second): 97.166
+
+./prototype/cmake/build/client true Azure_LRC Random 12 6 3 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 12 k: 6 r: 3 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 19252.4
+DRC_min(micro second): 18501.8
+DRC_max(micro second): 20950.5
+repair_Rate_MiB/(second): 35.9928
+repair_Rate_MiB_min/(second): 33.8505
+repair_Rate_MiB_max/(second): 37.037
+
+./prototype/cmake/build/client true Azure_LRC Flat 12 6 3 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 12 k: 6 r: 3 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 26468.8
+DRC_min(micro second): 25642.5
+DRC_max(micro second): 27577.2
+repair_Rate_MiB/(second): 19.1296
+repair_Rate_MiB_min/(second): 18.794
+repair_Rate_MiB_max/(second): 19.4805
+
+./prototype/cmake/build/client true Azure_LRC Best_Placement 16 10 5 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 16 k: 10 r: 5 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 2433.24
+DRC_min(micro second): 2399.73
+DRC_max(micro second): 2510.42
+repair_Rate_MiB/(second): 36.9942
+repair_Rate_MiB_min/(second): 36.4326
+repair_Rate_MiB_max/(second): 37.2816
+
+./prototype/cmake/build/client true Azure_LRC Random 16 10 5 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 16 k: 10 r: 5 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 4548.08
+DRC_min(micro second): 4426.07
+DRC_max(micro second): 4652.9
+repair_Rate_MiB/(second): 20.2063
+repair_Rate_MiB_min/(second): 20.0209
+repair_Rate_MiB_max/(second): 20.339
+
+./prototype/cmake/build/client true Azure_LRC Flat 16 10 5 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 16 k: 10 r: 5 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 7024.26
+DRC_min(micro second): 6905.98
+DRC_max(micro second): 7205.76
+repair_Rate_MiB/(second): 11.8081
+repair_Rate_MiB_min/(second): 11.7216
+repair_Rate_MiB_max/(second): 11.8885
+
+./prototype/cmake/build/client true Azure_LRC Best_Placement 16 10 5 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 16 k: 10 r: 5 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 7840.87
+DRC_min(micro second): 7317.73
+DRC_max(micro second): 9116.83
+repair_Rate_MiB/(second): 45.7361
+repair_Rate_MiB_min/(second): 44.9649
+repair_Rate_MiB_max/(second): 46.8293
+
+./prototype/cmake/build/client true Azure_LRC Random 16 10 5 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 16 k: 10 r: 5 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 16784.8
+DRC_min(micro second): 16147.3
+DRC_max(micro second): 17760.9
+repair_Rate_MiB/(second): 22.6362
+repair_Rate_MiB_min/(second): 22.3776
+repair_Rate_MiB_max/(second): 22.9665
+
+./prototype/cmake/build/client true Azure_LRC Flat 16 10 5 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 16 k: 10 r: 5 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 26262
+DRC_min(micro second): 25713.3
+DRC_max(micro second): 26753.3
+repair_Rate_MiB/(second): 12.2794
+repair_Rate_MiB_min/(second): 12.1289
+repair_Rate_MiB_max/(second): 12.4111
+
+./prototype/cmake/build/client true Azure_LRC Best_Placement 18 12 5 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 18 k: 12 r: 5 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 1881.64
+DRC_min(micro second): 1860.79
+DRC_max(micro second): 1909.49
+repair_Rate_MiB/(second): 38.2328
+repair_Rate_MiB_min/(second): 37.9747
+repair_Rate_MiB_max/(second): 38.4615
+
+./prototype/cmake/build/client true Azure_LRC Random 18 12 5 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 18 k: 12 r: 5 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 4358.19
+DRC_min(micro second): 4241.44
+DRC_max(micro second): 4521.6
+repair_Rate_MiB/(second): 17.748
+repair_Rate_MiB_min/(second): 17.5268
+repair_Rate_MiB_max/(second): 17.982
+
+./prototype/cmake/build/client true Azure_LRC Flat 18 12 5 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 18 k: 12 r: 5 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 5484.83
+DRC_min(micro second): 5371.01
+DRC_max(micro second): 5642.73
+repair_Rate_MiB/(second): 12.5401
+repair_Rate_MiB_min/(second): 12.4567
+repair_Rate_MiB_max/(second): 12.6761
+
+./prototype/cmake/build/client true Azure_LRC Best_Placement 18 12 5 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 18 k: 12 r: 5 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 6218.02
+DRC_min(micro second): 5947.64
+DRC_max(micro second): 6928.25
+repair_Rate_MiB/(second): 46.4876
+repair_Rate_MiB_min/(second): 46.1538
+repair_Rate_MiB_max/(second): 47.2441
+
+./prototype/cmake/build/client true Azure_LRC Random 18 12 5 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 18 k: 12 r: 5 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 13557.2
+DRC_min(micro second): 13249.6
+DRC_max(micro second): 14321.7
+repair_Rate_MiB/(second): 22.5564
+repair_Rate_MiB_min/(second): 22.4439
+repair_Rate_MiB_max/(second): 22.9008
+
+./prototype/cmake/build/client true Azure_LRC Flat 18 12 5 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 18 k: 12 r: 5 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 20165.2
+DRC_min(micro second): 19481.2
+DRC_max(micro second): 20620.4
+repair_Rate_MiB/(second): 13.5338
+repair_Rate_MiB_min/(second): 13.2646
+repair_Rate_MiB_max/(second): 13.8889
+
+./prototype/cmake/build/client true Azure_LRC Best_Placement 24 15 5 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 24 k: 15 r: 5 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 1007.08
+DRC_min(micro second): 975.017
+DRC_max(micro second): 1043.79
+repair_Rate_MiB/(second): 44.9228
+repair_Rate_MiB_min/(second): 43.7358
+repair_Rate_MiB_max/(second): 45.933
+
+./prototype/cmake/build/client true Azure_LRC Random 24 15 5 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 24 k: 15 r: 5 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 3512.41
+DRC_min(micro second): 3420.94
+DRC_max(micro second): 3663.97
+repair_Rate_MiB/(second): 16.6147
+repair_Rate_MiB_min/(second): 16.5375
+repair_Rate_MiB_max/(second): 16.6811
+
+./prototype/cmake/build/client true Azure_LRC Flat 24 15 5 1024 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 24 k: 15 r: 5 value_size_kbytes: 1024 run_times: 5
+DRC(micro second): 5316.98
+DRC_min(micro second): 5195.33
+DRC_max(micro second): 5463.71
+repair_Rate_MiB/(second): 8.84874
+repair_Rate_MiB_min/(second): 8.81543
+repair_Rate_MiB_max/(second): 8.89301
+
+./prototype/cmake/build/client true Azure_LRC Best_Placement 24 15 5 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 24 k: 15 r: 5 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 2926.2
+DRC_min(micro second): 2752.13
+DRC_max(micro second): 3305.2
+repair_Rate_MiB/(second): 59.2959
+repair_Rate_MiB_min/(second): 56.6372
+repair_Rate_MiB_max/(second): 62.5407
+
+./prototype/cmake/build/client true Azure_LRC Random 24 15 5 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 24 k: 15 r: 5 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 12883.4
+DRC_min(micro second): 11868.2
+DRC_max(micro second): 14585.3
+repair_Rate_MiB/(second): 17.3035
+repair_Rate_MiB_min/(second): 16.0669
+repair_Rate_MiB_max/(second): 18.0451
+
+./prototype/cmake/build/client true Azure_LRC Flat 24 15 5 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 24 k: 15 r: 5 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 18370.2
+DRC_min(micro second): 17819.8
+DRC_max(micro second): 18638.9
+repair_Rate_MiB/(second): 10.065
+repair_Rate_MiB_min/(second): 9.83607
+repair_Rate_MiB_max/(second): 10.356
+
+#different bandwidth
+ssh msms@10.0.0.61 sudo ./wondershaper/wondershaper -a enp4s0f1 -d 9867100
+./prototype/cmake/build/client true Azure_LRC Best_Placement 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 5444.55
+DRC_min(micro second): 5150.5
+DRC_max(micro second): 5931.03
+repair_Rate_MiB/(second): 59.4796
+repair_Rate_MiB_min/(second): 57.7617
+repair_Rate_MiB_max/(second): 60.8365
+
+./prototype/cmake/build/client true Azure_LRC Random 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 7724.35
+DRC_min(micro second): 6902.72
+DRC_max(micro second): 9292.81
+repair_Rate_MiB/(second): 43.8116
+repair_Rate_MiB_min/(second): 43.0108
+repair_Rate_MiB_max/(second): 44.1989
+
+./prototype/cmake/build/client true Azure_LRC Flat 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 9764.78
+DRC_min(micro second): 9160.25
+DRC_max(micro second): 11137.9
+repair_Rate_MiB/(second): 32.3756
+repair_Rate_MiB_min/(second): 31.8725
+repair_Rate_MiB_max/(second): 32.8542
+
+ssh msms@10.0.0.61 sudo ./wondershaper/wondershaper -a enp4s0f1 -d 1973420
+./prototype/cmake/build/client true Azure_LRC Best_Placement 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 7686.38
+DRC_min(micro second): 7237.33
+DRC_max(micro second): 8739.78
+repair_Rate_MiB/(second): 41.8629
+repair_Rate_MiB_min/(second): 40.6091
+repair_Rate_MiB_max/(second): 43.1267
+
+./prototype/cmake/build/client true Azure_LRC Random 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 12783.3
+DRC_min(micro second): 12190.4
+DRC_max(micro second): 13587.2
+repair_Rate_MiB/(second): 25.6328
+repair_Rate_MiB_min/(second): 25.4372
+repair_Rate_MiB_max/(second): 26.0163
+
+./prototype/cmake/build/client true Azure_LRC Flat 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 17102.4
+DRC_min(micro second): 16423.4
+DRC_max(micro second): 18186
+repair_Rate_MiB/(second): 18.2774
+repair_Rate_MiB_min/(second): 17.6796
+repair_Rate_MiB_max/(second): 18.6916
+
+ssh msms@10.0.0.61 sudo ./wondershaper/wondershaper -a enp4s0f1 -d 657806
+./prototype/cmake/build/client true Azure_LRC Best_Placement 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 13743.3
+DRC_min(micro second): 13485.3
+DRC_max(micro second): 13998.1
+repair_Rate_MiB/(second): 22.7661
+repair_Rate_MiB_min/(second): 22.4404
+repair_Rate_MiB_max/(second): 22.9555
+
+./prototype/cmake/build/client true Azure_LRC Random 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 25348.3
+DRC_min(micro second): 24666.6
+DRC_max(micro second): 26094.2
+repair_Rate_MiB/(second): 12.2026
+repair_Rate_MiB_min/(second): 12.0573
+repair_Rate_MiB_max/(second): 12.3743
+
+./prototype/cmake/build/client true Azure_LRC Flat 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 35753.2
+DRC_min(micro second): 34462.4
+DRC_max(micro second): 36428.9
+repair_Rate_MiB/(second): 8.35596
+repair_Rate_MiB_min/(second): 8.30737
+repair_Rate_MiB_max/(second): 8.4122
+
+ssh msms@10.0.0.61 sudo ./wondershaper/wondershaper -a enp4s0f1 -d 493355
+./prototype/cmake/build/client true Azure_LRC Best_Placement 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 2 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 17184
+DRC_min(micro second): 16559.2
+DRC_max(micro second): 17855.3
+repair_Rate_MiB/(second): 18.2565
+repair_Rate_MiB_min/(second): 18.0791
+repair_Rate_MiB_max/(second): 18.3697
+
+./prototype/cmake/build/client true Azure_LRC Random 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 0 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 33635.9
+DRC_min(micro second): 33492.6
+DRC_max(micro second): 33704.2
+repair_Rate_MiB/(second): 9.49442
+repair_Rate_MiB_min/(second): 9.42285
+repair_Rate_MiB_max/(second): 9.58084
+
+./prototype/cmake/build/client true Azure_LRC Flat 16 12 6 4096 5
+partial_decoding:1 encode_type: 1 placement_type: 1 n: 16 k: 12 r: 6 value_size_kbytes: 4096 run_times: 5
+DRC(micro second): 45366.5
+DRC_min(micro second): 44832.6
+DRC_max(micro second): 45781.8
+repair_Rate_MiB/(second): 6.57787
+repair_Rate_MiB_min/(second): 6.54932
+repair_Rate_MiB_max/(second): 6.64176
+
