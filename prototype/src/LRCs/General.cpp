@@ -10,6 +10,19 @@ namespace REPAIR
     {
         return m_blocks.size();
     }
+    int Cluster::return_nonparity_number()
+    {
+        int count = 0;
+        for(auto block:m_blocks){
+            if(block[0]=='D'){
+                count++;
+            }
+            if(block[0]=='G'){
+                count++;
+            }
+        }
+        return count;
+    }
     void Cluster::set_upperbound(int upperbound)
     {
         m_upperbound = upperbound;
@@ -192,7 +205,7 @@ namespace REPAIR
         generate_placement(placement_type, seed);
         if (placement_type == REPAIR::Random)
         {
-
+            
             generate_repair_cost(m_random_placement_map);
         }
         else if (placement_type == REPAIR::Flat)
