@@ -206,15 +206,15 @@ namespace REPAIR
             nodes_ip_and_port;
         std::vector<int> nodes_id;
 
+        
         // Optimal_LRC_Class new_Optimal_LRC = Optimal_LRC_Class(n, k, r);
+    
         Placement placement_plan = m_encoder->generate_placement(placement_type);
-
+        
         std::vector<int> cluster_ids_dis(m_cluster_ids);
         std::random_shuffle(cluster_ids_dis.begin(), cluster_ids_dis.end(), MyRand());
         std::vector<int> all_node_ids;
-
         m_encoder->encode(data, coding, block_size);
-
         std::vector<std::thread> senders;
         int send_num = n;
         StripeItem stripe_this;
@@ -230,6 +230,7 @@ namespace REPAIR
             std::uniform_int_distribution<int> urd(0, m_Cluster_info[cluster_id].nodes.size() - 1);
             int random_number = urd(gen);
             int node_id = m_Cluster_info[cluster_id].nodes[random_number];
+            
             while (std::find(all_node_ids.begin(), all_node_ids.end(), cluster_id * 100 + node_id) != all_node_ids.end())
             {
                 random_number = (random_number + 1) % m_Cluster_info[cluster_id].nodes.size();
@@ -241,6 +242,7 @@ namespace REPAIR
 
             //node_id = j;
             stripe_this.node_ids.push_back(node_id);
+            stripe_this.cluster_id_v.push_back(placement_plan[j]);
             // std::cout << "==============" << std::endl;
             // std::cout << "shard_id " << shard_id << ", node_id " << node_id << std::endl;
             if (j < k)
@@ -254,12 +256,13 @@ namespace REPAIR
                                               shard_id.size(), (const char *)coding[j - k], block_size));
             }
         }
-
+        
         for (int j = 0; j < senders.size(); j++)
         {
             senders[j].join();
         }
         m_Stripe_info[key] = stripe_this;
+       
         return true;
     }
     bool Proxy::Get(std::string key, std::string &value)
@@ -293,6 +296,7 @@ namespace REPAIR
             receiver[j].join();
         }
         value = std::string(data.data(), value_size_bytes);
+        return true;
     }
     bool Proxy::RepairByKeyIndex(std::string key, int index)
     {
@@ -302,7 +306,7 @@ namespace REPAIR
         int block_size_bytes = key_meta_data->block_size_bytes;
         int nodeid_of_fail_block = key_meta_data->node_ids[index];
         int clusterid_of_fail_block = m_Node_info.at(nodeid_of_fail_block).Cluster_id;
-        int old_cluster_id = m_Node_info[clusterid_of_fail_block].Cluster_id;
+        int old_cluster_id = key_meta_data->cluster_id_v[index];//m_Node_info[clusterid_of_fail_block].Cluster_id;
         int new_node_id = nodeid_of_fail_block;
         std::vector<int> cluster_list;
         cluster_list.push_back(old_cluster_id);
@@ -334,14 +338,16 @@ namespace REPAIR
             std::string shard_id = key + std::to_string(request_index);
 
             int node_id = m_Stripe_info.at(key).node_ids[request_index];
-            int cluster_id = m_Node_info[node_id].Cluster_id;
+            int cluster_id_v = m_Stripe_info.at(key).cluster_id_v[request_index];
             bool cross_cluster = false;
-            if (m_encode_parameter.encodetype != Flat)
+            if (m_encode_parameter.placementtype != Flat)
             {
-                if (std::find(cluster_list.begin(), cluster_list.end(), cluster_id) == cluster_list.end())
+                
+                if (std::find(cluster_list.begin(), cluster_list.end(), cluster_id_v) == cluster_list.end())
                 {
-                    cluster_list.push_back(cluster_id);
+                    cluster_list.push_back(cluster_id_v);
                     cross_cluster = true;
+                    
                 }
             }
             else

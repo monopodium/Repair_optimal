@@ -3,8 +3,8 @@ import os
 # 目前的port/生成规则和之前的sh脚本一致
 current_path = os.getcwd()
 parent_path = os.path.dirname(current_path)
-datanode_number_per_Cluster = 10
-memcached_port_start = 21400
+datanode_number_per_Cluster = 20
+memcached_port_start = 31400
 datanode_port_start = memcached_port_start
 Clusterid_start = 0
 networkcore = 12222

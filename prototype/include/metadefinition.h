@@ -59,6 +59,7 @@ namespace REPAIR
     typedef struct StripeItem
     {
         std::vector<unsigned int> node_ids;
+        std::vector<unsigned int> cluster_id_v;
         int value_size_bytes;
         int block_size_bytes;
     } StripeItem;

@@ -3,16 +3,16 @@
 
 int main(int argc, char **argv)
 {
-    if (argc != 9)
+    if (argc != 10)
     {
-        std::cout << "./client partial_decoding encode_type placement_type n k r value_size_kbytes run_times" << std::endl;
-        std::cout << "./client false Xorbas Random 16 10 5 1 10" << std::endl;
+        std::cout << "./client partial_decoding encode_type placement_type n k r value_size_kbytes run_times result_file_abs" << std::endl;
+        std::cout << "./client false Xorbas Random 16 10 5 1 10 filename" << std::endl;
         exit(-1);
     }
     std::ofstream outfile;
 
-    std::string result_path = "/home/msms/codes/Repair_optimal/result_xorbas.txt";
-
+    std::string result_path =argv[9];// "/home/msms/codes/Repair_optimal/result_azure_lrc.txt";
+    //std::cout<<"result_path"<<result_path<<std::endl;
     bool partial_decoding;
     REPAIR::EncodeType encode_type;
     REPAIR::PlacementType placement_type;
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
     r = std::stoi(std::string(argv[6]));
     value_size_kbytes = std::stoi(std::string(argv[7]));
     run_times = std::stoi(std::string(argv[8]));
-    int totalvalue_size_kbytes = value_size_kbytes * 100;
+    int totalvalue_size_kbytes = 12800;//value_size_kbytes * 100;
     int value_number = totalvalue_size_kbytes / value_size_kbytes;
     // std::cout << "test!" << std::endl;
     std::string config_path = "/home/msms/codes/Repair_optimal/prototype/config/ClusterInformation.xml";
@@ -113,12 +113,13 @@ int main(int argc, char **argv)
         std::string value00000;
         REPAIR::random_generate_kv(key, value00000, 6, 1);
         // std::cout << key.size() << std::endl;
-        //std::cout << key << std::endl;
+        // std::cout <<i<<"    "<< key << std::endl;
         // std::cout << value1.size() << std::endl;
 
         proxy.Set(key, value1);
         key_list.push_back(key);
     }
+
     std::cout << "start repair!" << std::endl;
     auto start = std::chrono::system_clock::now();
     double min_drc_duration = -1.0;
