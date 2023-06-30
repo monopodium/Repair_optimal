@@ -117,6 +117,9 @@ namespace REPAIR
         m_best_placement_map.clear();
         m_block_repair_cost.clear();
         m_block_to_groupnumber.clear();
+
+        m_sub_optimal_placement_raw.clear();
+        m_sub_optimal_placement_map.clear();
         m_first = true;
         // klgr_to_nkr(k, , g, r, m_n);
     };
@@ -151,6 +154,8 @@ namespace REPAIR
             calculate_distance();
             generate_flat_placement();
             generate_best_placement();
+
+            generate_sub_optimal_placement();
             m_first = false;
         }
         Placement placement_return;
@@ -170,6 +175,10 @@ namespace REPAIR
         else if (placement_type == REPAIR::Best_Placement)
         {
             placement_map = m_best_placement_map;
+        }
+        else if (placement_type == REPAIR::Sub_Optimal)
+        {
+            placement_map = m_sub_optimal_placement_map;
         }
         else
         {
@@ -215,6 +224,10 @@ namespace REPAIR
         else if (placement_type == REPAIR::Best_Placement)
         {
             generate_repair_cost(m_best_placement_map);
+        }
+        else if (placement_type == REPAIR::Sub_Optimal)
+        {
+            generate_repair_cost(m_sub_optimal_placement_map);
         }
         else
         {
@@ -395,18 +408,22 @@ namespace REPAIR
     }
     void Code_Placement::print_placement_raw(PlacementType placement_type)
     {
-        PlacementRaw placment;
+        PlacementRaw placement;
         if (placement_type == Random)
         {
-            placment = m_random_placement_raw;
+            placement = m_random_placement_raw;
         }
         else if (placement_type == Best_Placement)
         {
-            placment = m_best_placement_raw;
+            placement = m_best_placement_raw;
+        }
+        else if (placement_type == Sub_Optimal)
+        {
+            placement = m_sub_optimal_placement_raw;
         }
         else
         {
-            placment = m_flat_placement_raw;
+            placement = m_flat_placement_raw;
         }
         for (auto group:m_stripe_information){
             std::cout<<"group "<< " | " << std::flush;
@@ -416,7 +433,7 @@ namespace REPAIR
             std::cout << " | " << std::endl
                       << std::flush;
         }
-        for (auto cluster : placment)
+        for (auto cluster : placement)
         {
             std::cout << "cluster id " << cluster.return_id() << " | " << std::flush;
             for (auto block : cluster.return_all_blocks())

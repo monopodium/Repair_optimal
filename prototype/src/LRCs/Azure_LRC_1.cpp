@@ -52,6 +52,7 @@ namespace REPAIR
             }
         }
     };
+    void Azure_LRC_1_Class::generate_sub_optimal_placement(){};
     void Azure_LRC_1_Class::nkr_to_klgr(int n, int k, int r)
     {
         m_l = ceil(k, r) + 1;

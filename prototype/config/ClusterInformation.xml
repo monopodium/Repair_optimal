@@ -24,28 +24,28 @@
 			<datanode uri="10.0.0.51:31419" />
 		</datanodes>
 	</Cluster>
-	<Cluster id="1" proxy="10.0.0.53:50005">
+	<Cluster id="1" proxy="10.0.0.52:50005">
 		<datanodes>
-			<datanode uri="10.0.0.53:31400" />
-			<datanode uri="10.0.0.53:31401" />
-			<datanode uri="10.0.0.53:31402" />
-			<datanode uri="10.0.0.53:31403" />
-			<datanode uri="10.0.0.53:31404" />
-			<datanode uri="10.0.0.53:31405" />
-			<datanode uri="10.0.0.53:31406" />
-			<datanode uri="10.0.0.53:31407" />
-			<datanode uri="10.0.0.53:31408" />
-			<datanode uri="10.0.0.53:31409" />
-			<datanode uri="10.0.0.53:31410" />
-			<datanode uri="10.0.0.53:31411" />
-			<datanode uri="10.0.0.53:31412" />
-			<datanode uri="10.0.0.53:31413" />
-			<datanode uri="10.0.0.53:31414" />
-			<datanode uri="10.0.0.53:31415" />
-			<datanode uri="10.0.0.53:31416" />
-			<datanode uri="10.0.0.53:31417" />
-			<datanode uri="10.0.0.53:31418" />
-			<datanode uri="10.0.0.53:31419" />
+			<datanode uri="10.0.0.52:31400" />
+			<datanode uri="10.0.0.52:31401" />
+			<datanode uri="10.0.0.52:31402" />
+			<datanode uri="10.0.0.52:31403" />
+			<datanode uri="10.0.0.52:31404" />
+			<datanode uri="10.0.0.52:31405" />
+			<datanode uri="10.0.0.52:31406" />
+			<datanode uri="10.0.0.52:31407" />
+			<datanode uri="10.0.0.52:31408" />
+			<datanode uri="10.0.0.52:31409" />
+			<datanode uri="10.0.0.52:31410" />
+			<datanode uri="10.0.0.52:31411" />
+			<datanode uri="10.0.0.52:31412" />
+			<datanode uri="10.0.0.52:31413" />
+			<datanode uri="10.0.0.52:31414" />
+			<datanode uri="10.0.0.52:31415" />
+			<datanode uri="10.0.0.52:31416" />
+			<datanode uri="10.0.0.52:31417" />
+			<datanode uri="10.0.0.52:31418" />
+			<datanode uri="10.0.0.52:31419" />
 		</datanodes>
 	</Cluster>
 	<Cluster id="2" proxy="10.0.0.54:50005">

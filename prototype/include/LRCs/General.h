@@ -62,6 +62,7 @@ namespace REPAIR
         virtual int r_group_block_num();
         virtual bool decode_in_group_xor(int group_data_number, char **data_ptrs, char **coding_ptrs, int blocksize);
         std::string s_index_to_string(int index);
+       
     protected:
         int m_n = 0;
         int m_k = 0;
@@ -86,6 +87,9 @@ namespace REPAIR
         PlacementRaw m_best_placement_raw;
         std::map<std::string, int> m_best_placement_map;
 
+        PlacementRaw m_sub_optimal_placement_raw;
+        std::map<std::string, int> m_sub_optimal_placement_map;
+
         std::map<std::string, int> m_block_repair_cost;
         std::map<std::string, int> m_block_to_groupnumber;
 
@@ -98,6 +102,7 @@ namespace REPAIR
         virtual void generate_block_repair_request() = 0;
         virtual void return_group_number() = 0;
         virtual void generate_best_placement() = 0;
+        virtual void generate_sub_optimal_placement() = 0;
         void generate_random_placement(int random_seed = 10);
         
         bool check_cluster_information(std::vector<REPAIR::Cluster> placement, std::map<std::string, int> placement_map);
@@ -112,6 +117,7 @@ namespace REPAIR
         bool check_parameter() override;
         int calculate_distance() override;
         void generate_best_placement() override;
+        void generate_sub_optimal_placement() override;
         void nkr_to_klgr(int n, int k, int r) override;
         void klgr_to_nkr(int k, int l, int g, int r) override;
 
@@ -138,6 +144,7 @@ namespace REPAIR
         void return_group_number() override;
         bool encode(char **data_ptrs, char **coding_ptrs, int blocksize) override;
         bool decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize) override;
+        void generate_sub_optimal_placement() override;
     };
     class Azure_LRC_1_Class : public Code_Placement
     {
@@ -148,6 +155,7 @@ namespace REPAIR
         bool check_parameter() override;
         int calculate_distance() override;
         void generate_best_placement() override;
+        void generate_sub_optimal_placement() override;
         void nkr_to_klgr(int n, int k, int r) override;
         void klgr_to_nkr(int k, int l, int g, int r) override;
 
@@ -156,6 +164,7 @@ namespace REPAIR
         void return_group_number() override;
         bool encode(char **data_ptrs, char **coding_ptrs, int blocksize) override;
         bool decode(char **data_ptrs, char **coding_ptrs, int *erasures, int blocksize) override;
+        
     };
     class Xorbas_Class : public Code_Placement
     {
@@ -166,6 +175,7 @@ namespace REPAIR
         bool check_parameter() override;
         int calculate_distance() override;
         void generate_best_placement() override;
+        void generate_sub_optimal_placement() override;
         void nkr_to_klgr(int n, int k, int r) override;
         void klgr_to_nkr(int k, int l, int g, int r) override;
 
