@@ -9,6 +9,7 @@ namespace REPAIR
         }
         return true;
     };
+    void Xorbas_Class::generate_sub_optimal_placement(){};
     int Xorbas_Class::calculate_distance()
     {
         m_d = m_g + 1;

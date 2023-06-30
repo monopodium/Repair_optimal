@@ -16,6 +16,7 @@ namespace REPAIR
         m_d = m_g + ceil(m_g + 1, m_r) + 1;
         return m_d;
     };
+    void Optimal_LRC_Class::generate_sub_optimal_placement(){};
     void Optimal_LRC_Class::generate_best_placement()
     {
         for (std::vector<std::string> each_group : m_stripe_information)

@@ -3,7 +3,7 @@
 
 function start_close_memcached()
 {
-    local CLUSTER_ARRAY=('10.0.0.51' '10.0.0.53' '10.0.0.54' '10.0.0.55' '10.0.0.56' '10.0.0.58')
+    local CLUSTER_ARRAY=('10.0.0.51' '10.0.0.52' '10.0.0.54' '10.0.0.55' '10.0.0.56' '10.0.0.58')
     local CLUSTER_NUM=${#CLUSTER_ARRAY[@]}
     local CLUSTER_NUM=`expr $CLUSTER_NUM - 1`
     local SRC_PATH_RUN_MEMCACHED=/home/msms/codes/Repair_optimal/prototype/run_memcached
@@ -95,6 +95,7 @@ do
 done
 ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
 
+# part 2
 #different paramter,1M,4M
 N_K_R_ARRAY=('16 10 5' '15 10 5' '10 6 3' '7 4 2')
 N_K_R_NUM=${#N_K_R_ARRAY[@]}
@@ -130,6 +131,8 @@ do
 done
 ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
 
+
+#part 3
 #different bandwidth,1M,4M
 Bandwidth_RATIO_ARRAY=(1 5 15 20)
 Bandwidth_ARRAY=(9867100 1973420 657806 493355)
@@ -158,5 +161,7 @@ do
         ./prototype/cmake/build/client true Xorbas $placement $n_k_r $block_size $RUN_TIMES
     done
 done
+
+#end
 ssh msms@$NETWORKCORE_IP 'sudo ./wondershaper/wondershaper -c -a enp4s0f1'
 start_close_memcached 0

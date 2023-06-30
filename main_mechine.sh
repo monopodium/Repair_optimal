@@ -2,7 +2,7 @@
 
 function start_close_memcached()
 {
-    local CLUSTER_ARRAY=('10.0.0.51' '10.0.0.53' '10.0.0.54' '10.0.0.55' '10.0.0.56' '10.0.0.58')
+    local CLUSTER_ARRAY=('10.0.0.51' '10.0.0.52' '10.0.0.54' '10.0.0.55' '10.0.0.56' '10.0.0.58')
     local CLUSTER_NUM=${#CLUSTER_ARRAY[@]}
     local CLUSTER_NUM=`expr $CLUSTER_NUM - 1`
     local SRC_PATH_RUN_MEMCACHED=/home/msms/codes/Repair_optimal/prototype/run_memcached

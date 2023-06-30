@@ -19,7 +19,8 @@ namespace REPAIR
     {
         Random,
         Flat,
-        Best_Placement
+        Best_Placement,
+        Sub_Optimal
     };
     typedef struct ECSchema
     {

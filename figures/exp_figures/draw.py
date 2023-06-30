@@ -1,7 +1,7 @@
-import matplotlib.pyplot as plt
+from draw_util import draw_line,draw_bar
 import numpy as np
-
-
+import os
+abs_path=os.path.abspath(r"..")+'/final_results_figure/exp_fig/'
 def mult_list(y1, n, k):
     y2 = []
     for item in y1:
@@ -9,6 +9,13 @@ def mult_list(y1, n, k):
     return y2
 
 
+def list_divide(a):
+    for i in range(len(a)):
+        a[i] = a[i]/1000
+def list_divide_err(a):
+    for i in range(len(a[0])):
+        a[0][i] = a[0][i]/1000
+        a[1][i] = a[1][i]/1000
 def time_to_MiBs(y1, size_MB, k):
     true_size = size_MB / k
     y2 = []
@@ -43,35 +50,35 @@ def time_to_MiBs(y1, size_MB, k):
 
 #     plt.show()
 #     fig.savefig(name)
-def draw(x, y1, y2, y3, xlabel, ylabel, yticks, name):
-    fig, ax = plt.subplots(figsize=(1.7 * 2, 1.1 * 2), dpi=300, constrained_layout=True)
-    #设置自变量的范围和个数
+# def draw(x, y1, y2, y3, xlabel, ylabel, yticks, name):
+#     fig, ax = plt.subplots(figsize=(1.7 * 2, 1.1 * 2), dpi=300, constrained_layout=True)
+#     #设置自变量的范围和个数
     
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
-    #画图
-    #009db2 - 024b51 - 0780cf
-    #  #C82423   #FF8884  #2878B5
-    ax.plot(x, y1, label='Flat', linestyle=':', marker='s', markersize='6.4', markerfacecolor="none", color="#C82423", linewidth=2.5)
-    ax.plot(x, y2, label='Random', linestyle='--', marker='o', markersize='6', markerfacecolor="none", color="#FF8884", linewidth=2.5)
-    ax.plot(x, y3, label='R-Opt', linestyle='-', marker='^', markersize='6', markerfacecolor="none", color="#2878B5", linewidth=2.5)
-    #设置坐标轴
-    #ax.set_xlim(0, 9.5)
-    #ax.set_ylim(0, 1.4)
-    ax.set_yticks(yticks)
-    ax.set_xlabel(xlabel, fontsize=10, labelpad=4)
-    ax.set_ylabel(ylabel, fontsize=9, labelpad=4)
-    #设置刻度
-    ax.tick_params(axis='x', labelsize=10, rotation=45, pad=2, which='major', width=1, length=2)
-    ax.tick_params(axis='y', labelsize=10, pad=2, which='major', width=1, length=2)
-    #显示网格
-    #ax.grid(True, linestyle='-.')
-    #ax.yaxis.grid(True, linestyle='-.')
-    #添加图例
-    legend = ax.legend(loc='best', frameon=False, fontsize=10)
+#     ax.spines['right'].set_visible(False)
+#     ax.spines['top'].set_visible(False)
+#     #画图
+#     #009db2 - 024b51 - 0780cf
+#     #  #C82423   #FF8884  #2878B5
+#     ax.plot(x, y1, label='Flat', linestyle=':', marker='s', markersize='6.4', markerfacecolor="none", color="#C82423", linewidth=2.5)
+#     ax.plot(x, y2, label='Random', linestyle='--', marker='o', markersize='6', markerfacecolor="none", color="#FF8884", linewidth=2.5)
+#     ax.plot(x, y3, label='R-Opt', linestyle='-', marker='^', markersize='6', markerfacecolor="none", color="#2878B5", linewidth=2.5)
+#     #设置坐标轴
+#     #ax.set_xlim(0, 9.5)
+#     #ax.set_ylim(0, 1.4)
+#     ax.set_yticks(yticks)
+#     ax.set_xlabel(xlabel, fontsize=10, labelpad=4)
+#     ax.set_ylabel(ylabel, fontsize=9, labelpad=4)
+#     #设置刻度
+#     ax.tick_params(axis='x', labelsize=10, rotation=45, pad=2, which='major', width=1, length=2)
+#     ax.tick_params(axis='y', labelsize=10, pad=2, which='major', width=1, length=2)
+#     #显示网格
+#     #ax.grid(True, linestyle='-.')
+#     #ax.yaxis.grid(True, linestyle='-.')
+#     #添加图例
+#     legend = ax.legend(loc='best', frameon=False, fontsize=10)
 
-    plt.show()
-    fig.savefig(name)
+#     plt.show()
+#     fig.savefig(name)
 
 
 # def draw_bar(x,y1,y2,y3,xlabel,ylabel,yticks,name,yerr1,yerr2,yerr3):
@@ -106,43 +113,42 @@ def draw(x, y1, y2, y3, xlabel, ylabel, yticks, name):
 #     fig.savefig(name)
 
 
-def draw_bar(x, y1, y2, y3, xlabel, ylabel, yticks, name, yerr1, yerr2, yerr3):
-    fig, ax = plt.subplots(figsize=(1.7 * 2, 1.1 * 2), dpi=300, constrained_layout=True)
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
-    #设置自变量的范围和个数
-    index = np.array([1, 3, 5, 7, 9])  #np.arange(1,len(x)+1,0.7)
-    print(index)
-    bar_width = 1
-    #画图
-    ax.set_xticks(index)
-    #009db2 - 024b51 - 0780cf
-    #  #C82423   #FF8884  #2878B5
-    error_attri = {"elinewidth": 1, "ecolor": "black", "capsize": 1.5}
-    ax.bar(index - bar_width / 2, y1, bar_width / 2, label='Flat', yerr=yerr1, error_kw=error_attri, color="#C82423", edgecolor="black")
-    ax.bar(index, y2, bar_width / 2, label='Random', yerr=yerr2, error_kw=error_attri, color="#FF8884", edgecolor="black")
-    ax.bar(index + bar_width / 2, y3, bar_width / 2, label='R-Opt', yerr=yerr3, error_kw=error_attri, color="#2878B5", edgecolor="black")
-    #设置坐标轴
-    #ax.set_xlim(0, 9.5)
-    #ax.set_ylim(0, 1.4)
-    ax.set_yticks(yticks)
-    ax.set_xticklabels(x)
-    ax.set_xlabel(xlabel, fontsize=10, labelpad=4)
-    ax.set_ylabel(ylabel, fontsize=8, labelpad=4)
-    #设置刻度
-    ax.tick_params(rotation=45, axis='x', labelsize=10, pad=1, which='major', width=1, length=1.5)
-    ax.tick_params(axis='y', labelsize=10, pad=1, which='major', width=1, length=1.5)
-    #显示网格
-    #ax.grid(True, linestyle='-.')
-    #ax.yaxis.grid(True, linestyle='-.')
-    #添加图例
-    legend = ax.legend(loc='best', frameon=False, fontsize=9)
+# def draw_bar(x, y1, y2, y3, xlabel, ylabel, yticks, name, yerr1, yerr2, yerr3):
+#     fig, ax = plt.subplots(figsize=(1.7 * 2, 1.1 * 2), dpi=300, constrained_layout=True)
+#     ax.spines['right'].set_visible(False)
+#     ax.spines['top'].set_visible(False)
+#     #设置自变量的范围和个数
+#     index = np.array([1, 3, 5, 7, 9])  #np.arange(1,len(x)+1,0.7)
+#     print(index)
+#     bar_width = 1
+#     #画图
+#     ax.set_xticks(index)
+#     #009db2 - 024b51 - 0780cf
+#     #  #C82423   #FF8884  #2878B5
+#     error_attri = {"elinewidth": 1, "ecolor": "black", "capsize": 1.5}
+#     ax.bar(index - bar_width / 2, y1, bar_width / 2, label='Flat', yerr=yerr1, error_kw=error_attri, color="#C82423", edgecolor="black")
+#     ax.bar(index, y2, bar_width / 2, label='Random', yerr=yerr2, error_kw=error_attri, color="#FF8884", edgecolor="black")
+#     ax.bar(index + bar_width / 2, y3, bar_width / 2, label='R-Opt', yerr=yerr3, error_kw=error_attri, color="#2878B5", edgecolor="black")
+#     #设置坐标轴
+#     #ax.set_xlim(0, 9.5)
+#     #ax.set_ylim(0, 1.4)
+#     ax.set_yticks(yticks)
+#     ax.set_xticklabels(x)
+#     ax.set_xlabel(xlabel, fontsize=10, labelpad=4)
+#     ax.set_ylabel(ylabel, fontsize=8, labelpad=4)
+#     #设置刻度
+#     ax.tick_params(rotation=45, axis='x', labelsize=10, pad=1, which='major', width=1, length=1.5)
+#     ax.tick_params(axis='y', labelsize=10, pad=1, which='major', width=1, length=1.5)
+#     #显示网格
+#     #ax.grid(True, linestyle='-.')
+#     #ax.yaxis.grid(True, linestyle='-.')
+#     #添加图例
+#     legend = ax.legend(loc='best', frameon=False, fontsize=9)
 
-    plt.show()
-    fig.savefig(name)
-
-
-def draw_DRC_diff_bandwidth():
+#     plt.show()
+#     fig.savefig(name)
+    
+def  draw_DRC_diff_bandwidth():
     x = ["0.5", "0.7", "1", "2", "10"]
     y1 = [11013, 20481, 29778, 39364, 48503]
     y1.reverse()
@@ -153,13 +159,16 @@ def draw_DRC_diff_bandwidth():
     #assert y1.shape[0]==y2.shape[0], '两个因变量个数不相等！'
     xlabel = 'Bandwidth (Gbps)'
     ylabel = 'Degraded Read Time (us)'
-    name = 'DRC_diff_bandwidth_4M.pdf'
-    yticks = [0, 10000, 20000, 30000, 40000, 50000]
+    name = abs_path+'DRC_diff_bandwidth_4MB_optimal_lrc.pdf'
+    yticks = [0,  20, 40, 60]
+    list_divide(y1)
+    list_divide(y2)
+    list_divide(y3)
     for i in range(len(x)):
         print(x[i])
         print("Flat", (y1[i] - y3[i]) / y1[i])
         print("Random", (y2[i] - y3[i]) / y2[i])
-    draw(x, y1, y2, y3, xlabel, ylabel, yticks, name)
+    draw_line(x, y1, y2, y3, xlabel, ylabel, yticks, name)
 
 
 def draw_1block_NRC_diff_bandwidth():
@@ -173,13 +182,13 @@ def draw_1block_NRC_diff_bandwidth():
     #assert y1.shape[0]==y2.shape[0], '两个因变量个数不相等！'
     xlabel = 'Bandwidth (Gbps)'
     ylabel = 'Node Repair Cost (us)'
-    name = 'NRC_diff_bandwidth.pdf'
+    name = abs_path+'NRC_diff_bandwidth_4MB_optimal_lrc.pdf'
     yticks = [20000, 40000, 60000, 80000, 100000]
     for i in range(len(x)):
         print(x[i])
         print("Flat", (y1[i] - y3[i]) / y1[i])
         print("Random", (y2[i] - y3[i]) / y2[i])
-    draw(x, y1, y2, y3, xlabel, ylabel, yticks, name)
+    draw_line(x, y1, y2, y3, xlabel, ylabel, yticks, name)
 
 
 def draw_64blocks_NRC_diff_bandwidth_1M():
@@ -199,14 +208,14 @@ def draw_64blocks_NRC_diff_bandwidth_1M():
     #assert y1.shape[0]==y2.shape[0], '两个因变量个数不相等！'
     xlabel = 'Bandwidth (Gbps)'
     ylabel = 'Node Repair Rate (MiB/s)'  #Node Repair Cost (s)'
-    name = 'NRC_diff_bandwidth_1M.pdf'
+    name = abs_path+'NRC_diff_bandwidth_1MB_optimal_lrc.pdf'
     #yticks = [0.2,0.4,0.6,0.8,1]
-    yticks = [0, 30, 60, 90, 120, 150, 180]
+    yticks = [0, 60, 120, 180]
     for i in range(len(x)):
         print(x[i])
         print("Flat", y3[i] / y1[i])
         print("Random", y3[i] / y2[i])
-    draw(x, y1, y2, y3, xlabel, ylabel, yticks, name)
+    draw_line(x, y1, y2, y3, xlabel, ylabel, yticks, name)
 
 
 def draw_64blocks_NRC_diff_bandwidth_4M():
@@ -227,13 +236,13 @@ def draw_64blocks_NRC_diff_bandwidth_4M():
     y3 = time_to_MiBs(y3, 4, 6)
     xlabel = 'Bandwidth (Gbps)'
     ylabel = 'Node Repair Rate (MiB/s)'  #Node Repair Cost (s)'
-    name = 'NRC_diff_bandwidth_4M.pdf'
-    yticks = [0, 30, 60, 90, 120, 150, 180, 210]
+    name = abs_path+'NRC_diff_bandwidth_4MB_optimal_lrc.pdf'
+    yticks = [0, 60, 120, 180, 240]
     for i in range(len(x)):
         print(x[i])
         print("Flat", y3[i] / y1[i])
         print("Random", y3[i] / y2[i])
-    draw(x, y1, y2, y3, xlabel, ylabel, yticks, name)
+    draw_line(x, y1, y2, y3, xlabel, ylabel, yticks, name)
 
 
 def draw_DRC_diff_Parameter_1MB():
@@ -244,8 +253,8 @@ def draw_DRC_diff_Parameter_1MB():
     #assert y1.shape[0]==y2.shape[0], '两个因变量个数不相等！'
     xlabel = 'Coding Parameter'
     ylabel = 'Degraded Read Time (us)'
-    name = 'DRC_diff_Parameter_1MB.pdf'
-    yticks = [0, 2500, 5000, 7500, 10000, 12500, 15000, 17500]
+    name = abs_path+'DRC_diff_Parameter_1MB_optimal_lrc.pdf'
+    yticks = [0, 5,  10,  15, 20]
     yerr1 = [[12094-11795,8840-8657,8725-8437,8403-8085,7504-7249],\
             [11795-11073,8657-8475,8437-8149,8085-7933,7249-7101]]
     yerr2 = [[7593-7263,4778-4721,4794-4644,5807-5447,3967-3892],\
@@ -255,6 +264,12 @@ def draw_DRC_diff_Parameter_1MB():
     sum1 = 0
     sum2 = 0
     sum3 = 0
+    list_divide(y1)
+    list_divide(y2)
+    list_divide(y3)
+    list_divide_err(yerr1)
+    list_divide_err(yerr2)
+    list_divide_err(yerr3)
     for i in range(len(x)):
         print(x[i])
         print("Flat", (y1[i] - y3[i]) / y1[i])
@@ -273,7 +288,7 @@ def draw_1block_NRC_diff_Parameter_1MB():
     #assert y1.shape[0]==y2.shape[0], '两个因变量个数不相等！'
     xlabel = 'Coding Parameter'
     ylabel = 'Node Repair Cost (us)'
-    name = 'NRC_diff_Parameter_1MB.pdf'
+    name = abs_path+'NRC_diff_Parameter_1MB_optimal_lrc.pdf'
     yticks = [5000, 10000, 15000, 20000, 25000]
     yerr1 = [[23353-22769,17467-16655,11740-10269],\
             [25059-23353,19004-17467,12789-11740]]
@@ -304,9 +319,9 @@ def draw_64blocks_NRC_diff_Parameter_1MB():
     #assert y1.shape[0]==y2.shape[0], '两个因变量个数不相等！'
     xlabel = 'Coding Parameter'
     ylabel = 'Node Repair Rate (MiB/s)'  #Node Repair Cost (s)'
-    name = 'NRC_diff_Parameter_1MB.pdf'
+    name = abs_path+'NRC_diff_Parameter_1MB_optimal_lrc.pdf'
     print(y1, y2, y3)
-    yticks = [0, 40, 80, 120, 160, 200, 240]
+    yticks = [0, 80, 160, 240]
 
     yerr1 = [[(1*64*8)/(1.530155*3*3)-(1*64*8)/(1.515182*3*3), (1*64*12)/(1.105053*6*6)-(1*64*12)/(1.100065*6*6), (1*64*15)/(0.805892*10*10)-(1*64*15)/(0.800367*10*10),  (1*18*64)/(0.788984*12*12)-(1*18*64)/(0.78082*12*12), (1*24*64)/(0.751027*15*15)-(1*24*64)/(0.735515*15*15)],\
             [(1*64*8)/(1.541491*3*3)-(1*64*8)/(1.530155*3*3), (1*64*12)/(1.129550*6*6)-(1*64*12)/(1.105053*6*6), (1*64*15)/(0.807234*10*10)-(1*64*15)/(0.805892*10*10),   (1*18*64)/(0.795515*12*12)-(1*18*64)/(0.788984*12*12), (1*24*64)/(0.761056*15*15)-(1*24*64)/(0.751027*15*15)]]
@@ -345,7 +360,7 @@ def draw_64blocks_NRC_diff_Parameter_1MB():
         print(x[i])
         print("Flat", y3[i] / y1[i])
         print("Random", y3[i] / y2[i])
-
+    print(yerr1, yerr2, yerr3)
     draw_bar(x, y1, y2, y3, xlabel, ylabel, yticks, name, yerr1, yerr2, yerr3)
 
 
@@ -357,8 +372,8 @@ def draw_draw_1blocks_DRC_diff_Parameter_4MB():
     #assert y1.shape[0]==y2.shape[0], '两个因变量个数不相等！'
     xlabel = 'Coding Parameter'
     ylabel = 'Degraded Read Time (us)'
-    name = 'DRC_diff_Parameter_4MB.pdf'
-    yticks = [0, 10000, 20000, 30000, 40000, 50000, 60000]
+    name = abs_path+'DRC_diff_Parameter_4MB_optimal_lrc.pdf'
+    yticks = [0,20,40, 60]
     yerr1 = [[44179-41007,29778-27334,29908-27112,28001-27011,26984-24887],\
             [46215-44179,31040-29778,29908-28745,29033-28001,28584-26984]]
     yerr2 = [[22991-21728,14221-14054,17292-14710,19945-18002,8450-7935],\
@@ -366,6 +381,12 @@ def draw_draw_1blocks_DRC_diff_Parameter_4MB():
 
     yerr3 = [[11065-10589,6873-6179,8020-7070,10295-9939,3714-3632],\
             [11199-11065,8355-6873,9904-8020,10651-10295,3902-3714]]
+    list_divide(y1)
+    list_divide(y2)
+    list_divide(y3)
+    list_divide_err(yerr1)
+    list_divide_err(yerr2)
+    list_divide_err(yerr3)
     for i in range(len(x)):
         print(x[i])
         print("Flat", (y1[i] - y3[i]) / y1[i])
@@ -381,8 +402,8 @@ def draw_draw_1blocks_NRC_diff_Parameter_4MB():
     #assert y1.shape[0]==y2.shape[0], '两个因变量个数不相等！'
     xlabel = 'Coding Parameter'
     ylabel = 'Node Repair Cost (us)'
-    name = 'NRC_diff_Parameter_4MB.pdf'
-    yticks = [20000, 40000, 60000, 80000, 100000]
+    name = abs_path+'NRC_diff_Parameter_4MB_optimal_lrc.pdf'
+    yticks = [0,20000, 40000, 60000, 80000, 100000]
     yerr1 = [[88116-82992,65818-60288,40766-39167],\
             [90890-88116,70892-65818,45019-40766]]
     yerr2 = [[55389-53277,51718-50048,20616-19713],\
@@ -410,8 +431,8 @@ def draw_64blocks_NRC_diff_Parameter_4MB():
     #assert y1.shape[0]==y2.shape[0], '两个因变量个数不相等！'
     xlabel = 'Coding Parameter'
     ylabel = 'Node Repair Rate (MiB/s)'  #Node Repair Cost (s)'
-    name = 'NRC_diff_Parameter_4MB.pdf'
-    yticks = [0, 40, 80, 120, 160, 200, 240, 280]
+    name = abs_path+'NRC_diff_Parameter_4MB_optimal_lrc.pdf'
+    yticks = [0,  80, 160, 240, 320]
     yerr1 = [[(4*64*8)/(5.610397*3*3)-(4*64*8)/(5.547993*3*3),  (4*64*12)/(3.7845958*6*6)-(4*64*12)/(3.714837*6*6),  (4*64*15)/(2.663662*10*10)-(4*64*15)/(2.609742*10*10),   (4*64*18)/(2.543211*12*12)-(4*64*18)/(2.489419*12*12),  (4*64*24)/(2.382081*15*15)-(4*64*24)/(2.313187*15*15),],\
             [(4*64*8)/(5.771332*3*3)-(4*64*8)/(5.610397*3*3),   (4*64*12)/(3.873669*6*6)-(4*64*12)/(3.784595*6*6),   (4*64*15)/(2.735906*10*10)-(4*64*15)/(2.663662*10*10),   (4*64*18)/(2.593051*12*12)-(4*64*18)/(2.543211*12*12),  (4*64*24)/(2.475105*15*15)-(4*64*24)/(2.382081*15*15),]]
     yerr2 = [[(4*64*8)/(3.475751*3*3)-(4*64*8)/(3.391519*3*3),  (4*64*12)/(2.920577*6*6)-(4*64*12)/(2.895699*6*6),   (4*64*15)/(1.426934*10*10)-(4*64*15)/(1.404525*10*10),   (4*64*18)/(1.895024*12*12)-(4*64*18)/(1.859207*12*12),  (4*64*24)/(0.914806*15*15)-(4*64*24)/(0.850277*15*15)],\
@@ -450,8 +471,8 @@ def draw_DRC_diff_object_size():
     #assert y1.shape[0]==y2.shape[0], '两个因变量个数不相等！'
     xlabel = 'Object Size'
     ylabel = 'Degraded Read Time (us)'
-    yticks = [0, 5000, 10000, 15000, 20000, 25000, 30000, 35000]
-    name = 'DRC_diff_object_size.pdf'
+    yticks = [0,  10,  20,  30, 40]
+    name = abs_path+'DRC_diff_object_size_optimal_lrc.pdf'
     sum1 = 0
     sum2 = 0
     sum3 = 0
@@ -472,7 +493,10 @@ def draw_DRC_diff_object_size():
     # print((sum1-sum3)/sum1)
     # print("Random")
     # print((sum2-sum3)/sum2)
-    draw(x, y1, y2, y3, xlabel, ylabel, yticks, name)
+    list_divide(y1)
+    list_divide(y2)
+    list_divide(y3)
+    draw_line(x, y1, y2, y3, xlabel, ylabel, yticks, name)
 
 
 def draw_1block_NRC_diff_object_size():
@@ -483,8 +507,8 @@ def draw_1block_NRC_diff_object_size():
     #assert y1.shape[0]==y2.shape[0], '两个因变量个数不相等！'
     xlabel = 'Object Size'
     ylabel = 'Node Repair Cost (us)'
-    name = 'NRC_diff_object_size.pdf'
-    yticks = [10000, 20000, 30000, 40000, 50000, 60000, 70000]
+    name = abs_path+'NRC_diff_object_size_optimal_lrc.pdf'
+    yticks = [0, 20000, 40000, 60000, 80000]
     sum1 = 0
     sum2 = 0
     sum3 = 0
@@ -499,7 +523,7 @@ def draw_1block_NRC_diff_object_size():
     print((sum1 - sum3) / sum1)
     print("Random")
     print((sum2 - sum3) / sum2)
-    draw(x, y1, y2, y3, xlabel, ylabel, yticks, name)
+    draw_line(x, y1, y2, y3, xlabel, ylabel, yticks, name)
 
 
 def draw_64blocks_NRC_diff_object_size():
@@ -516,9 +540,9 @@ def draw_64blocks_NRC_diff_object_size():
     #assert y1.shape[0]==y2.shape[0], '两个因变量个数不相等！'
     xlabel = 'Object Size'
     ylabel = 'Node Repair Rate (MiB/s)'  #Node Repair Cost (s)'
-    name = 'NRC_diff_object_size.pdf'
+    name = abs_path+'NRC_diff_object_size_optimal_lrc.pdf'
     #yticks = [0.4,0.8,1.2,1.6,2]#[1,2,3,4,5]#
-    yticks = [0, 20, 40, 60, 80, 100, 120, 140]
+    yticks = [0,  40, 80,  120, 160]
     # sum1=0
     # sum2=0
     # sum3=0
@@ -547,7 +571,7 @@ def draw_64blocks_NRC_diff_object_size():
     # print(sum3/sum1)
     # print("Random")
     # print(sum3/sum2)
-    draw(x, y1, y2, y3, xlabel, ylabel, yticks, name)
+    draw_line(x, y1, y2, y3, xlabel, ylabel, yticks, name)
 
 
 def item_to_size_G(list_origin, size_of_one_block_M):
@@ -557,43 +581,43 @@ def item_to_size_G(list_origin, size_of_one_block_M):
     return y1
 
 
-def draw_7(x, y1, y2, y3, y4, y5, y6, xlabel, ylabel, yticks, name):
-    fig, ax = plt.subplots(figsize=(1.7 * 4, 1.1 * 2), dpi=300, constrained_layout=True)
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
-    #设置自变量的范围和个数
-    index = np.array([1, 3.5, 6, 8.5, 11, 13.5, 16])  #np.arange(1,len(x)+1,0.7)#[1,4,7,10,13,16,19]
-    print(index)
-    bar_width = 2
-    #画图
-    ax.set_xticks(index)
-    #009db2 - 024b51 - 0780cf
-    #  #C82423   #FF8884  #2878B5
-    error_attri = {"elinewidth": 1, "ecolor": "black", "capsize": 1.5}
-    ax.bar(index - 5 * bar_width / 12, y1, bar_width / 6, error_kw=error_attri, color="#C82423", edgecolor="black", label='Node0')
-    ax.bar(index - bar_width / 4, y2, bar_width / 6, error_kw=error_attri, color="#FF8884", edgecolor="black", label='Node1')
-    ax.bar(index - bar_width / 12, y3, bar_width / 6, error_kw=error_attri, color="#2878B5", edgecolor="black", label='Node2')
-    ax.bar(index + bar_width / 12, y4, bar_width / 6, error_kw=error_attri, color="#F8AC8C", edgecolor="black", label='Node3')
-    ax.bar(index + bar_width / 4, y5, bar_width / 6, error_kw=error_attri, color="#00adb5", edgecolor="black", label='Node4')
-    ax.bar(index + 5 * bar_width / 12, y6, bar_width / 6, error_kw=error_attri, color="#fce38a", edgecolor="black", label='Node5')
-    #设置坐标轴
-    #ax.set_xlim(0, 9.5)
-    #ax.set_ylim(0, 1.4)
-    ax.set_yticks(yticks)
-    ax.set_xticklabels(x)
-    ax.set_xlabel(xlabel, fontsize=10, labelpad=4)
-    ax.set_ylabel(ylabel, fontsize=8, labelpad=4)
-    #设置刻度
-    ax.tick_params(axis='x', labelsize=10, pad=1, which='major', width=1, length=1.5)  #rotation=45,
-    ax.tick_params(axis='y', labelsize=10, pad=1, which='major', width=1, length=1.5)
-    #显示网格
-    #ax.grid(True, linestyle='-.')
-    #ax.yaxis.grid(True, linestyle='-.')
-    #添加图例
-    legend = ax.legend(loc='best', frameon=False, fontsize=9, ncol=3, labelspacing=0.1, columnspacing=0.1, handletextpad=0.1)
+# def draw_7(x, y1, y2, y3, y4, y5, y6, xlabel, ylabel, yticks, name):
+#     fig, ax = plt.subplots(figsize=(1.7 * 4, 1.1 * 2), dpi=300, constrained_layout=True)
+#     ax.spines['right'].set_visible(False)
+#     ax.spines['top'].set_visible(False)
+#     #设置自变量的范围和个数
+#     index = np.array([1, 3.5, 6, 8.5, 11, 13.5, 16])  #np.arange(1,len(x)+1,0.7)#[1,4,7,10,13,16,19]
+#     print(index)
+#     bar_width = 2
+#     #画图
+#     ax.set_xticks(index)
+#     #009db2 - 024b51 - 0780cf
+#     #  #C82423   #FF8884  #2878B5
+#     error_attri = {"elinewidth": 1, "ecolor": "black", "capsize": 1.5}
+#     ax.bar(index - 5 * bar_width / 12, y1, bar_width / 6, error_kw=error_attri, color="#C82423", edgecolor="black", label='Node0')
+#     ax.bar(index - bar_width / 4, y2, bar_width / 6, error_kw=error_attri, color="#FF8884", edgecolor="black", label='Node1')
+#     ax.bar(index - bar_width / 12, y3, bar_width / 6, error_kw=error_attri, color="#2878B5", edgecolor="black", label='Node2')
+#     ax.bar(index + bar_width / 12, y4, bar_width / 6, error_kw=error_attri, color="#F8AC8C", edgecolor="black", label='Node3')
+#     ax.bar(index + bar_width / 4, y5, bar_width / 6, error_kw=error_attri, color="#00adb5", edgecolor="black", label='Node4')
+#     ax.bar(index + 5 * bar_width / 12, y6, bar_width / 6, error_kw=error_attri, color="#fce38a", edgecolor="black", label='Node5')
+#     #设置坐标轴
+#     #ax.set_xlim(0, 9.5)
+#     #ax.set_ylim(0, 1.4)
+#     ax.set_yticks(yticks)
+#     ax.set_xticklabels(x)
+#     ax.set_xlabel(xlabel, fontsize=10, labelpad=4)
+#     ax.set_ylabel(ylabel, fontsize=8, labelpad=4)
+#     #设置刻度
+#     ax.tick_params(axis='x', labelsize=10, pad=1, which='major', width=1, length=1.5)  #rotation=45,
+#     ax.tick_params(axis='y', labelsize=10, pad=1, which='major', width=1, length=1.5)
+#     #显示网格
+#     #ax.grid(True, linestyle='-.')
+#     #ax.yaxis.grid(True, linestyle='-.')
+#     #添加图例
+#     legend = ax.legend(loc='best', frameon=False, fontsize=9, ncol=3, labelspacing=0.1, columnspacing=0.1, handletextpad=0.1)
 
-    plt.show()
-    fig.savefig(name)
+#     plt.show()
+#     fig.savefig(name)
 
 
 def load_balance_draw():
@@ -645,8 +669,8 @@ def load_balance_draw():
 #load_balance_draw()
 print("draw_64blocks_NRC_diff_object_size")
 draw_64blocks_NRC_diff_object_size()
-# print("draw_64blocks_NRC_diff_bandwidth_1M")
-# draw_64blocks_NRC_diff_bandwidth_1M()
+print("draw_64blocks_NRC_diff_bandwidth_1M")
+draw_64blocks_NRC_diff_bandwidth_1M()
 print("draw_64blocks_NRC_diff_bandwidth_4M")
 draw_64blocks_NRC_diff_bandwidth_4M()
 print("draw_64blocks_NRC_diff_Parameter_1MB")
@@ -654,11 +678,12 @@ draw_64blocks_NRC_diff_Parameter_1MB()
 print("draw_64blocks_NRC_diff_Parameter_4MB")
 draw_64blocks_NRC_diff_Parameter_4MB()
 
-# print("draw_DRC_diff_bandwidth")
-# draw_DRC_diff_bandwidth()
-# print("draw_DRC_diff_object_size")
-# draw_DRC_diff_object_size()
-# print("draw_draw_1blocks_DRC_diff_Parameter_4MB")
-# draw_draw_1blocks_DRC_diff_Parameter_4MB()
-# print("draw_DRC_diff_Parameter_1MB")
-# draw_DRC_diff_Parameter_1MB()
+
+print("draw_DRC_diff_bandwidth")
+draw_DRC_diff_bandwidth()
+print("draw_DRC_diff_object_size")
+draw_DRC_diff_object_size()
+print("draw_draw_1blocks_DRC_diff_Parameter_4MB")
+draw_draw_1blocks_DRC_diff_Parameter_4MB()
+print("draw_DRC_diff_Parameter_1MB")
+draw_DRC_diff_Parameter_1MB()

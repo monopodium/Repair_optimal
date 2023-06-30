@@ -326,7 +326,7 @@ namespace REPAIR
         std::vector<std::vector<char>> v_data_area(repair_request.size(), std::vector<char>(key_meta_data->block_size_bytes));
         std::vector<std::vector<char>> v_coding_area(1, std::vector<char>(key_meta_data->block_size_bytes));
         std::vector<std::thread> receiver;
-        for (int i = 0; i < repair_request.size(); i++)
+        for (int i = 0; i < int(repair_request.size()); i++)
         {
             data[i] = v_data_area[i].data();
         }

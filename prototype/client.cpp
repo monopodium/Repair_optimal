@@ -54,6 +54,10 @@ int main(int argc, char **argv)
     {
         placement_type = REPAIR::Best_Placement;
     }
+    else if (std::string(argv[3]) == "Sub_Optimal")
+    {
+        placement_type = REPAIR::Sub_Optimal;
+    }
     else
     {
         std::cout << "error: unknown placement_type" << std::endl;
@@ -64,7 +68,7 @@ int main(int argc, char **argv)
     r = std::stoi(std::string(argv[6]));
     value_size_kbytes = std::stoi(std::string(argv[7]));
     run_times = std::stoi(std::string(argv[8]));
-    int totalvalue_size_kbytes = 12800;//value_size_kbytes * 100;
+    int totalvalue_size_kbytes = value_size_kbytes * 100;//value_size_kbytes * 100;
     int value_number = totalvalue_size_kbytes / value_size_kbytes;
     // std::cout << "test!" << std::endl;
     std::string config_path = "/home/msms/codes/Repair_optimal/prototype/config/ClusterInformation.xml";
